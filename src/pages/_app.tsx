@@ -1,9 +1,10 @@
-import { Global } from '@emotion/core';
+import { Global } from '@emotion/react';
 import { AppProps } from 'next/app';
 import React from 'react';
 import theme from 'theme';
 import { ThemeProvider } from 'theme-ui';
 import Head from 'next/head';
+import { Layout } from 'components/Layout';
 
 const globalStyles = `
   html,
@@ -34,12 +35,14 @@ function App({ Component, pageProps }: AppProps) {
     <ThemeProvider {...{ theme }}>
       <Head>
         <link
-          href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;600;700&display=swap"
           rel="stylesheet"
         />
       </Head>
       <Global styles={globalStyles} />
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </ThemeProvider>
   );
 }

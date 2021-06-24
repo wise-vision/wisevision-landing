@@ -11,7 +11,7 @@ export default class MyDocument extends Document<Document> {
 
   render() {
     return (
-      <Html lang="en">
+      <Html lang="pl">
         <Head />
         <body>
           <Main />
