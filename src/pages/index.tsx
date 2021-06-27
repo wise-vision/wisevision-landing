@@ -4,20 +4,23 @@ import { ROUTES } from 'routes';
 import { pxToRem } from 'theme';
 import { Box, Button, Container, Flex, Grid, Heading, Image, ThemeUIStyleObject } from 'theme-ui';
 import { WithChildren } from 'types';
+import { Link } from 'react-scroll';
 
 const SCROLL_TARGET = 'scrollTarget';
 
 function HeroSection() {
-  function scrollTo() {
-    const target = document.getElementById(SCROLL_TARGET);
-    const menu = document.getElementById(MENU_ID);
+  const navHeight = () => {
+    if (process.browser && document) {
+      const menu = document.getElementById(MENU_ID);
 
-    if (target && menu) {
-      const top = target.offsetTop - menu.clientHeight;
-
-      window.scrollTo({ top, behavior: 'smooth' });
+      if (menu) {
+        const navHeight = menu.clientHeight;
+        return navHeight;
+      }
     }
-  }
+
+    return 0;
+  };
 
   return (
     <Flex
@@ -46,7 +49,9 @@ function HeroSection() {
           textAlign: 'center',
         }}
       >
-        <Image src="/static/home/arrow_down.png" sx={{ cursor: 'pointer' }} onClick={scrollTo} />
+        <Link to={SCROLL_TARGET} offset={navHeight() * -1} smooth duration={800}>
+          <Image src="/static/home/arrow_down.png" sx={{ cursor: 'pointer' }} />
+        </Link>
       </Box>
     </Flex>
   );
