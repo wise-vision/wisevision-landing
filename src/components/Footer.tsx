@@ -24,15 +24,12 @@ const footerLabel: ThemeUIStyleObject = {
 function NewsletterForm() {
   const [email, setEmail] = useState('');
 
-  function onSubmit(e: FormEvent<HTMLDivElement>) {
-    e.preventDefault();
-    window.alert(`submit ${email}`);
-  }
-
   return (
-    <Box as="form" onSubmit={onSubmit}>
+    <form action={process.env.NEXT_PUBLIC_MAILCHIMP_URL} method="POST" target="_blank">
       <Flex sx={{ maxWidth: ['100%', null, pxToRem(320)], width: '100%' }}>
         <Input
+          name="EMAIL"
+          type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="email"
@@ -40,7 +37,7 @@ function NewsletterForm() {
         />
         <Button type="submit">Subskrybuj</Button>
       </Flex>
-    </Box>
+    </form>
   );
 }
 
