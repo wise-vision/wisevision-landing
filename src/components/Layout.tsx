@@ -8,7 +8,7 @@ export const Layout = ({ children }: WithChildren) => (
   <>
     <Menu />
     <Box as="main" sx={{ flex: 1, pt: [pxToRem(59), pxToRem(70)] }}>
-      {children}
+      <Box sx={{ overflowX: 'hidden' }}>{children}</Box>
     </Box>
     <Footer />
   </>

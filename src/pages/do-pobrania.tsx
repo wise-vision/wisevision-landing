@@ -39,10 +39,10 @@ function DownloadItemsContainer({ children, title }: { title: string } & WithChi
   );
 }
 
-export default function Dokumentacja() {
+export default function DoPobrania() {
   return (
     <Box>
-      <PageBanner image="dokumentacja" title="Dokumentacja" />
+      <PageBanner image="do_pobrania" title="Do pobrania" />
       <Container pt={[5, 6]} pb={[6, 7]}>
         <Grid columns={[1, 2]} gap={5}>
           <DownloadItemsContainer title="WHITEPAPER">

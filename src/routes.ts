@@ -1,7 +1,7 @@
 export const ROUTES = {
   HOME: '/',
   BLOG: '#',
-  DOKUMENTACJA: '/dokumentacja',
+  DO_POBRANIA: '/do-pobrania',
   CENNIK: '/cennik',
   O_NAS: '#',
   NOTY_PRAWNE: '#',
@@ -13,7 +13,7 @@ export const ROUTES = {
   ZDALNY_DOSTEP: '/zdalny-dostep',
   COVID: '/covid',
   TWITTER: '#',
-  LINKEDIN: '#',
+  LINKEDIN: 'https://www.linkedin.com/company/wisevision-pl',
   POBIERZ_SPECYFIKACJA: 'static/files/dummy.pdf',
   POBIERZ_DOKUMENTACJA: 'static/files/dummy.pdf',
   POBIERZ_RODO: 'static/files/dummy.pdf',

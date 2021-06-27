@@ -120,6 +120,10 @@ const theme: Theme = {
       px: [3, 4, 5],
       maxWidth: pxToRem(1320),
     },
+    footer: {
+      variant: 'layout.container',
+      maxWidth: [pxToRem(400), pxToRem(560), pxToRem(1320)],
+    },
   },
   styles: {
     root: {

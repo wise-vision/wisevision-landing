@@ -1,11 +1,11 @@
 import { AppLink } from 'components/AppLink';
+import { MENU_ID } from 'components/Menu';
 import { ROUTES } from 'routes';
 import { pxToRem } from 'theme';
 import { Box, Button, Container, Flex, Grid, Heading, Image, ThemeUIStyleObject } from 'theme-ui';
 import { WithChildren } from 'types';
 
 const SCROLL_TARGET = 'scrollTarget';
-export const MENU_ID = 'menu';
 
 function HeroSection() {
   function scrollTo() {
@@ -61,17 +61,31 @@ function SectionWrapper({
     <Flex
       id={id}
       sx={{
-        py: 5,
-        height: pxToRem(450),
+        py: [0, 5],
+        minHeight: ['auto', pxToRem(450)],
         alignItems: 'center',
-        background: `url(/static/home/section_${sectionImage}.jpg)`,
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center center',
+        position: 'relative',
+        flexDirection: ['column', 'row'],
       }}
     >
-      <Container>
-        <Grid columns={2} gap={pxToRem(80)}>
+      <Box
+        sx={{
+          background: `url(/static/home/section_${sectionImage}.jpg)`,
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center center',
+          position: ['relative', 'absolute'],
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: -1,
+          width: '100%',
+          minHeight: pxToRem(170),
+        }}
+      />
+      <Container sx={{ pb: [pxToRem(48), 0], pt: [3, 0] }}>
+        <Grid columns={[1, 2]} gap={[0, pxToRem(80)]}>
           {children}
         </Grid>
       </Container>
@@ -208,7 +222,9 @@ function UsageSection() {
     <>
       <Box sx={{ bg: 'primary', py: [4, pxToRem(90)] }}>
         <Container>
-          <Heading sx={{ color: 'textAlt', textAlign: 'center' }}>
+          <Heading
+            sx={{ color: 'textAlt', textAlign: 'center', maxWidth: ['8em', '100%'], mx: 'auto' }}
+          >
             Główne obszary zastosowania WiseVision
           </Heading>
         </Container>

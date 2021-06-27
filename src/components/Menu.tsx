@@ -1,9 +1,10 @@
-import { MENU_ID } from 'pages';
 import { useState } from 'react';
 import { ROUTES } from 'routes';
 import { pxToRem } from 'theme';
 import { Box, Container, Flex, Grid, Image, SxProp } from 'theme-ui';
 import { AppLink } from './AppLink';
+
+export const MENU_ID = 'menu';
 
 function Line({ sx }: SxProp) {
   return (
@@ -94,8 +95,8 @@ export function Menu() {
             <AppLink onClick={close} sx={{ variant: 'links.nav' }} href={ROUTES.BLOG}>
               Blog
             </AppLink>
-            <AppLink onClick={close} sx={{ variant: 'links.nav' }} href={ROUTES.DOKUMENTACJA}>
-              Dokumentacja
+            <AppLink onClick={close} sx={{ variant: 'links.nav' }} href={ROUTES.DO_POBRANIA}>
+              Do pobrania
             </AppLink>
             <AppLink onClick={close} sx={{ variant: 'links.nav' }} href={ROUTES.CENNIK}>
               Cennik
