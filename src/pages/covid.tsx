@@ -1,3 +1,4 @@
+import { PageSEOTags } from 'components/HeadTags';
 import {
   PageBanner,
   PageDescriptionItems,
@@ -44,3 +45,5 @@ export default function Covid() {
     </>
   );
 }
+
+Covid.seoTags = <PageSEOTags title="WiseVision | Covid" />;

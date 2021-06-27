@@ -1,4 +1,5 @@
 import { AppLink } from 'components/AppLink';
+import { PageSEOTags } from 'components/HeadTags';
 import { PageBanner } from 'components/PageWithInfographic';
 import { ReactNode } from 'react';
 import { ROUTES } from 'routes';
@@ -70,3 +71,5 @@ export default function DoPobrania() {
     </Box>
   );
 }
+
+DoPobrania.seoTags = <PageSEOTags title="WiseVision | Do pobrania" />;

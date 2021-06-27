@@ -1,3 +1,4 @@
+import { PageSEOTags } from 'components/HeadTags';
 import {
   PageBanner,
   PageDescriptionItems,
@@ -54,3 +55,5 @@ export default function WideoNaZywo() {
     </>
   );
 }
+
+WideoNaZywo.seoTags = <PageSEOTags title="WiseVision | Wideo na żywo" />;

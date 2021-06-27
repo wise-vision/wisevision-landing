@@ -1,3 +1,4 @@
+import { PageSEOTags } from 'components/HeadTags';
 import { PageBanner } from 'components/PageWithInfographic';
 import { FormEvent, useState } from 'react';
 import { pxToRem } from 'theme';
@@ -71,3 +72,5 @@ export default function Cennik() {
     </Box>
   );
 }
+
+Cennik.seoTags = <PageSEOTags title="WiseVision | Cennik" />;

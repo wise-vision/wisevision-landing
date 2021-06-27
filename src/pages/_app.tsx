@@ -5,6 +5,7 @@ import theme from 'theme';
 import { ThemeProvider } from 'theme-ui';
 import Head from 'next/head';
 import { Layout } from 'components/Layout';
+import { PageSEOTags } from 'components/HeadTags';
 
 const globalStyles = `
   html,
@@ -30,9 +31,19 @@ const globalStyles = `
   }
 `;
 
-function App({ Component, pageProps }: AppProps) {
+// extending Component with static properties that can be attached to it
+interface CustomAppProps {
+  Component: {
+    seoTags?: JSX.Element;
+  };
+}
+
+function App({ Component, pageProps }: AppProps & CustomAppProps) {
+  const seoTags = Component.seoTags || <PageSEOTags title="WiseVision" />;
+
   return (
     <ThemeProvider {...{ theme }}>
+      {seoTags}
       <Head>
         <link
           href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;600;700&display=swap"

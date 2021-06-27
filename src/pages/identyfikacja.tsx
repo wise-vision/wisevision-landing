@@ -1,3 +1,4 @@
+import { PageSEOTags } from 'components/HeadTags';
 import {
   PageBanner,
   PageDescriptionItems,
@@ -58,3 +59,5 @@ export default function Identyfikacja() {
     </>
   );
 }
+
+Identyfikacja.seoTags = <PageSEOTags title="WiseVision | Identyfikacja" />;

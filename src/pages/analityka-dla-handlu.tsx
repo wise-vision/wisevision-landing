@@ -1,3 +1,4 @@
+import { PageSEOTags } from 'components/HeadTags';
 import {
   PageBanner,
   PageDescriptionItems,
@@ -60,3 +61,5 @@ export default function AnalitykaDlaHandlu() {
     </>
   );
 }
+
+AnalitykaDlaHandlu.seoTags = <PageSEOTags title="WiseVision | Analityka dla handlu" />;

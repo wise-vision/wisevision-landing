@@ -1,3 +1,4 @@
+import { PageSEOTags } from 'components/HeadTags';
 import {
   PageBanner,
   PageDescriptionItems,
@@ -50,3 +51,5 @@ export default function ZdalnyDostep() {
     </>
   );
 }
+
+ZdalnyDostep.seoTags = <PageSEOTags title="WiseVision | Zdalny dostęp" />;
