@@ -37,7 +37,7 @@ function HeroSection() {
         autoPlay
         muted
         loop
-        playsinline
+        playsInline
         disablePictureInPicture
         id="myVideo"
         poster="static/home/hero.jpg"
