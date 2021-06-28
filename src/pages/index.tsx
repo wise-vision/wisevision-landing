@@ -29,12 +29,30 @@ function HeroSection() {
         minHeight: [`calc(100vh - ${pxToRem(59)})`, `calc(100vh - ${pxToRem(70)})`],
         alignItems: 'center',
         position: 'relative',
-        background: 'url(static/home/hero.jpg)',
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center center',
       }}
     >
+      <Box
+        as="video"
+        // @ts-ignore
+        autoPlay
+        muted
+        loop
+        id="myVideo"
+        poster="static/home/hero.jpg"
+        sx={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          zIndex: -1,
+        }}
+      >
+        <source src="static/home/hero_video.mp4" type="video/mp4" />
+      </Box>
       <Container>
         <Heading variant="largeHeading" sx={{ maxWidth: '7em', mt: -5, mx: 'auto' }}>
           Nowoczesne oprogramowanie do monitoringu
@@ -73,12 +91,9 @@ function SectionWrapper({
         flexDirection: ['column', 'row'],
       }}
     >
-      <Box
+      <Image
+        src={`static/home/section_${sectionImage}.jpg`}
         sx={{
-          background: `url(/static/home/section_${sectionImage}.jpg)`,
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center center',
           position: ['relative', 'absolute'],
           top: 0,
           left: 0,
@@ -86,7 +101,9 @@ function SectionWrapper({
           bottom: 0,
           zIndex: -1,
           width: '100%',
+          height: '100%',
           minHeight: pxToRem(170),
+          objectFit: 'cover',
         }}
       />
       <Container sx={{ pb: [pxToRem(48), 0], pt: [3, 0] }}>

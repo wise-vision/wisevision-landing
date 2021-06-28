@@ -72,6 +72,10 @@ const theme: Theme = {
         bg: 'background',
         borderColor: 'primary',
       },
+      '&:disabled': {
+        opacity: 0.5,
+        pointerEvents: 'none',
+      },
     },
     outline: {
       variant: 'buttons.primary',
@@ -130,6 +134,11 @@ const theme: Theme = {
       fontFamily: 'body',
       fontSize: 3,
       fontWeight: 'body',
+    },
+    spinner: {
+      color: 'textAlt',
+      size: 4,
+      strokeWidth: 2,
     },
   },
 };

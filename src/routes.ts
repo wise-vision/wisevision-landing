@@ -3,6 +3,7 @@ export const ROUTES = {
   BLOG: '#',
   DO_POBRANIA: '/do-pobrania',
   CENNIK: '/cennik',
+  DOKUMENTACJA: '#',
   O_NAS: '#',
   NOTY_PRAWNE: '#',
   RODO: '#',

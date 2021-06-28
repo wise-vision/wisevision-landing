@@ -3,7 +3,6 @@ import { AppProps } from 'next/app';
 import React from 'react';
 import theme from 'theme';
 import { ThemeProvider } from 'theme-ui';
-import Head from 'next/head';
 import { Layout } from 'components/Layout';
 import { PageSEOTags } from 'components/HeadTags';
 
@@ -44,12 +43,6 @@ function App({ Component, pageProps }: AppProps & CustomAppProps) {
   return (
     <ThemeProvider {...{ theme }}>
       {seoTags}
-      <Head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;600;700&display=swap"
-          rel="stylesheet"
-        />
-      </Head>
       <Global styles={globalStyles} />
       <Layout>
         <Component {...pageProps} />

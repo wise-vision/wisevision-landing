@@ -1,6 +1,7 @@
+/* eslint-disable react/no-danger */
 import Head from 'next/head';
 
-export function GooglaAnalytics() {
+function GoogleAnalytics() {
   return (
     <>
       <script
@@ -11,12 +12,45 @@ export function GooglaAnalytics() {
         defer
         dangerouslySetInnerHTML={{
           __html: `window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-            
-              gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}');`,
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+          
+            gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}');`,
         }}
       />
+    </>
+  );
+}
+
+export function LiveChat() {
+  return (
+    <script
+      defer
+      dangerouslySetInnerHTML={{
+        __html: `var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+          (function(){
+          var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+          s1.async=true;
+          s1.src='${process.env.NEXT_PUBLIC_LIVE_CHAT}';
+          s1.charset='UTF-8';
+          s1.setAttribute('crossorigin','*');
+          s0.parentNode.insertBefore(s1,s0);
+          })();`,
+      }}
+    />
+  );
+}
+
+export function BaseHeadTags() {
+  return (
+    <>
+      <link rel="shortcut icon" href="/static/favicon.png" />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;600;700&display=swap"
+        rel="stylesheet"
+      />
+      <GoogleAnalytics />
+      <LiveChat />
     </>
   );
 }

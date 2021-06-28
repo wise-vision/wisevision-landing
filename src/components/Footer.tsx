@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import { useState } from 'react';
 import { ROUTES } from 'routes';
 import { pxToRem } from 'theme';
 import {
@@ -65,7 +65,7 @@ export function Footer() {
       <Box sx={{ bg: 'backgroundAlt', py: 4, color: 'textMuted' }}>
         <Container variant="footer" pb={2}>
           <Box mb={4}>
-            <Image src="/static/logo.png" />
+            <Image src="/static/logo.png" sx={{ maxWidth: [pxToRem(140), '100%'] }} />
           </Box>
           <Grid columns={[1, 2, 3]} gap={4}>
             <Grid gap={4}>

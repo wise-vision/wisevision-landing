@@ -1,4 +1,4 @@
-import { GooglaAnalytics } from 'components/HeadTags';
+import { BaseHeadTags } from 'components/HeadTags';
 import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document';
 import React from 'react';
 
@@ -14,7 +14,7 @@ export default class MyDocument extends Document<Document> {
     return (
       <Html lang="pl">
         <Head>
-          <GooglaAnalytics />
+          <BaseHeadTags />
         </Head>
         <body>
           <Main />
