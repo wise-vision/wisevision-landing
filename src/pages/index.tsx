@@ -37,6 +37,8 @@ function HeroSection() {
         autoPlay
         muted
         loop
+        playsInline
+        disablePictureInPicture
         id="myVideo"
         poster="static/home/hero.jpg"
         sx={{
