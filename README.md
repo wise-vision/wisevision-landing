@@ -69,12 +69,11 @@ zagadnienia
 - [sx prop](https://theme-ui.com/getting-started#sx-prop):
 
 ```
-  // creates div with specified styles
   <Box
     sx={{
       fontWeight: 'bold',
-      fontSize: 4, // picks up value from `theme.fontSizes[4]`
-      color: 'primary', // picks up value from `theme.colors.primary`
+      fontSize: 4, // pobiera wartość z `theme.fontSizes[4]`
+      color: 'primary', // pobiera wartość z `theme.colors.primary`
     }}>
     Hello
   </Box>
@@ -83,14 +82,15 @@ zagadnienia
   <Button sx={{ fontSize: 7 }} />
 ```
 
-- [style responsywne](https://theme-ui.com/getting-started#responsive-styles)
+- [style responsywne](https://theme-ui.com/getting-started#responsive-styles) w aplikacji, używane
+  jest podejście mobile-first.
 
 ```
 <Box
    sx={{
-     // applies width 100% to all viewport widths,
-     // null omits breakpoint,
-     // and 25% above the next breakpoint
+     // dodaje width 100% do wszystkich szerokości ekranu,
+     // null omija breakpoint,
+     // width 25% powyżej kolejnego breakpointu
      width: ['100%', null, '25%'],
    }}
  />
