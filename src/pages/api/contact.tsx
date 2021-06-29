@@ -12,6 +12,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         user: process.env.SMTP_USERNAME_SECRET,
         pass: process.env.SMTP_PASSWORD_SECRET,
       },
+      tls: { rejectUnauthorized: false },
     });
 
     const { email, firm, name, message } = req.body as ContactRequestBody;
@@ -39,6 +40,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     return res.status(200).send({ message: 'Success' });
   } catch (err) {
+    console.error(err);
     return res.status(500).send({ message: 'Something went wrong while sending email' });
   }
 };
