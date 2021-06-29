@@ -1506,6 +1506,11 @@ damerau-levenshtein@^1.0.6:
   resolved "https://registry.yarnpkg.com/damerau-levenshtein/-/damerau-levenshtein-1.0.6.tgz#143c1641cb3d85c60c32329e26899adea8701791"
   integrity sha512-JVrozIeElnj3QzfUIt8tB8YMluBJom4Vw9qTPpjGYQ9fYlB3D/rb6OordUxf3xeFB35LKWs0xqcO5U6ySvBtug==
 
+darkreader@^4.9.33:
+  version "4.9.33"
+  resolved "https://registry.yarnpkg.com/darkreader/-/darkreader-4.9.33.tgz#be050b6da401645695c2fb0fe99409e6a20351fa"
+  integrity sha512-L5YrNvp0phK50Efm8l1N/0n4jAaFhnbQXlGuMVqE9tCOFPuvu3ky5zVELanpz6J12BzOhN8rRhf0ntLCxdFrKA==
+
 data-uri-to-buffer@3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/data-uri-to-buffer/-/data-uri-to-buffer-3.0.1.tgz#594b8973938c5bc2c33046535785341abc4f3636"

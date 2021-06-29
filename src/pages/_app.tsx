@@ -1,10 +1,13 @@
 import { Global } from '@emotion/react';
 import { AppProps } from 'next/app';
+import dynamic from 'next/dynamic';
 import React from 'react';
 import theme from 'theme';
 import { ThemeProvider } from 'theme-ui';
 import { Layout } from 'components/Layout';
 import { PageSEOTags } from 'components/HeadTags';
+
+const DarkReaderDisable = dynamic(() => import('components/DarkReaderDisable'), { ssr: false });
 
 const globalStyles = `
   html,
@@ -43,6 +46,7 @@ function App({ Component, pageProps }: AppProps & CustomAppProps) {
   return (
     <ThemeProvider {...{ theme }}>
       {seoTags}
+      <DarkReaderDisable />
       <Global styles={globalStyles} />
       <Layout>
         <Component {...pageProps} />

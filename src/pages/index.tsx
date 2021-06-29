@@ -50,12 +50,11 @@ function HeroSection() {
           width: '100%',
           height: '100%',
           objectFit: 'cover',
-          zIndex: -1,
         }}
       >
         <source src="static/home/hero_video.mp4" type="video/mp4" />
       </Box>
-      <Container>
+      <Container sx={{ position: 'relative', zIndex: 1 }}>
         <Heading variant="largeHeading" sx={{ maxWidth: '7em', mt: -5, mx: 'auto' }}>
           Nowoczesne oprogramowanie do monitoringu
         </Heading>
