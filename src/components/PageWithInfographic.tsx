@@ -1,9 +1,17 @@
 import { ReactNode } from 'react';
 import { pxToRem } from 'theme';
-import { Box, Container, Flex, Grid, Heading, Image, SxProp } from 'theme-ui';
+import { Box, Container, Flex, Grid, Heading, Image, SxProp, ThemeUIStyleObject } from 'theme-ui';
 import { WithChildren } from 'types';
 
-export function PageBanner({ image, title }: { image: string; title: string }) {
+export function PageBanner({
+  image,
+  title,
+  styles,
+}: {
+  image: string;
+  title: string;
+  styles?: { background?: ThemeUIStyleObject };
+}) {
   return (
     <Flex
       sx={{
@@ -14,6 +22,7 @@ export function PageBanner({ image, title }: { image: string; title: string }) {
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         backgroundPosition: 'center center',
+        ...styles?.background,
       }}
     >
       <Container>

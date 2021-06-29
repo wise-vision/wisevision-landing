@@ -89,7 +89,7 @@ export function ContactForm() {
             />
           </Grid>
           <Textarea
-            placeholder="Treść wiadomości*"
+            placeholder="Opisz nam swój problem*"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             sx={{ resize: 'none', height: '10em' }}

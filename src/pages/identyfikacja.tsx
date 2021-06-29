@@ -41,7 +41,15 @@ const DESCRIPTION_ITEMS_2 = [
 export default function Identyfikacja() {
   return (
     <>
-      <PageBanner image="identyfikacja" title="Identyfikacja zdarzeń, obiektów i osób" />
+      <PageBanner
+        image="identyfikacja"
+        title="Identyfikacja zdarzeń, obiektów i osób"
+        styles={{
+          background: {
+            backgroundPosition: ['center right -135px', null, 'center right'],
+          },
+        }}
+      />
       <PageHeadingSection
         title="Na terenie biurowca, centrum handlowego, hotelu, magazynu, placu budowy lub dowolnego
             innego obiektu przyda się inteligentny monitoring, który zidentyfikuje zagrożenia.
