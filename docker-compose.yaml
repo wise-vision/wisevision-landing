@@ -1,0 +1,13 @@
+version: "3.6"
+services:
+  dev:
+    build: .
+    volumes:
+      - type: bind
+        source: ./
+        target: /app
+    ports:
+      - target: 3000
+        published: 3000
+        protocol: tcp
+        mode: host
