@@ -72,11 +72,11 @@ export function Footer() {
               <Box>
                 <Box sx={footerLabel}>Adres</Box>
                 <Box sx={{ lineHeight: 'loose' }}>
-                  WiseVision Sp. z o.o.
+                  Inter Plus Sp. z o.o.
                   <br />
-                  Myśliborska 45/2A
+                  ul. Świętokrzyska 30/63
                   <br />
-                  54-678 Warszawa
+                  00-116 Warszawa
                   <br />
                   Polska
                 </Box>
@@ -84,8 +84,8 @@ export function Footer() {
               <Box>
                 <Box sx={footerLabel}>Kontakt</Box>
                 <Grid gap={1}>
-                  <AppLink href="mailto:info@wisevision.com">info@wisevision.com</AppLink>
-                  <AppLink href="support:info@wisevision.com">support@wisevision.com</AppLink>
+                  <AppLink href="mailto:support@wisevision.com.pl">support@wisevision.com.pl</AppLink>
+                  <AppLink href="support:support@wisevision.com.pl">support@wisevision.com.pl</AppLink>
                 </Grid>
               </Box>
             </Grid>
