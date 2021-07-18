@@ -85,7 +85,7 @@ export function Footer() {
                 <Box sx={footerLabel}>Kontakt</Box>
                 <Grid gap={1}>
                   <AppLink href="mailto:support@wisevision.com.pl">support@wisevision.com.pl</AppLink>
-                  <AppLink href="support:support@wisevision.com.pl">support@wisevision.com.pl</AppLink>
+                  <AppLink href="mailto:adam.krawczyk@wisevision.com.pl">adam.krawczyk@wisevision.com.pl</AppLink>
                 </Grid>
               </Box>
             </Grid>
