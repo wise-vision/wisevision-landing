@@ -56,7 +56,7 @@ function HeroSection() {
       </Box>
       <Container sx={{ position: 'relative', zIndex: 1 }}>
         <Heading variant="largeHeading" sx={{ maxWidth: '7em', mt: -5, mx: 'auto' }}>
-          Nowoczesne oprogramowanie do monitoringu
+          Nowoczesne rozwiązania w monitoringu
         </Heading>
       </Container>
       <Box
