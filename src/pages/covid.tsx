@@ -31,7 +31,18 @@ const DESCRIPTION_ITEMS_2 = [
 export default function Covid() {
   return (
     <>
-      <PageBanner image="covid" title="#STOP COVID19" />
+      <PageBanner
+        image="covid"
+        title="#STOP COVID19"
+        styles={{
+          background: {
+            backgroundPosition: 'right center',
+            '@media screen and (max-width: 480px)': {
+              backgroundPosition: 'right -70px center',
+            },
+          },
+        }}
+      />
       <PageHeadingSection title="Mamy czasy pandemii, co wymaga dodatkowego zaangażowania ze strony Twoich pracowników. Czy wiesz, że sztuczna inteligencja może ich odciążyć? Zobacz, co potrafi oprogramowanie od WiseVision!" />
       <PageInfographicSectionWrapper>
         <PageDescriptionItems items={DESCRIPTION_ITEMS_1} />

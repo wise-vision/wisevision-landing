@@ -28,7 +28,18 @@ const DESCRIPTION_ITEMS_1 = [
 export default function ZarzadzanieWideo() {
   return (
     <>
-      <PageBanner image="zarzadzanie_wideo" title="Zarządzanie zasobami wideo" />
+      <PageBanner
+        image="zarzadzanie_wideo"
+        title="Zarządzanie zasobami wideo"
+        styles={{
+          background: {
+            backgroundPosition: 'right center',
+            '@media screen and (max-width: 480px)': {
+              backgroundPosition: 'right -70px center',
+            },
+          },
+        }}
+      />
       <PageHeadingSection title="Dowiedz się, co możesz zrobić z zarejestrowanymi przez kamery obrazami, gdy wybierzesz inteligentne oprogramowanie do monitoringu." />
       <PageInfographicSectionWrapper sx={{ pt: 0 }}>
         <PageInfographic image="zarzadzanie_wideo" />
