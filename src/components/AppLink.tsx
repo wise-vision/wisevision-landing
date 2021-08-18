@@ -13,7 +13,7 @@ interface AppLinkProps extends SxProp {
 }
 
 export function AppLink({ href, as, children, sx, ...rest }: AppLinkProps) {
-  const isInternalLink = href.startsWith('/') || href.startsWith('#');
+  const isInternalLink = href.startsWith('/') || href.startsWith('#') || href.startsWith('https://wisevision.tech');
 
   return isInternalLink ? (
     <Link {...{ href, as }} passHref>

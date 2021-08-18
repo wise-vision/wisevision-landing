@@ -101,7 +101,7 @@ export function Menu() {
             <AppLink onClick={close} sx={{ variant: 'links.nav' }} href={ROUTES.CENNIK}>
               Cennik
             </AppLink>
-            <AppLink onClick={close} sx={{ variant: 'links.nav' }} href={ROUTES.CENNIK}>
+            <AppLink onClick={close} sx={{ variant: 'links.nav' }} href={ROUTES.DOKUMENTACJA}>
               Dokumentacja
             </AppLink>
           </Box>
