@@ -80,7 +80,14 @@ function SectionWrapper({
   id,
   sectionImage,
   children,
-}: { id?: string; sectionImage: string } & WithChildren) {
+  styles,
+}: {
+  id?: string;
+  sectionImage: string;
+  styles?: {
+    image: ThemeUIStyleObject;
+  };
+} & WithChildren) {
   return (
     <Flex
       id={id}
@@ -105,6 +112,7 @@ function SectionWrapper({
           height: '100%',
           minHeight: pxToRem(170),
           objectFit: 'cover',
+          ...styles?.image,
         }}
       />
       <Container sx={{ pb: [pxToRem(48), 0], pt: [3, 0] }}>
@@ -137,7 +145,15 @@ function SectionContent({
 
 function RecognizeSection() {
   return (
-    <SectionWrapper id={SCROLL_TARGET} sectionImage="recognize">
+    <SectionWrapper
+      id={SCROLL_TARGET}
+      sectionImage="recognize"
+      styles={{
+        image: {
+          objectPosition: ['left', 'center'],
+        },
+      }}
+    >
       <Box />
       <SectionContent
         title="Rozpoznaje ludzi i obiekty"
@@ -150,7 +166,14 @@ function RecognizeSection() {
 
 function StudySection() {
   return (
-    <SectionWrapper sectionImage="study">
+    <SectionWrapper
+      sectionImage="study"
+      styles={{
+        image: {
+          objectPosition: ['right', 'center'],
+        },
+      }}
+    >
       <SectionContent
         title="Bada natężenie ruchu"
         description="Bada ruch w określonych godzinach i miejscu, np. jak często dana osoba lub pojazd porusza
@@ -163,7 +186,17 @@ function StudySection() {
 
 function AlarmSection() {
   return (
-    <SectionWrapper sectionImage="alarm">
+    <SectionWrapper
+      sectionImage="alarm"
+      styles={{
+        image: {
+          objectPosition: ['left', 'center'],
+          '@media screen and (max-width: 480px)': {
+            objectPosition: '-30px',
+          },
+        },
+      }}
+    >
       <Box />
       <SectionContent
         title="Alarmuje na kilka sposobów"
@@ -175,7 +208,14 @@ function AlarmSection() {
 
 function LocalizeSection() {
   return (
-    <SectionWrapper sectionImage="localize">
+    <SectionWrapper
+      sectionImage="localize"
+      styles={{
+        image: {
+          objectPosition: ['right', 'center'],
+        },
+      }}
+    >
       <SectionContent
         title="Ułatwia zlokalizowanie kamer"
         description="Mapa 3D pozwala zlokalizować umieszczenie każdej z kamer. Umożliwia to rozpoznanie położenia danego obiektu lub osoby i kierunku, w którym zmierza."
@@ -192,7 +232,17 @@ function LocalizeSection() {
 
 function WatchSection() {
   return (
-    <SectionWrapper sectionImage="watch">
+    <SectionWrapper
+      sectionImage="watch"
+      styles={{
+        image: {
+          objectPosition: ['left', 'center'],
+          '@media screen and (max-width: 480px)': {
+            objectPosition: '-35px',
+          },
+        },
+      }}
+    >
       <Box />
       <SectionContent
         title="Usprawnia oglądanie zapisu"

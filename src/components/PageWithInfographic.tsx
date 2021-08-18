@@ -16,7 +16,7 @@ export function PageBanner({
     <Flex
       sx={{
         py: 5,
-        minHeight: [pxToRem(375), pxToRem(450)],
+        minHeight: [pxToRem(225), pxToRem(450)],
         alignItems: 'center',
         background: `url(/static/banners/${image}.jpg)`,
         backgroundRepeat: 'no-repeat',

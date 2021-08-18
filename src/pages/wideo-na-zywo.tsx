@@ -41,7 +41,18 @@ const DESCRIPTION_ITEMS_2 = [
 export default function WideoNaZywo() {
   return (
     <>
-      <PageBanner image="wideo_na_zywo" title="Wideo na żywo" />
+      <PageBanner
+        image="wideo_na_zywo"
+        title="Wideo na żywo"
+        styles={{
+          background: {
+            backgroundPosition: 'right center',
+            '@media screen and (max-width: 480px)': {
+              backgroundPosition: 'right -160px center',
+            },
+          },
+        }}
+      />
       <PageHeadingSection title="W prosty sposób można ułatwić operatorom śledzenie obiektów, a to dzięki wyjątkowym funkcjom naszego inteligentnego monitoringu. Zobacz, co dokładnie potrafi!" />
       <PageInfographicSectionWrapper>
         <PageDescriptionItems items={DESCRIPTION_ITEMS_1} />

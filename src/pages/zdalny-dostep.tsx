@@ -38,7 +38,18 @@ const DESCRIPTION_ITEMS_1 = [
 export default function ZdalnyDostep() {
   return (
     <>
-      <PageBanner image="zdalny_dostep" title="Zdalny dostęp" />
+      <PageBanner
+        image="zdalny_dostep"
+        title="Zdalny dostęp"
+        styles={{
+          background: {
+            backgroundPosition: 'right center',
+            '@media screen and (max-width: 480px)': {
+              backgroundPosition: 'right -130px center',
+            },
+          },
+        }}
+      />
       <PageHeadingSection title="Zyskaj dostęp do obrazu z kamer z dowolnego miejsca, w którym jesteś. Taką możliwość daje nasze inteligentne oprogramowanie. I to nawet jeśli lokalizacje kamer są rozproszone – znajdują się w odległych od siebie miejscach, miastach, a nawet… państwach!" />
       <PageInfographicSectionWrapper sx={{ pt: 0 }}>
         <PageInfographic image="zdalny_dostep" />
