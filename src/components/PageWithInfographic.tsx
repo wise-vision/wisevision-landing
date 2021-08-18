@@ -71,7 +71,14 @@ export function PageDescriptionItems({
 }
 
 export function PageInfographic({ image }: { image: string }) {
-  return <Image src={`/static/infographics/${image}.png`} my={[4, 0]} />;
+  return (
+    <Image
+      src={`/static/infographics/${image}.png`}
+      my={[4, 0]}
+      mx="auto"
+      sx={{ display: 'block' }}
+    />
+  );
 }
 
 export function PageInfographicSectionWrapper({ children, sx }: WithChildren & SxProp) {
