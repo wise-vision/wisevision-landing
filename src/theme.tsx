@@ -29,6 +29,8 @@ const theme: Theme = {
     backgroundMuted: '#E6E7E8',
 
     primary: '#0028AB',
+
+    error: '#DCA1AD',
   },
   // @ts-ignore
   fontWeights: {
@@ -102,8 +104,18 @@ const theme: Theme = {
         color: 'inherit',
       },
     },
+    inputWithError: {
+      variant: 'forms.input',
+      border: '1px solid',
+      borderColor: 'error',
+    },
     textarea: {
       variant: 'forms.input',
+    },
+    textareaWithError: {
+      variant: 'forms.textarea',
+      border: '1px solid',
+      borderColor: 'error',
     },
   },
   links: {

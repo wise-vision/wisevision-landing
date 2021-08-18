@@ -1,6 +1,6 @@
 import { FormEvent, useState } from 'react';
 import { pxToRem } from 'theme';
-import { Box, Button, Container, Grid, Input, Spinner, Textarea } from 'theme-ui';
+import { Box, Button, Container, Grid, Input, Spinner, Text, Textarea } from 'theme-ui';
 
 export interface ContactRequestBody {
   email?: string;
@@ -22,15 +22,41 @@ export function validateContact({ email, firm, name, message }: ContactRequestBo
   return true;
 }
 
+function ErrorMessage({ errorMessage }: { errorMessage?: string }) {
+  return errorMessage ? <Text sx={{ color: 'error' }}>{errorMessage}</Text> : null;
+}
+
+function getInputVariant(errorMessage: string | undefined, prefix?: string | undefined) {
+  return `${prefix || 'input'}${errorMessage ? 'WithError' : ''}`;
+}
+
 export function ContactForm() {
   const [email, setEmail] = useState('');
   const [firm, setFirm] = useState('');
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
+  const [emailError, setEmailError] = useState<string | undefined>(undefined);
+  const [firmError, setFirmError] = useState<string | undefined>(undefined);
+  const [nameError, setNameError] = useState<string | undefined>(undefined);
+  const [messageError, setMessageError] = useState<string | undefined>(undefined);
   const [stage, setStage] = useState<ContactFormStage>('editing');
 
   async function onSubmit(e: FormEvent<HTMLDivElement>) {
     e.preventDefault();
+
+    const canSend = validateContact({ email, firm, name, message }) && stage !== 'inProgress';
+
+    setMessageError(message ? undefined : '* proszę wypełnić');
+    setFirmError(firm ? undefined : '* proszę wypełnić');
+    setNameError(name ? undefined : '* proszę wypełnić');
+    setEmailError(
+      !email ? '* proszę wypełnić' : !EMAIL_REGEX.test(email) ? '* niepoprawny adres' : undefined
+    );
+
+    if (!canSend) {
+      return;
+    }
+
     setStage('inProgress');
 
     const res = await fetch('/api/contact', {
@@ -53,8 +79,6 @@ export function ContactForm() {
     }
   }
 
-  const canSend = validateContact({ email, firm, name, message }) && stage !== 'inProgress';
-
   return (
     <Container
       sx={{
@@ -65,39 +89,63 @@ export function ContactForm() {
       }}
     >
       <Box sx={{ color: 'primary', mb: 4 }}>Prosimy o uzupełnienie wszystkich pól formularza</Box>
-      <Grid as="form" onSubmit={canSend ? onSubmit : undefined} gap={[3, 4]}>
-        <Grid columns={[1, '260px 1fr']} gap={[4, null, 5]}>
+      <Grid as="form" onSubmit={onSubmit} gap={[3, 4]}>
+        <Grid columns={[1, '260px 1fr']} gap={[4, null, 5]} sx={{ alignItems: 'flex-start' }}>
           <Grid gap={pxToRem(20)}>
-            <Input
-              placeholder="Email*"
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <Input
-              placeholder="Firma*"
-              value={firm}
-              required
-              onChange={(e) => setFirm(e.target.value)}
-            />
-            <Input
-              placeholder="Nazwisko*"
-              value={name}
-              required
-              onChange={(e) => setName(e.target.value)}
+            <Grid gap={1}>
+              <ErrorMessage errorMessage={emailError} />
+              <Input
+                placeholder="Email*"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                variant={getInputVariant(emailError)}
+                onBlur={() =>
+                  setEmailError(
+                    !email
+                      ? '* proszę wypełnić'
+                      : !EMAIL_REGEX.test(email)
+                      ? '* niepoprawny adres'
+                      : undefined
+                  )
+                }
+              />
+            </Grid>
+            <Grid gap={1}>
+              <ErrorMessage errorMessage={firmError} />
+              <Input
+                placeholder="Firma*"
+                value={firm}
+                onChange={(e) => setFirm(e.target.value)}
+                variant={getInputVariant(firmError)}
+                onBlur={() => setFirmError(firm ? undefined : '* proszę wypełnić')}
+              />
+            </Grid>
+            <Grid gap={1}>
+              <ErrorMessage errorMessage={nameError} />
+              <Input
+                placeholder="Nazwisko*"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                variant={getInputVariant(nameError)}
+                onBlur={() => setNameError(name ? undefined : '* proszę wypełnić')}
+              />
+            </Grid>
+          </Grid>
+          <Grid gap={1}>
+            <ErrorMessage errorMessage={messageError} />
+            <Textarea
+              placeholder="Opisz nam swój problem*"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              sx={{ resize: 'none', height: '10em' }}
+              variant={getInputVariant(messageError, 'textarea')}
+              onBlur={() => setMessageError(message ? undefined : '* proszę wypełnić')}
             />
           </Grid>
-          <Textarea
-            placeholder="Opisz nam swój problem*"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            sx={{ resize: 'none', height: '10em' }}
-            required
-          />
         </Grid>
         <Button
-          disabled={!canSend}
+          disabled={stage === 'inProgress'}
           sx={{
             lineHeight: '2',
             maxWidth: pxToRem(310),
