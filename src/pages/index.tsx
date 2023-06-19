@@ -55,9 +55,9 @@ function HeroSection() {
         <source src="static/home/hero_video.mp4" type="video/mp4" />
       </Box>
       <Container sx={{ position: 'relative', zIndex: 1 }}>
-        <Heading variant="largeHeading" sx={{ maxWidth: '7em', mt: -5, mx: 'auto' }}>
-          Nowoczesne rozwiązania w monitoringu
-        </Heading>
+      <Heading variant="largeHeading" sx={{ maxWidth: '7em', mx: 'auto', textAlign: 'center' }}>
+      Wisely connected IoT
+      </Heading>
       </Container>
       <Box
         sx={{
