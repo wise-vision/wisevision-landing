@@ -2,7 +2,7 @@ export const ROUTES = {
   HOME: '/',
   BLOG: 'https://wisevision.tech/blog',
   DO_POBRANIA: '/do-pobrania',
-  CENNIK: '/cennik',
+  PRICING: '/pricing',
   DOKUMENTACJA: 'https://wisevision.tech/docs/intro',
   O_NAS: 'https://wisevision.tech/blog/Witajcie',
   NOTY_PRAWNE: '#',
