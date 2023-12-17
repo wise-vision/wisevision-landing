@@ -23,7 +23,7 @@ function DownloadItem({
         {title}
       </Flex>
       <AppLink href={href}>
-        <Button sx={{ width: '100%' }}>Pobierz</Button>
+        <Button sx={{ width: '100%' }}>Download</Button>
       </AppLink>
     </Grid>
   );
@@ -40,10 +40,10 @@ function DownloadItemsContainer({ children, title }: { title: string } & WithChi
   );
 }
 
-export default function DoPobrania() {
+export default function Downloads() {
   return (
     <Box>
-      <PageBanner image="do_pobrania" title="Do pobrania" />
+      <PageBanner image="downloads" title="Downloads" />
       <Container pt={[5, 6]} pb={[6, 7]}>
         <Grid columns={[1, 2]} gap={5}>
           <DownloadItemsContainer title="WHITEPAPER">
@@ -58,13 +58,13 @@ export default function DoPobrania() {
             />
             <DownloadItem
               iconColor="primary"
-              href={ROUTES.POBIERZ_DOKUMENTACJA}
-              title="Dokumentacja"
+              href={ROUTES.DOWNLOAD_DOCUMENTATION}
+              title="Documentation"
             />
           </DownloadItemsContainer>
-          <DownloadItemsContainer title="NOTY PRAWNE & RODO">
-            <DownloadItem iconColor="muted" href={ROUTES.POBIERZ_RODO} title="RODO" />
-            <DownloadItem iconColor="muted" href={ROUTES.POBIERZ_NOTY} title="Noty prawne" />
+          <DownloadItemsContainer title="NOTES & RODO">
+            <DownloadItem iconColor="muted" href={ROUTES.DOWNLOAD_RODO} title="RODO" />
+            <DownloadItem iconColor="muted" href={ROUTES.DOWNLOAD_NOTES} title="NOTES" />
           </DownloadItemsContainer>
         </Grid>
       </Container>
@@ -72,4 +72,4 @@ export default function DoPobrania() {
   );
 }
 
-DoPobrania.seoTags = <PageSEOTags title="WiseVision | Do pobrania" />;
+Downloads.seoTags = <PageSEOTags title="WiseVision | Downloads " />;

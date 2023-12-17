@@ -1,7 +1,7 @@
 export const ROUTES = {
   HOME: '/',
   BLOG: 'https://wisevision.tech/blog',
-  DO_POBRANIA: '/do-pobrania',
+  DOWNLOADS: '/downloads',
   PRICING: '/pricing',
   DOKUMENTACJA: 'https://wisevision.tech/docs/intro',
   O_NAS: 'https://wisevision.tech/blog/Witajcie',
@@ -16,7 +16,7 @@ export const ROUTES = {
   TWITTER: '#',
   LINKEDIN: 'https://www.linkedin.com/company/wisevision-pl',
   POBIERZ_SPECYFIKACJA: 'static/files/dummy.pdf',
-  POBIERZ_DOKUMENTACJA: 'static/files/dummy.pdf',
-  POBIERZ_RODO: 'static/files/dummy.pdf',
-  POBIERZ_NOTY: 'static/files/dummy.pdf',
+  DOWNLOAD_DOCUMENTATION: 'static/files/dummy.pdf',
+  DOWNLOAD_RODO: 'static/files/dummy.pdf',
+  DOWNLOAD_NOTES: 'static/files/dummy.pdf',
 };

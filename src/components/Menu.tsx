@@ -95,8 +95,8 @@ export function Menu() {
             <AppLink onClick={close} sx={{ variant: 'links.nav' }} href={ROUTES.BLOG}>
               Blog
             </AppLink>
-            <AppLink onClick={close} sx={{ variant: 'links.nav' }} href={ROUTES.DO_POBRANIA}>
-              Do pobrania
+            <AppLink onClick={close} sx={{ variant: 'links.nav' }} href={ROUTES.DOWNLOADS}>
+              Downloads
             </AppLink>
             <AppLink onClick={close} sx={{ variant: 'links.nav' }} href={ROUTES.PRICING}>
               Pricing
