@@ -277,17 +277,17 @@ function NotificationSection() {
 const USAGE_ITEMS = [
   {
     icon: 'identyfikacja',
-    label: 'Identyfikacja obiektów i osób',
+    label: 'Accelerated Production',
     href: ROUTES.IDENTYFIKACJA,
   },
   {
     icon: 'analityka_handlu',
-    label: 'Analityka dla handlu',
+    label: 'Supply Chain Management',
     href: ROUTES.ANALITYKA_DLA_HANDLU,
   },
   {
     icon: 'wideo_na_zywo',
-    label: 'Wideo na żywo',
+    label: 'Optimization with Digital Twins',
     href: ROUTES.WIDEO_NA_ZYWO,
   },
   {
@@ -297,12 +297,12 @@ const USAGE_ITEMS = [
   },
   {
     icon: 'zdalny_dostep',
-    label: 'Zdalny dostęp',
+    label: 'Remote Access',
     href: ROUTES.ZDALNY_DOSTEP,
   },
   {
     icon: 'covid',
-    label: '#STOP COVID19',
+    label: 'Anomaly Detection',
     href: ROUTES.COVID,
   },
 ];
@@ -342,7 +342,7 @@ function UsageSection() {
                   {label}
                 </Heading>
                 <AppLink href={href}>
-                  <Button variant="outline">Sprawdź</Button>
+                  <Button variant="outline">Check</Button>
                 </AppLink>
               </Box>
             ))}
