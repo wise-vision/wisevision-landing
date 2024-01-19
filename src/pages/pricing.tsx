@@ -4,10 +4,10 @@ import { PageBanner } from 'components/PageWithInfographic';
 import { pxToRem } from 'theme';
 import { Box, Container, Flex, Heading } from 'theme-ui';
 
-export default function Cennik() {
+export default function Pricing() {
   return (
     <Box>
-      <PageBanner image="cennik" title="Cennik" />
+      <PageBanner image="pricing" title="Pricing" />
       <Flex
         sx={{
           bg: 'primary',
@@ -18,16 +18,16 @@ export default function Cennik() {
       >
         <Container>
           <Heading sx={{ textAlign: 'center', color: 'textAlt' }}>
-            Zapraszamy do kontaktu w celu dobrania odpowiedniej dla Was oferty.
+          Find Your Perfect Plan: Contact Us for Customized Pricing Solutions.
           </Heading>
         </Container>
       </Flex>
       <Box pt={5} pb={6}>
         <ContactForm />
-        {/* TO DO, MAKE CENNIK TABLE */}
+        {/* TO DO, MAKE PRICING TABLE */}
       </Box>
     </Box>
   );
 }
 
-Cennik.seoTags = <PageSEOTags title="WiseVision | Cennik" />;
+Pricing.seoTags = <PageSEOTags title="WiseVision | Pricing" />;

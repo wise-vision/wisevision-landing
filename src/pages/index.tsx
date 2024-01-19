@@ -143,10 +143,29 @@ function SectionContent({
   );
 }
 
-function RecognizeSection() {
+function SystemSection() {
   return (
     <SectionWrapper
       id={SCROLL_TARGET}
+      sectionImage="system"
+      styles={{
+        image: {
+          objectPosition: ['left', 'center'],
+        },
+      }}
+    >
+      <Box />
+      <SectionContent
+        title="ROS 2 and LoRaWAN"
+        description="Combining ROS2's advanced robotics software with LoRaWAN's long-range network, this technology brings smarter, more efficient connectivity to everyday life. Ideal for smart homes, agriculture, and city management, it offers reliable communication over large areas, using less power. It's a game-changer for making advanced technology accessible and practical for everyone."
+      />
+    </SectionWrapper>
+  );
+}
+
+function DetectionSection() {
+  return (
+    <SectionWrapper
       sectionImage="recognize"
       styles={{
         image: {
@@ -156,9 +175,8 @@ function RecognizeSection() {
     >
       <Box />
       <SectionContent
-        title="Rozpoznaje ludzi i obiekty"
-        description="Rozpoznaje twarze, a wraz z nimi szacuje wiek i płeć. Analizuje ludzkie zachowania, np.
-          dostrzega postawę ciała napastnika. Bez trudu identyfikuje obiekty, tablice rejestracyjne."
+        title="Smart Detection and Analysis"
+        description="Swiftly pinpoints outliers, analyzing data anomalies. Identifies unusual patterns, aiding in error detection and insights. Streamlines complex data analysis, enhancing accuracy and efficiency."
       />
     </SectionWrapper>
   );
@@ -175,16 +193,66 @@ function StudySection() {
       }}
     >
       <SectionContent
-        title="Bada natężenie ruchu"
-        description="Bada ruch w określonych godzinach i miejscu, np. jak często dana osoba lub pojazd porusza
-        się po określonym obszarze i jak dużo czasu tam spędza."
+        title="Precision in Numbers"
+        description="Accurately measures key statistics, providing comprehensive data insights. Tracks and analyzes trends, enabling informed decision-making. Delivers precise statistical analysis for effective data evaluation."
       />
       <Box />
     </SectionWrapper>
   );
 }
 
-function AlarmSection() {
+function DigitalTwinSection() {
+  return (
+    <SectionWrapper
+      sectionImage="localize"
+      styles={{
+        image: {
+          objectPosition: ['right', 'center'],
+        },
+      }}
+    >
+      <SectionContent
+        title="Digital Twin Simulation with O3DE"
+        description="Leveraging the power of O3DE (Open 3D Engine), this feature offers a sophisticated digital twin simulation of IoT environments. It provides a realistic, interactive 3D representation of IoT devices and systems, allowing users to test, analyze, and optimize scenarios in a virtual space. It's an essential tool for advanced IoT development and troubleshooting."
+        styles={{
+          title: {
+            maxWidth: '10em',
+          },
+        }}
+      />
+      <Box />
+    </SectionWrapper>
+  );
+}
+
+function ControlPanelSection() {
+  return (
+    <SectionWrapper
+    sectionImage="watch"
+    styles={{
+      image: {
+        objectPosition: ['left', 'center'],
+        '@media screen and (max-width: 480px)': {
+          objectPosition: '-35px',
+        },
+      },
+    }}
+    >
+      <Box />
+      <SectionContent
+        title="Interactive Control Panel"
+        description="User-friendly interface serves as the central hub for all data interactions. Users can effortlessly set and adjust data pipelines, view comprehensive data sets, and create custom visualizations. The panel provides intuitive tools for deep data exploration, AI analysis and monitoring real-time data flows."
+        styles={{
+          title: {
+            maxWidth: '100%',
+          },
+        }}
+        />
+    </SectionWrapper>
+  );
+}
+
+function NotificationSection() {
   return (
     <SectionWrapper
       sectionImage="alarm"
@@ -199,59 +267,8 @@ function AlarmSection() {
     >
       <Box />
       <SectionContent
-        title="Alarmuje na kilka sposobów"
-        description="Informuje o zdarzeniu przez alarm, sms, e-mail, powiadomienie push w aplikacji – sam ustawiasz najwygodniejszą opcję dla operatorów kamer."
-      />
-    </SectionWrapper>
-  );
-}
-
-function LocalizeSection() {
-  return (
-    <SectionWrapper
-      sectionImage="localize"
-      styles={{
-        image: {
-          objectPosition: ['right', 'center'],
-        },
-      }}
-    >
-      <SectionContent
-        title="Ułatwia zlokalizowanie kamer"
-        description="Mapa 3D pozwala zlokalizować umieszczenie każdej z kamer. Umożliwia to rozpoznanie położenia danego obiektu lub osoby i kierunku, w którym zmierza."
-        styles={{
-          title: {
-            maxWidth: '10em',
-          },
-        }}
-      />
-      <Box />
-    </SectionWrapper>
-  );
-}
-
-function WatchSection() {
-  return (
-    <SectionWrapper
-      sectionImage="watch"
-      styles={{
-        image: {
-          objectPosition: ['left', 'center'],
-          '@media screen and (max-width: 480px)': {
-            objectPosition: '-35px',
-          },
-        },
-      }}
-    >
-      <Box />
-      <SectionContent
-        title="Usprawnia oglądanie zapisu"
-        description="Scala kadry, by operatorzy widzieli obraz z kilku rejestratorów naraz – w formie panoramicznej."
-        styles={{
-          title: {
-            maxWidth: '100%',
-          },
-        }}
+        title="Notifications and Automatic Execution"
+        description="Sends real-time alerts, notifying users of any unusual activity. Provides instant notifications, allowing swift action to be taken. Integrated with ROS 2 to enable automatic execution of tasks."
       />
     </SectionWrapper>
   );
@@ -260,17 +277,17 @@ function WatchSection() {
 const USAGE_ITEMS = [
   {
     icon: 'identyfikacja',
-    label: 'Identyfikacja obiektów i osób',
+    label: 'Accelerated Production',
     href: ROUTES.IDENTYFIKACJA,
   },
   {
     icon: 'analityka_handlu',
-    label: 'Analityka dla handlu',
+    label: 'Supply Chain Management',
     href: ROUTES.ANALITYKA_DLA_HANDLU,
   },
   {
     icon: 'wideo_na_zywo',
-    label: 'Wideo na żywo',
+    label: 'Optimization with Digital Twins',
     href: ROUTES.WIDEO_NA_ZYWO,
   },
   {
@@ -280,12 +297,12 @@ const USAGE_ITEMS = [
   },
   {
     icon: 'zdalny_dostep',
-    label: 'Zdalny dostęp',
+    label: 'Remote Access',
     href: ROUTES.ZDALNY_DOSTEP,
   },
   {
     icon: 'covid',
-    label: '#STOP COVID19',
+    label: 'Anomaly Detection',
     href: ROUTES.COVID,
   },
 ];
@@ -298,7 +315,7 @@ function UsageSection() {
           <Heading
             sx={{ color: 'textAlt', textAlign: 'center', maxWidth: ['8em', '100%'], mx: 'auto' }}
           >
-            Główne obszary zastosowania WiseVision
+            Main Use Cases
           </Heading>
         </Container>
       </Box>
@@ -325,7 +342,7 @@ function UsageSection() {
                   {label}
                 </Heading>
                 <AppLink href={href}>
-                  <Button variant="outline">Sprawdź</Button>
+                  <Button variant="outline">Check</Button>
                 </AppLink>
               </Box>
             ))}
@@ -340,11 +357,12 @@ export default function Home() {
   return (
     <Box>
       <HeroSection />
-      <RecognizeSection />
+      <SystemSection />
+      <DetectionSection />
       <StudySection />
-      <AlarmSection />
-      <LocalizeSection />
-      <WatchSection />
+      <ControlPanelSection />
+      <DigitalTwinSection />
+      <NotificationSection />
       <UsageSection />
     </Box>
   );

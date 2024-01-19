@@ -46,11 +46,11 @@ export function ContactForm() {
 
     const canSend = validateContact({ email, firm, name, message }) && stage !== 'inProgress';
 
-    setMessageError(message ? undefined : '* proszę wypełnić');
-    setFirmError(firm ? undefined : '* proszę wypełnić');
-    setNameError(name ? undefined : '* proszę wypełnić');
+    setMessageError(message ? undefined : '* please fill this field');
+    setFirmError(firm ? undefined : '* please fill this field');
+    setNameError(name ? undefined : '* please fill this field');
     setEmailError(
-      !email ? '* proszę wypełnić' : !EMAIL_REGEX.test(email) ? '* niepoprawny adres' : undefined
+      !email ? '* please fill this field' : !EMAIL_REGEX.test(email) ? '* wrong address' : undefined
     );
 
     if (!canSend) {
@@ -88,7 +88,7 @@ export function ContactForm() {
         pt: pxToRem(24),
       }}
     >
-      <Box sx={{ color: 'primary', mb: 4 }}>Prosimy o uzupełnienie wszystkich pól formularza</Box>
+      <Box sx={{ color: 'primary', mb: 4 }}>Please fill all the fields</Box>
       <Grid as="form" onSubmit={onSubmit} gap={[3, 4]}>
         <Grid columns={[1, '260px 1fr']} gap={[4, null, 5]} sx={{ alignItems: 'flex-start' }}>
           <Grid gap={pxToRem(20)}>
@@ -103,9 +103,9 @@ export function ContactForm() {
                 onBlur={() =>
                   setEmailError(
                     !email
-                      ? '* proszę wypełnić'
+                      ? '* please fill this field'
                       : !EMAIL_REGEX.test(email)
-                      ? '* niepoprawny adres'
+                      ? '* wrong address'
                       : undefined
                   )
                 }
@@ -114,33 +114,33 @@ export function ContactForm() {
             <Grid gap={1}>
               <ErrorMessage errorMessage={firmError} />
               <Input
-                placeholder="Firma*"
+                placeholder="Company*"
                 value={firm}
                 onChange={(e) => setFirm(e.target.value)}
                 variant={getInputVariant(firmError)}
-                onBlur={() => setFirmError(firm ? undefined : '* proszę wypełnić')}
+                onBlur={() => setFirmError(firm ? undefined : '* please fill this field')}
               />
             </Grid>
             <Grid gap={1}>
               <ErrorMessage errorMessage={nameError} />
               <Input
-                placeholder="Nazwisko*"
+                placeholder="Name*"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 variant={getInputVariant(nameError)}
-                onBlur={() => setNameError(name ? undefined : '* proszę wypełnić')}
+                onBlur={() => setNameError(name ? undefined : '* please fill this field')}
               />
             </Grid>
           </Grid>
           <Grid gap={1}>
             <ErrorMessage errorMessage={messageError} />
             <Textarea
-              placeholder="Opisz nam swój problem*"
+              placeholder="Please describe your needs*"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               sx={{ resize: 'none', height: '10em' }}
               variant={getInputVariant(messageError, 'textarea')}
-              onBlur={() => setMessageError(message ? undefined : '* proszę wypełnić')}
+              onBlur={() => setMessageError(message ? undefined : '* please fill this field')}
             />
           </Grid>
         </Grid>
@@ -157,13 +157,13 @@ export function ContactForm() {
             minHeight: pxToRem(54),
           }}
         >
-          {stage === 'inProgress' ? <Spinner variant="styles.spinner" /> : 'WYŚLIJ'}
+          {stage === 'inProgress' ? <Spinner variant="styles.spinner" /> : 'SEND'}
         </Button>
         {stage === 'success' && (
-          <Box sx={{ textAlign: 'right' }}>Formularz kontaktowy został przesłany</Box>
+          <Box sx={{ textAlign: 'right' }}>The contact form has been sent</Box>
         )}
         {stage === 'failure' && (
-          <Box sx={{ textAlign: 'right' }}>Coś poszło nie tak, spróbuj ponownie</Box>
+          <Box sx={{ textAlign: 'right' }}>Something went wrong, please try again</Box>
         )}
       </Grid>
     </Container>
