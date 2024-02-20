@@ -285,11 +285,11 @@ const USAGE_ITEMS = [
     label: 'Supply Chain Management',
     href: ROUTES.ANALITYKA_DLA_HANDLU,
   },
-  {
-    icon: 'wideo_na_zywo',
-    label: 'Optimization with Digital Twins',
-    href: ROUTES.WIDEO_NA_ZYWO,
-  },
+  // {
+  //   icon: 'wideo_na_zywo',
+  //   label: 'Optimization with Digital Twins',
+  //   href: ROUTES.WIDEO_NA_ZYWO,
+  // },
   {
     icon: 'zarzadzanie_wideo',
     label: 'Zarządzanie zasobami wideo',
