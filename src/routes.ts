@@ -10,7 +10,7 @@ export const ROUTES = {
   IDENTYFIKACJA: '/identyfikacja',
   ANALITYKA_DLA_HANDLU: '/analityka-dla-handlu',
   WIDEO_NA_ZYWO: '/wideo-na-zywo',
-  ZARZADZANIE_WIDEO: '/zarzadzanie-wideo',
+  ZARZADZANIE_WIDEO: '/data-management',
   ZDALNY_DOSTEP: '/zdalny-dostep',
   COVID: '/covid',
   TWITTER: '#',
