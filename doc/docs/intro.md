@@ -10,8 +10,6 @@ sidebar_position: 1
 
 At WiseVision, we're pioneering the integration of Internet of Things (IoT) technologies with the powerful ROS 2 ecosystem. Our mission is to empower developers, engineers, and businesses to harness the full potential of IoT devices by seamlessly connecting them to ROS 2, unlocking advanced data processing and automation capabilities.
 
-![WiseVision](asset/project_logo.png)
-
 ## Why WiseVision?
 
 In a world where data is the new gold, accessing and utilizing it efficiently is paramount. WiseVision provides the tools and platforms that make this not just possible, but effortless.
@@ -53,3 +51,5 @@ By bridging ChirpStack-managed LoRaWAN devices with ROS 2, WiseVision opens up a
 ---
 
 **Join us on this exciting journey to revolutionize the IoT landscape. Dive into our documentation to get started and discover what WiseVision can do for you.**
+
+![WiseVision](asset/project_logo.png)
