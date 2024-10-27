@@ -29,3 +29,4 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 .vscode
+public/static/doc/assets/js/5e95c892.0272c413.js

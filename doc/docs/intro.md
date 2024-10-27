@@ -2,46 +2,54 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# Welcome to WiseVision
 
-Let's discover **Docusaurus in less than 5 minutes**.
+**Bridging IoT and ROS 2 for a Smarter Future**
 
-## Getting Started
+---
 
-Get started by **creating a new site**.
+At WiseVision, we're pioneering the integration of Internet of Things (IoT) technologies with the powerful ROS 2 ecosystem. Our mission is to empower developers, engineers, and businesses to harness the full potential of IoT devices by seamlessly connecting them to ROS 2, unlocking advanced data processing and automation capabilities.
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+![WiseVision](asset/project_logo.png)
 
-### What you'll need
+## Why WiseVision?
 
-- [Node.js](https://nodejs.org/en/download/) version 18.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+In a world where data is the new gold, accessing and utilizing it efficiently is paramount. WiseVision provides the tools and platforms that make this not just possible, but effortless.
 
-## Generate a new site
+### Our Key Offerings:
 
-Generate a new Docusaurus site using the **classic template**.
+- **LoRaWAN - ROS 2 Bridge**  
+  Effortlessly connect your LoRaWAN devices to the ROS 2 ecosystem. Our bridge enables real-time communication and data exchange, leveraging ChirpStack for comprehensive device support.
 
-The classic template will automatically be added to your project after you run the command:
+- **ROS2 Black Box**  
+  Built atop Zenoh and InfluxDB, this solution allows simultaneous data storage and retrieval. Never miss a data point and access your information whenever you need it.
 
-```bash
-npm init docusaurus@latest my-website classic
-```
+- **ROS2 Automatic Action Execution**  
+  Automate your workflows by setting conditions that trigger messages or services across topics. Define your parameters and let our tool handle the rest.
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
+- **WiseVision Dashboard**  
+  Manage all your LoRaWAN devices through an intuitive interface. Visualize ROS 2 data with simple plots, making monitoring and analysis straightforward.
 
-The command also installs all necessary dependencies you need to run Docusaurus.
+- **Notifications System**  
+  Stay informed with real-time notifications sent directly to your dashboard, email, or mobile app. Ensure you're always up-to-date with critical information.
 
-## Start your site
+- **WiseVision_msgs**  
+  Access all our custom message definitions in one centralized location, streamlining your development process.
 
-Run the development server:
+- **Lora_e5_ros2_software**  
+  Enhance the capabilities of your LoRa E5 development board with our custom Micro ROS software, pushing the boundaries of what's possible.
 
-```bash
-cd my-website
-npm run start
-```
+- **WiseVision.proj**  
+  Kickstart your project with our comprehensive set of VCS repositories. Build the entire WiseVision ecosystem with ease. See you at the GitHub repository [wisevision.proj](https://github.com/wise-vision/wisevision.proj).
 
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
+## Unlock the Power of ROS 2 and IoT
 
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
+By bridging ChirpStack-managed LoRaWAN devices with ROS 2, WiseVision opens up a world of possibilities:
 
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+- **Advanced Data Processing**: Utilize ROS 2's robust algorithms to process and analyze IoT data like never before.
+- **Seamless Integration**: Connect various communication methods into a unified system.
+- **Scalability**: Grow your network without the headaches, thanks to our scalable solutions.
+
+---
+
+**Join us on this exciting journey to revolutionize the IoT landscape. Dive into our documentation to get started and discover what WiseVision can do for you.**
