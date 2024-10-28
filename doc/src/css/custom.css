@@ -5,26 +5,32 @@
  */
 
 /* You can override the default Infima variables here. */
+
+@import url('https://fonts.googleapis.com/css2?family=Ropa+Sans&display=swap');
+
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
+  --ifm-color-primary: #1f3de9;
+  --ifm-color-secondary: #ffffff;
+  --ifm-color-primary-dark: #1332e2;
+  --ifm-color-primary-darker: #1836e4ad;
+  --ifm-color-primary-darkest: #0322d193;
+  --ifm-color-primary-light: #4bcdf0;
+  --ifm-color-primary-lighter: #05f2f5;
+  --ifm-color-primary-lightest: #6bfff5;
   --ifm-code-font-size: 95%;
+  --ifm-font-family-base: 'Ropa Sans';
+  --ifm-font-size-base: 120%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
+  --ifm-color-primary: #4C84FF;          /* A lighter blue for better contrast */
+  --ifm-color-primary-dark: #3A6FE0;     /* Darker shade of the new primary */
+  --ifm-color-primary-darker: #335FCC;   /* Even darker shade */
+  --ifm-color-primary-darkest: #2A50B8;  /* Darkest shade */
+  --ifm-color-primary-light: #6699FF;    /* Lighter shade */
+  --ifm-color-primary-lighter: #80ADFF;  /* Even lighter shade */
+  --ifm-color-primary-lightest: #99C2FF; /* Lightest shade */
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
