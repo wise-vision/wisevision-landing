@@ -78,6 +78,8 @@ const config = {
         logo: {
           alt: 'WiseVision Logo',
           src: 'img/logo.png',
+          href: 'https://wisevision.tech',
+          target: '_self',
         },
         items: [
           {

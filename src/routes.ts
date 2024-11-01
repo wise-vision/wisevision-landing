@@ -3,7 +3,7 @@ export const ROUTES = {
   BLOG: 'https://wisevision.tech/blog',
   DOWNLOADS: '/downloads',
   PRICING: '/pricing',
-  DOKUMENTACJA: '/static/doc/docs/intro',
+  DOCS: '/static/doc/docs/intro',
   O_NAS: 'https://wisevision.tech/blog/Witajcie',
   NOTY_PRAWNE: '#',
   RODO: '#',

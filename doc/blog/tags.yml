@@ -17,3 +17,18 @@ hola:
   label: Hola
   permalink: /hola
   description: Hola tag description
+
+introduction: 
+  label: Introduction
+  permalink: /introduction
+  description: Introduction
+
+iot:
+  label: IoT
+  permalink: /iot
+  description: Internet of Things
+
+robotics:
+  label: robotics
+  permalink: /robotics
+  description: Robotics
