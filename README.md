@@ -6,11 +6,17 @@
 - [ThemeUI (CSS in JS)](https://theme-ui.com/)
 - [Vercel (CI/CD, Deployment)](https://vercel.com/)
 
-## Uruchomienie strony
+## Run locally
 
 ```
 yarn
 yarn dev
+
+# whole with docusaurus
+cd doc && yarn install && yarn build && cd .. && yarn dev
+
+# or with docker
+docker-compose up --build
 ```
 
 Strona będzie dostępna pod adresem [http://localhost:3000/](http://localhost:3000/)

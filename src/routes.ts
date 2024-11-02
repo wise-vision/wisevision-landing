@@ -1,10 +1,10 @@
 export const ROUTES = {
   HOME: '/',
-  BLOG: 'https://wisevision.tech/blog',
+  BLOG: '/static/doc/blog',
   DOWNLOADS: '/downloads',
   PRICING: '/pricing',
   DOCS: '/static/doc/docs/intro',
-  O_NAS: 'https://wisevision.tech/blog/Witajcie',
+  O_NAS: '/static/doc/blog',
   NOTY_PRAWNE: '#',
   RODO: '#',
   IDENTYFIKACJA: '/identyfikacja',
