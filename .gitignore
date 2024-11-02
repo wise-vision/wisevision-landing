@@ -29,3 +29,6 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 .vscode
+
+# docusaurus generated files
+public/static/doc/*

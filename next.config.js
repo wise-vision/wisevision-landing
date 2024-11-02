@@ -17,5 +17,25 @@ module.exports = {
 
     return config;
   },
-  target: 'serverless',
+
+  /**
+   * Rewrites to redirect /static/doc to /static/doc/index.html
+   * https://nextjs.org/docs/api-reference/next.config.js/rewrites
+   */
+  async rewrites() {
+    return [
+      {
+        source: '/static/doc',
+        destination: '/static/doc/index.html',
+      },
+      {
+        source: '/static/doc/docs/intro',
+        destination: '/static/doc/docs/intro/index.html',
+      },
+      // {
+      //   source: '/docs/:slug*',        // Match any subpath after /docs/ and rewrite it to /static/doc/:slug* but does not work
+      //   destination: '/static/doc/:slug*',
+      // },
+    ];
+  },
 };

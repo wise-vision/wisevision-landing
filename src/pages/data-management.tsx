@@ -30,7 +30,7 @@ export default function ZarzadzanieWideo() {
     <>
       <PageBanner
         image="zarzadzanie_wideo"
-        title="Zarządzanie zasobami wideo"
+        title="Data management"
         styles={{
           background: {
             backgroundPosition: 'right center',

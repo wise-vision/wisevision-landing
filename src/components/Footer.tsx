@@ -70,7 +70,7 @@ export function Footer() {
           <Grid columns={[1, 2, 3]} gap={4}>
             <Grid gap={4}>
               <Box>
-                <Box sx={footerLabel}>Adres</Box>
+                <Box sx={footerLabel}>Address</Box>
                 <Box sx={{ lineHeight: 'loose' }}>
                   Inter Plus Sp. z o.o.
                   <br />
@@ -82,18 +82,18 @@ export function Footer() {
                 </Box>
               </Box>
               <Box>
-                <Box sx={footerLabel}>Kontakt</Box>
+                <Box sx={footerLabel}>Contact</Box>
                 <Grid gap={1}>
-                  <AppLink href="mailto:support@wisevision.com.pl">support@wisevision.com.pl</AppLink>
-                  <AppLink href="mailto:adam.krawczyk@wisevision.com.pl">adam.krawczyk@wisevision.com.pl</AppLink>
+                  <AppLink href="mailto:support@wisevision.tech">support@wisevision.com.pl</AppLink>
+                  <AppLink href="mailto:adam.krawczyk@wisevision.tech">adam.krawczyk@wisevision.com.pl</AppLink>
                 </Grid>
               </Box>
             </Grid>
             <Grid gap={4}>
               <Box>
-                <Box sx={footerLabel}>O firmie</Box>
+                <Box sx={footerLabel}>About company</Box>
                 <Grid gap={1}>
-                  <AppLink href={ROUTES.O_NAS}>O nas</AppLink>
+                  <AppLink href={ROUTES.O_NAS}>About company</AppLink>
                   <AppLink href={ROUTES.NOTY_PRAWNE}>Noty prawne</AppLink>
                   <AppLink href={ROUTES.RODO}>Rodo</AppLink>
                 </Grid>

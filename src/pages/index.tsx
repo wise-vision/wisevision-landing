@@ -292,7 +292,7 @@ const USAGE_ITEMS = [
   // },
   {
     icon: 'zarzadzanie_wideo',
-    label: 'Zarządzanie zasobami wideo',
+    label: 'Data management',
     href: ROUTES.ZARZADZANIE_WIDEO,
   },
   {

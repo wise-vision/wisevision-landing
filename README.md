@@ -104,3 +104,13 @@ from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more
 details.
+
+
+## Clear the docker 
+
+This will remove all your volumes
+
+```bash
+docker-compose down --volumes --remove-orphans
+docker system prune --all --volumes --force
+```

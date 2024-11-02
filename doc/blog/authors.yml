@@ -1,0 +1,23 @@
+adkrawcz:
+  name: Adam Krawczyk
+  title: CTO @ WiseVision 
+  url: https://github.com/adamkrawczyk?tab=repositories
+  image_url: https://media.licdn.com/dms/image/v2/C4E03AQETLRfNjsvoOw/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1656692642633?e=1735776000&v=beta&t=6nsr3IDKzZAcDg0AidSTParulAjWF9PQrLZbDtaFyF4
+  page: true
+  socials:
+    linkedin: adkrawcz
+    github: adamkrawczyk
+
+# slorber:
+#   name: Sébastien Lorber
+#   title: Docusaurus maintainer
+#   url: https://sebastienlorber.com
+#   image_url: https://github.com/slorber.png
+#   page:
+#     # customize the url of the author page at /blog/authors/<permalink>
+#     permalink: '/all-sebastien-lorber-articles'
+#   socials:
+#     x: sebastienlorber
+#     linkedin: sebastienlorber
+#     github: slorber
+#     newsletter: https://thisweekinreact.com
