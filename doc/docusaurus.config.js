@@ -85,10 +85,10 @@ const config = {
           {
             type: 'docSidebar',
             sidebarId: 'tutorialSidebar',
-            position: 'left',
-            label: 'Docs',
+            position: 'right',
+            label: 'Documentation',
           },
-          {to: '/blog', label: 'Blog', position: 'left'},
+          {to: '/blog', label: 'Blog', position: 'right'},
           {
             href: 'https://github.com/wise-vision',
             label: 'GitHub',
