@@ -55,9 +55,9 @@ function HeroSection() {
         <source src="static/home/hero_video.mp4" type="video/mp4" />
       </Box>
       <Container sx={{ position: 'relative', zIndex: 1 }}>
-      <Heading variant="largeHeading" sx={{ maxWidth: '7em', mx: 'auto', textAlign: 'center' }}>
-      Wisely connected IoT
-      </Heading>
+        <Heading variant="largeHeading" sx={{ maxWidth: '7em', mx: 'auto', textAlign: 'center' }}>
+          Wisely connected IoT
+        </Heading>
       </Container>
       <Box
         sx={{
@@ -157,7 +157,7 @@ function SystemSection() {
       <Box />
       <SectionContent
         title="ROS 2 and LoRaWAN"
-        description="Combining ROS2's advanced robotics software with LoRaWAN's long-range network, this technology brings smarter, more efficient connectivity to everyday life. Ideal for smart homes, agriculture, and city management, it offers reliable communication over large areas, using less power. It's a game-changer for making advanced technology accessible and practical for everyone."
+        description="Combining ROS2 with LoRaWAN's devices enables smarter, efficient connectivity with your data. Ideal for smart factories, agriculture, and city management—offering reliable communication over large areas."
       />
     </SectionWrapper>
   );
@@ -175,8 +175,8 @@ function DetectionSection() {
     >
       <Box />
       <SectionContent
-        title="Smart Detection and Analysis"
-        description="Swiftly pinpoints outliers, analyzing data anomalies. Identifies unusual patterns, aiding in error detection and insights. Streamlines complex data analysis, enhancing accuracy and efficiency."
+        title="Advanced Data Analysis with AI"
+        description="Harness AI algorithms for comprehensive data analysis. Detect anomalies, uncover patterns, and gain deep insights using free, readily available ROS2 packages."
       />
     </SectionWrapper>
   );
@@ -212,8 +212,8 @@ function DigitalTwinSection() {
       }}
     >
       <SectionContent
-        title="Digital Twin Simulation with O3DE"
-        description="Leveraging the power of O3DE (Open 3D Engine), this feature offers a sophisticated digital twin simulation of IoT environments. It provides a realistic, interactive 3D representation of IoT devices and systems, allowing users to test, analyze, and optimize scenarios in a virtual space. It's an essential tool for advanced IoT development and troubleshooting."
+        title="WiseVision Data Black Box"
+        description="Introducing the WiseVision Data Black Box simple and efficient way to store and access your data. It allows you to view and use your information in real-time while securely saving it for future use. Unlike other systems that might interrupt your work, our solution lets you continue your operations smoothly, ensuring your data is always safe and ready for analysis whenever you need it."
         styles={{
           title: {
             maxWidth: '10em',
@@ -228,26 +228,26 @@ function DigitalTwinSection() {
 function ControlPanelSection() {
   return (
     <SectionWrapper
-    sectionImage="watch"
-    styles={{
-      image: {
-        objectPosition: ['left', 'center'],
-        '@media screen and (max-width: 480px)': {
-          objectPosition: '-35px',
+      sectionImage="watch"
+      styles={{
+        image: {
+          objectPosition: ['left', 'center'],
+          '@media screen and (max-width: 480px)': {
+            objectPosition: '-35px',
+          },
         },
-      },
-    }}
+      }}
     >
       <Box />
       <SectionContent
-        title="Interactive Control Panel"
-        description="User-friendly interface serves as the central hub for all data interactions. Users can effortlessly set and adjust data pipelines, view comprehensive data sets, and create custom visualizations. The panel provides intuitive tools for deep data exploration, AI analysis and monitoring real-time data flows."
+        title="WiseVision Dashboard"
+        description="Our straightforward web interface offers basic tools for easy data monitoring and control. With the WiseVision Dashboard, you can quickly view your data and adjust essential settings without any complexity. It's designed for users who need a simple, effective way to manage their data."
         styles={{
           title: {
             maxWidth: '100%',
           },
         }}
-        />
+      />
     </SectionWrapper>
   );
 }
@@ -276,33 +276,33 @@ function NotificationSection() {
 
 const USAGE_ITEMS = [
   {
-    icon: 'identyfikacja',
-    label: 'Accelerated Production',
-    href: ROUTES.IDENTYFIKACJA,
-  },
-  {
     icon: 'analityka_handlu',
-    label: 'Supply Chain Management',
-    href: ROUTES.ANALITYKA_DLA_HANDLU,
+    label: 'WiseVision LoRa Bridge',
+    href: ROUTES.WISEVISION_LORA_BRIDGE,
   },
-  // {
-  //   icon: 'wideo_na_zywo',
-  //   label: 'Optimization with Digital Twins',
-  //   href: ROUTES.WIDEO_NA_ZYWO,
-  // },
   {
     icon: 'zarzadzanie_wideo',
-    label: 'Data management',
+    label: 'WiseVision Data Black Box',
     href: ROUTES.ZARZADZANIE_WIDEO,
   },
   {
+    icon: 'wideo_na_zywo',
+    label: 'WiseVision Micro ROS for LoRa-E5',
+    href: ROUTES.WIDEO_NA_ZYWO,
+  },
+  {
+    icon: 'identyfikacja',
+    label: 'WiseVision Action Executor',
+    href: ROUTES.IDENTYFIKACJA,
+  },
+  {
     icon: 'zdalny_dostep',
-    label: 'Remote Access',
+    label: 'WiseVision Dashboard',
     href: ROUTES.ZDALNY_DOSTEP,
   },
   {
     icon: 'covid',
-    label: 'Anomaly Detection',
+    label: 'WiseVision Notificator',
     href: ROUTES.COVID,
   },
 ];
@@ -315,7 +315,7 @@ function UsageSection() {
           <Heading
             sx={{ color: 'textAlt', textAlign: 'center', maxWidth: ['8em', '100%'], mx: 'auto' }}
           >
-            Main Use Cases
+            WiseVision Suite of Tools
           </Heading>
         </Container>
       </Box>

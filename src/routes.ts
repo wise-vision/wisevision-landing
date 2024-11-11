@@ -8,7 +8,7 @@ export const ROUTES = {
   NOTY_PRAWNE: '#',
   RODO: '#',
   IDENTYFIKACJA: '/identyfikacja',
-  ANALITYKA_DLA_HANDLU: '/analityka-dla-handlu',
+  WISEVISION_LORA_BRIDGE: '/wisevision-lora-bridge',
   WIDEO_NA_ZYWO: '/wideo-na-zywo',
   ZARZADZANIE_WIDEO: '/data-management',
   ZDALNY_DOSTEP: '/zdalny-dostep',

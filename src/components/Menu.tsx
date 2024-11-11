@@ -92,9 +92,6 @@ export function Menu() {
               pt: 0,
             }}
           >
-            <AppLink onClick={close} sx={{ variant: 'links.nav' }} href={ROUTES.BLOG}>
-              Blog
-            </AppLink>
             <AppLink onClick={close} sx={{ variant: 'links.nav' }} href={ROUTES.DOWNLOADS}>
               Downloads
             </AppLink>
@@ -103,6 +100,9 @@ export function Menu() {
             </AppLink>
             <AppLink onClick={close} sx={{ variant: 'links.nav' }} href={ROUTES.DOCS}>
               Documentation
+            </AppLink>
+            <AppLink onClick={close} sx={{ variant: 'links.nav' }} href={ROUTES.BLOG}>
+              Blog
             </AppLink>
           </Box>
         </Flex>
