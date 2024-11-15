@@ -4,6 +4,8 @@ sidebar_position: 1
 
 # WiseVision Data Black Box – What It Is and How It Works
 
+![WiseVisiona Data Black Box](asset/wisevision_data_black_box.jpeg)
+
 ### Introduction
 #
 
@@ -46,4 +48,4 @@ Using WiseVision Data Black Box, you can:
 #
 _Written by: Cezary Krzeminski, wisevision_ 
 
-Do you need support with this topic or have questions about your project? Feel free to contact us! [support@wisevision.com.pl](mailto:support@wisevision.com.pl)
+Do you need support with this topic or have questions about your project? Feel free to contact us! [support@wisevision.tech](mailto:support@wisevision.tech)
