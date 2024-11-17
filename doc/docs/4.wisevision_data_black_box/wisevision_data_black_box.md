@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # WiseVision Data Black Box – What It Is and How It Works
 
-![WiseVisiona Data Black Box](asset/wisevision_data_black_box.jpeg)
+![WiseVisiona Data Black Box](asset/wisevision_data_black_box.jpg)
 
 ### Introduction
 #
