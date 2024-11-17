@@ -1,7 +1,7 @@
 version: "3.6"
 services:
   dev:
-    container_name: wisevision_dashboard
+    container_name: wisevision_landing
     build: .
     volumes:
       - type: bind
