@@ -1,7 +1,7 @@
----
-sidebar_position: 1
----
-# WiseVision MicroRos for LoRa-E5 – What It Is and How It Works
+
+# Micro-ROS for LoRa-E5
+
+## WiseVision MicroRos for LoRa-E5 – What It Is and How It Works
 ![WiseVisiona MicroRos for LoRa-E5](asset/wisevision_microros_for_lora_e5.jpg)
 ## Introduction
 **WiseVision MicroRos for LoRa-E5** is firmware designed for the [**Wio-E5 Dev Board**](https://wiki.seeedstudio.com/LoRa_E5_Dev_Board/), enabling communication over **LoRaWAN** and **serial** protocols. This solution integrates seamlessly with ROS 2 systems, allowing flexible and efficient management of sensors, ROS messages, and custom actions.
