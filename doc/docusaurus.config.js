@@ -34,6 +34,51 @@ const config = {
     locales: ['en'],
   },
 
+  plugins: [
+    // BlackBox Documentation Plugin
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'BlackBox',
+        path: 'BlackBox',
+        routeBasePath: 'BlackBox',
+        sidebarPath: require.resolve('./sidebarsBlackBox.js'),
+        // editUrl: 'https://github.com/your-github-username/your-repo-name/edit/main/',
+      },
+    ],
+    // WiseVision Bridge Documentation Plugin
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'Bridge',
+        path: 'Bridge',
+        routeBasePath: 'Bridge',
+        sidebarPath: require.resolve('./sidebarsBridge.js'),
+        // editUrl: 'https://github.com/your-github-username/your-repo-name/edit/main/',
+      },
+    ],
+    // WiseVision Develoment Board Documentation Plugin
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'DevBoard',
+        path: 'DevBoard',
+        routeBasePath: 'DevBoard',
+        sidebarPath: require.resolve('./sidebarsDevBoard.js'),
+      },
+    ],
+    // WiseVision Tools Documentation Plugin
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'Tools',
+        path: 'Tools',
+        routeBasePath: 'Tools',
+        sidebarPath: require.resolve('./sidebarsTools.js'),
+      },
+    ],
+  ],
+
   presets: [
     [
       'classic',
@@ -88,6 +133,10 @@ const config = {
             position: 'right',
             label: 'Documentation',
           },
+          {to: '/Bridge/intro', label: 'Bridge', position: 'left'},
+          {to: '/BlackBox/intro', label: 'BlackBox', position: 'left'},
+          {to: '/DevBoard/intro', label: 'DevBoard', position: 'left'},
+          {to: '/Tools/intro', label: 'Tools', position: 'left'},
           {to: '/blog', label: 'Blog', position: 'right'},
           {
             href: 'https://github.com/wise-vision',
@@ -148,4 +197,4 @@ const config = {
     }),
 };
 
-export default config;
+module.exports = config;

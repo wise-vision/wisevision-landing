@@ -1,7 +1,7 @@
----
-sidebar_position: 1
----
-# WiseVision Notificator – What It Is and How It Works
+
+# About
+
+## What It Is and How It Works
 ![WiseVisiona Notificator](asset/wisevision_notificator.jpg)
 ## Introduction
 **WiseVision Notificator** is a system designed to handle notifications in ROS 2 environments. By subscribing to a specific topic (`/notifications`), it processes notification messages and ensures they are delivered to users. This delivery can occur via two main methods:
