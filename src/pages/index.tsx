@@ -163,10 +163,10 @@ function SystemSection() {
   );
 }
 
-function DetectionSection() {
+function AnalysisSection() {
   return (
     <SectionWrapper
-      sectionImage="recognize"
+      sectionImage="data"
       styles={{
         image: {
           objectPosition: ['left', 'center'],
@@ -182,10 +182,10 @@ function DetectionSection() {
   );
 }
 
-function StudySection() {
+function UControllerSection() {
   return (
     <SectionWrapper
-      sectionImage="study"
+      sectionImage="ucontroller"
       styles={{
         image: {
           objectPosition: ['right', 'center'],
@@ -193,18 +193,18 @@ function StudySection() {
       }}
     >
       <SectionContent
-        title="Precision in Numbers"
-        description="Accurately measures key statistics, providing comprehensive data insights. Tracks and analyzes trends, enabling informed decision-making. Delivers precise statistical analysis for effective data evaluation."
+        title="Micro Power"
+        description="Enhance your system with custom Microcontroller. Unleash the full potential with flexible solutions that can be tailored to your specific needs."
       />
       <Box />
     </SectionWrapper>
   );
 }
 
-function DigitalTwinSection() {
+function BlackBoxSection() {
   return (
     <SectionWrapper
-      sectionImage="localize"
+      sectionImage="blackbox"
       styles={{
         image: {
           objectPosition: ['right', 'center'],
@@ -212,8 +212,8 @@ function DigitalTwinSection() {
       }}
     >
       <SectionContent
-        title="WiseVision Data Black Box"
-        description="Introducing the WiseVision Data Black Box simple and efficient way to store and access your data. It allows you to view and use your information in real-time while securely saving it for future use. Unlike other systems that might interrupt your work, our solution lets you continue your operations smoothly, ensuring your data is always safe and ready for analysis whenever you need it."
+        title="Data Black Box"
+        description="Simple and efficient way to store and access your data. Allows you to view and use your information in real-time while securely saving it for future. Unlike other systems that might interrupt your work, our solution lets you continue your operations smoothly, ensuring your data is always safe and ready for analysis whenever you need it."
         styles={{
           title: {
             maxWidth: '10em',
@@ -258,7 +258,7 @@ function NotificationSection() {
       sectionImage="alarm"
       styles={{
         image: {
-          objectPosition: ['left', 'center'],
+          objectPosition: ['right', 'center'],
           '@media screen and (max-width: 480px)': {
             objectPosition: '-30px',
           },
@@ -357,11 +357,11 @@ export default function Home() {
   return (
     <Box>
       <HeroSection />
-      <SystemSection />
-      <DetectionSection />
-      <StudySection />
       <ControlPanelSection />
-      <DigitalTwinSection />
+      <BlackBoxSection />
+      <AnalysisSection />
+      <SystemSection />
+      <UControllerSection />
       <NotificationSection />
       <UsageSection />
     </Box>
