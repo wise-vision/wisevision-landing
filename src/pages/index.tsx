@@ -259,9 +259,6 @@ function NotificationSection() {
       styles={{
         image: {
           objectPosition: ['left', 'center'],
-          '@media screen and (max-width: 480px)': {
-            objectPosition: '-30px',
-          },
         },
       }}
     >
@@ -269,6 +266,11 @@ function NotificationSection() {
       <SectionContent
         title="Notifications and Automatic Execution"
         description="Sends real-time alerts, notifying users of any unusual activity. Provides instant notifications, allowing swift action to be taken. Integrated with ROS 2 to enable automatic execution of tasks."
+        styles={{
+          title: {
+            maxWidth: '100%',
+          },
+        }}
       />
     </SectionWrapper>
   );
@@ -360,8 +362,8 @@ export default function Home() {
       <ControlPanelSection />
       <BlackBoxSection />
       <AnalysisSection />
-      <SystemSection />
       <UControllerSection />
+      <SystemSection />
       <NotificationSection />
       <UsageSection />
     </Box>
