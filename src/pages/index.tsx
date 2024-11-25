@@ -258,7 +258,7 @@ function NotificationSection() {
       sectionImage="alarm"
       styles={{
         image: {
-          objectPosition: ['right', 'center'],
+          objectPosition: ['left', 'center'],
           '@media screen and (max-width: 480px)': {
             objectPosition: '-30px',
           },
