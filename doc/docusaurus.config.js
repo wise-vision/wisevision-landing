@@ -35,6 +35,17 @@ const config = {
   },
 
   plugins: [
+    // Dashboard Documentation Plugin
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'Dashboard',
+        path: 'Dashboard',
+        routeBasePath: 'Dashboard',
+        sidebarPath: require.resolve('./sidebarsDashboard.js'),
+        // editUrl: 'https://github.com/your-github-username/your-repo-name/edit/main/',
+      },
+    ],
     // BlackBox Documentation Plugin
     [
       '@docusaurus/plugin-content-docs',
@@ -133,6 +144,7 @@ const config = {
             position: 'right',
             label: 'Documentation',
           },
+          {to: '/Dashboard/intro', label: 'Dashboard', position: 'left'},
           {to: '/Bridge/intro', label: 'Bridge', position: 'left'},
           {to: '/BlackBox/intro', label: 'BlackBox', position: 'left'},
           {to: '/DevBoard/intro', label: 'DevBoard', position: 'left'},

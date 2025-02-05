@@ -16,7 +16,7 @@ yarn dev
 cd doc && yarn install && yarn build && cd .. && yarn dev
 
 # or with docker
-docker-compose up --build
+docker compose up --build
 ```
 
 Strona będzie dostępna pod adresem [http://localhost:3000/](http://localhost:3000/)

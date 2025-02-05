@@ -19,4 +19,10 @@ export const ROUTES = {
   DOWNLOAD_DOCUMENTATION: 'static/files/dummy.pdf',
   DOWNLOAD_RODO: 'static/files/dummy.pdf',
   DOWNLOAD_NOTES: 'static/files/dummy.pdf',
+  SMART_CITY: '/smart-city',
+  ROBOTICS: '/robotics',
+  AGRICULTURE: '/agriculture',
+  AI_CENTRIC_SYSTEMS: '/ai-centric-systems',
+  SMART_FACTORY: '/smart-factory',
+  LOGISTICS: '/logistics',
 };

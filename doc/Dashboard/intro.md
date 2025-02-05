@@ -1,16 +1,12 @@
 
-# WiseVision Data Black Box API
+# WiseVision Data Black Box
 
+## Introduction
 
-### Introduction
+The WiseVision dashboard
 
-The API can be found here: TODO add links
-
-
+**For more details, see the [About](2.About/1.wisevision_dashboard.md) page.**
 
 ---
-
-#
-_Written by: Adam Krawczyk, wisevision_ 
 
 Do you need support with this topic or have questions about your project? Feel free to contact us! [support@wisevision.tech](mailto:support@wisevision.tech)
