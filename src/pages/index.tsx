@@ -6,76 +6,10 @@ import { Box, Button, Container, Flex, Grid, Heading, Image, ThemeUIStyleObject 
 import { WithChildren } from 'types';
 import { Link } from 'react-scroll';
 
+// Global Constants
 const SCROLL_TARGET = 'scrollTarget';
 
-function HeroSection() {
-  const navHeight = () => {
-    if (process.browser && document) {
-      const menu = document.getElementById(MENU_ID);
-
-      if (menu) {
-        const navHeight = menu.clientHeight;
-        return navHeight;
-      }
-    }
-
-    return 0;
-  };
-
-  return (
-    <Flex
-      sx={{
-        py: 6,
-        minHeight: [`calc(100vh - ${pxToRem(59)})`, `calc(100vh - ${pxToRem(70)})`],
-        alignItems: 'center',
-        position: 'relative',
-      }}
-    >
-      <Box
-        as="video"
-        // @ts-ignore
-        autoPlay
-        muted
-        loop
-        playsInline
-        disablePictureInPicture
-        id="myVideo"
-        poster="static/home/hero.jpg"
-        sx={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-        }}
-      >
-        <source src="static/home/hero_video.mp4" type="video/mp4" />
-      </Box>
-      <Container sx={{ position: 'relative', zIndex: 1 }}>
-        <Heading variant="largeHeading" sx={{ maxWidth: '7em', mx: 'auto', textAlign: 'center' }}>
-          Wisely connected IoT
-        </Heading>
-      </Container>
-      <Box
-        sx={{
-          position: 'absolute',
-          bottom: 4,
-          left: '0',
-          right: '0',
-          textAlign: 'center',
-        }}
-      >
-        <Link to={SCROLL_TARGET} offset={navHeight() * -1} smooth duration={800}>
-          <Image src="/static/home/arrow_down.png" sx={{ cursor: 'pointer' }} />
-        </Link>
-      </Box>
-    </Flex>
-  );
-}
-
+// Helper Components
 function SectionWrapper({
   id,
   sectionImage,
@@ -143,22 +77,119 @@ function SectionContent({
   );
 }
 
-function SystemSection() {
+// Section Components
+function HeroSection() {
+  const navHeight = () => {
+    if (process.browser && document) {
+      const menu = document.getElementById(MENU_ID);
+      if (menu) {
+        return menu.clientHeight;
+      }
+    }
+    return 0;
+  };
+
+  return (
+    <Flex
+      sx={{
+        py: 6,
+        minHeight: [`calc(100vh - ${pxToRem(59)})`, `calc(100vh - ${pxToRem(70)})`],
+        alignItems: 'center',
+        position: 'relative',
+      }}
+    >
+      <Box
+        as="video"
+        // @ts-ignore
+        autoPlay
+        muted
+        loop
+        playsInline
+        disablePictureInPicture
+        id="myVideo"
+        poster="static/home/hero.jpg"
+        sx={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+        }}
+      >
+        <source src="static/home/hero_video.mp4" type="video/mp4" />
+      </Box>
+      <Container sx={{ position: 'relative', zIndex: 1 }}>
+        <Heading variant="largeHeading" sx={{ maxWidth: '7em', mx: 'auto', textAlign: 'center' }}>
+          Wisely connected IoT
+        </Heading>
+      </Container>
+      <Box
+        sx={{
+          position: 'absolute',
+          bottom: 4,
+          left: '0',
+          right: '0',
+          textAlign: 'center',
+        }}
+      >
+        <Link to={SCROLL_TARGET} offset={navHeight() * -1} smooth duration={800}>
+          <Image src="/static/home/arrow_down.png" sx={{ cursor: 'pointer' }} />
+        </Link>
+      </Box>
+    </Flex>
+  );
+}
+
+function ControlPanelSection() {
   return (
     <SectionWrapper
-      id={SCROLL_TARGET}
-      sectionImage="system"
+      sectionImage="watch"
       styles={{
         image: {
           objectPosition: ['left', 'center'],
+          '@media screen and (max-width: 480px)': {
+            objectPosition: '-35px',
+          },
         },
       }}
     >
       <Box />
       <SectionContent
-        title="ROS 2 and LoRaWAN"
-        description="Combining ROS2 with LoRaWAN's devices enables smarter, efficient connectivity with your data. Ideal for smart factories, agriculture, and city management—offering reliable communication over large areas."
+        title="WiseVision Dashboard"
+        description="Our straightforward web interface offers basic tools for easy data monitoring and control. With the WiseVision Dashboard, you can quickly view your data and adjust essential settings without any complexity. It's designed for users who need a simple, effective way to manage their data."
+        styles={{
+          title: {
+            maxWidth: '100%',
+          },
+        }}
       />
+    </SectionWrapper>
+  );
+}
+
+function BlackBoxSection() {
+  return (
+    <SectionWrapper
+      sectionImage="blackbox"
+      styles={{
+        image: {
+          objectPosition: ['right', 'center'],
+        },
+      }}
+    >
+      <SectionContent
+        title="Data Black Box"
+        description="Simple and efficient way to store and access your data. Allows you to view and use your information in real-time while securely saving it for future. Unlike other systems that might interrupt your work, our solution lets you continue your operations smoothly, ensuring your data is always safe and ready for analysis whenever you need it."
+        styles={{
+          title: {
+            maxWidth: '10em',
+          },
+        }}
+      />
+      <Box />
     </SectionWrapper>
   );
 }
@@ -201,52 +232,21 @@ function UControllerSection() {
   );
 }
 
-function BlackBoxSection() {
+function SystemSection() {
   return (
     <SectionWrapper
-      sectionImage="blackbox"
-      styles={{
-        image: {
-          objectPosition: ['right', 'center'],
-        },
-      }}
-    >
-      <SectionContent
-        title="Data Black Box"
-        description="Simple and efficient way to store and access your data. Allows you to view and use your information in real-time while securely saving it for future. Unlike other systems that might interrupt your work, our solution lets you continue your operations smoothly, ensuring your data is always safe and ready for analysis whenever you need it."
-        styles={{
-          title: {
-            maxWidth: '10em',
-          },
-        }}
-      />
-      <Box />
-    </SectionWrapper>
-  );
-}
-
-function ControlPanelSection() {
-  return (
-    <SectionWrapper
-      sectionImage="watch"
+      id={SCROLL_TARGET}
+      sectionImage="system"
       styles={{
         image: {
           objectPosition: ['left', 'center'],
-          '@media screen and (max-width: 480px)': {
-            objectPosition: '-35px',
-          },
         },
       }}
     >
       <Box />
       <SectionContent
-        title="WiseVision Dashboard"
-        description="Our straightforward web interface offers basic tools for easy data monitoring and control. With the WiseVision Dashboard, you can quickly view your data and adjust essential settings without any complexity. It's designed for users who need a simple, effective way to manage their data."
-        styles={{
-          title: {
-            maxWidth: '100%',
-          },
-        }}
+        title="ROS 2 and LoRaWAN"
+        description="Combining ROS2 with LoRaWAN's devices enables smarter, efficient connectivity with your data. Ideal for smart factories, agriculture, and city management—offering reliable communication over large areas."
       />
     </SectionWrapper>
   );
@@ -258,11 +258,10 @@ function NotificationSection() {
       sectionImage="alarm"
       styles={{
         image: {
-          objectPosition: ['left', 'center'],
+          objectPosition: ['right', 'center'],
         },
       }}
     >
-      <Box />
       <SectionContent
         title="Notifications and Automatic Execution"
         description="Sends real-time alerts, notifying users of any unusual activity. Provides instant notifications, allowing swift action to be taken. Integrated with ROS 2 to enable automatic execution of tasks."
@@ -272,40 +271,42 @@ function NotificationSection() {
           },
         }}
       />
+      <Box />
     </SectionWrapper>
   );
 }
 
+// Constants for Usage Section
 const USAGE_ITEMS = [
   {
     icon: 'analityka_handlu',
-    label: 'WiseVision LoRa Bridge',
-    href: ROUTES.WISEVISION_LORA_BRIDGE,
+    label: 'AI Centric Systems',
+    href: ROUTES.AI_CENTRIC_SYSTEMS,
   },
   {
     icon: 'zarzadzanie_wideo',
-    label: 'WiseVision Data Black Box',
-    href: ROUTES.ZARZADZANIE_WIDEO,
+    label: 'Smart Factory',
+    href: ROUTES.SMART_FACTORY,
   },
   {
     icon: 'wideo_na_zywo',
-    label: 'WiseVision Micro ROS for LoRa-E5',
-    href: ROUTES.WIDEO_NA_ZYWO,
+    label: 'Logistics',
+    href: ROUTES.LOGISTICS,
   },
   {
     icon: 'identyfikacja',
-    label: 'WiseVision Action Executor',
-    href: ROUTES.IDENTYFIKACJA,
+    label: 'Agriculture',
+    href: ROUTES.AGRICULTURE,
   },
   {
     icon: 'zdalny_dostep',
-    label: 'WiseVision Dashboard',
-    href: ROUTES.ZDALNY_DOSTEP,
+    label: 'Robotics',
+    href: ROUTES.ROBOTICS,
   },
   {
     icon: 'covid',
-    label: 'WiseVision Notificator',
-    href: ROUTES.COVID,
+    label: 'Smart City',
+    href: ROUTES.SMART_CITY,
   },
 ];
 
@@ -355,6 +356,7 @@ function UsageSection() {
   );
 }
 
+// Export Home page component
 export default function Home() {
   return (
     <Box>
