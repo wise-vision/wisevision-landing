@@ -35,7 +35,7 @@ function NewsletterForm() {
           placeholder="email"
           sx={{ flex: 1, bg: 'backgroundMuted', px: pxToRem(24) }}
         />
-        <Button type="submit">Subskrybuj</Button>
+        <Button type="submit">Subscribe</Button>
       </Flex>
     </form>
   );
@@ -74,18 +74,17 @@ export function Footer() {
                 <Box sx={{ lineHeight: 'loose' }}>
                   Inter Plus Sp. z o.o.
                   <br />
-                  ul. Świętokrzyska 30/63
+                  ul. Swietokrzyska 30/63
                   <br />
-                  00-116 Warszawa
+                  00-116 Warsaw
                   <br />
-                  Polska
+                  Poland
                 </Box>
               </Box>
               <Box>
                 <Box sx={footerLabel}>Contact</Box>
                 <Grid gap={1}>
                   <AppLink href="mailto:support@wisevision.tech">support@wisevision.com.pl</AppLink>
-                  <AppLink href="mailto:adam.krawczyk@wisevision.tech">adam.krawczyk@wisevision.com.pl</AppLink>
                 </Grid>
               </Box>
             </Grid>
@@ -94,8 +93,8 @@ export function Footer() {
                 <Box sx={footerLabel}>About company</Box>
                 <Grid gap={1}>
                   <AppLink href={ROUTES.O_NAS}>About company</AppLink>
-                  <AppLink href={ROUTES.NOTY_PRAWNE}>Noty prawne</AppLink>
-                  <AppLink href={ROUTES.RODO}>Rodo</AppLink>
+                  <AppLink href={ROUTES.NOTY_PRAWNE}>Legal Notes</AppLink>
+                  <AppLink href={ROUTES.RODO}>RODO</AppLink>
                 </Grid>
               </Box>
               <SocialMedia sx={{ display: ['block', null, 'none'] }} />
