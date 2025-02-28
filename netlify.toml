@@ -1,9 +1,5 @@
-[build]
-  command = "yarn build"
-  publish = ".next"
-
 [[plugins]]
-  package = "@opennextjs/netlify"
+  package = "@netlify/plugin-nextjs"
 
 [build.environment]
   NODE_VERSION = "22"
