@@ -13,6 +13,7 @@ import {
   ThemeUIStyleObject,
 } from 'theme-ui';
 import { AppLink } from './AppLink';
+import { MySxProp } from '../types';
 
 const footerLabel: ThemeUIStyleObject = {
   fontWeight: 'bold',
@@ -41,7 +42,7 @@ function NewsletterForm() {
   );
 }
 
-function SocialMedia({ sx }: SxProp) {
+function SocialMedia({ sx }: MySxProp) {
   return (
     <Box sx={sx}>
       <Box sx={footerLabel}>Social Media</Box>
@@ -82,10 +83,8 @@ export function Footer() {
                 </Box>
               </Box>
               <Box>
-                <Box sx={footerLabel}>Contact</Box>
-                <Grid gap={1}>
-                  <AppLink href="mailto:support@wisevision.tech">support@wisevision.com.pl</AppLink>
-                </Grid>
+                {/* <Box sx={footerLabel}>Newsletter</Box> */}
+                {/* <NewsletterForm /> */}
               </Box>
             </Grid>
             <Grid gap={4}>
@@ -101,8 +100,10 @@ export function Footer() {
             </Grid>
             <Grid gap={4} sx={{ order: [-1, null, 0], gridColumn: ['-1 / 1', null, 3] }}>
               <Box>
-                <Box sx={footerLabel}>Newsletter</Box>
-                <NewsletterForm />
+                <Box sx={footerLabel}>Contact</Box>
+                <Grid gap={1}>
+                  <AppLink href="mailto:office@wisevision.tech">office@wisevision.tech</AppLink>
+                </Grid>
               </Box>
               <SocialMedia sx={{ display: ['none', null, 'block'] }} />
             </Grid>

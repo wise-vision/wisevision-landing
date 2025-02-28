@@ -52,7 +52,7 @@ export function BaseHeadTags() {
         rel="stylesheet"
       />
       <GoogleTagManager />
-      <LiveChat />
+      {/* <LiveChat /> */} {/* Uncomment this line to enable live chat */}
     </>
   );
 }

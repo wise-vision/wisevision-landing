@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { ReactNode } from 'react';
-import { Box, Link as ThemeLink, SxProp } from 'theme-ui';
+import { SxProp } from 'theme-ui';
 
 interface AppLinkProps extends SxProp {
   href: string;
@@ -13,25 +13,50 @@ interface AppLinkProps extends SxProp {
 }
 
 export function AppLink({ href, as, children, sx, ...rest }: AppLinkProps) {
-  const isInternalLink = href.startsWith('/') || href.startsWith('#') || href.startsWith('https://wisevision.tech');
+  // Cast sx to a record so that we can destructure it
+  const sxObj = (sx || {}) as Record<string, any>;
+  const { textDecoration, ...restSx } = sxObj;
+  // Replace a null textDecoration with 'none'
+  const finalTextDecoration = textDecoration === null || textDecoration === undefined ? 'none' : textDecoration;
 
-  return isInternalLink ? (
-    <Link {...{ href, as }} passHref>
-      <ThemeLink sx={{ textDecoration: 'none', color: 'inherit', ...sx }} {...rest}>
-        {children}
-      </ThemeLink>
-    </Link>
-  ) : (
-    <ThemeLink
-      {...{
-        href,
-        target: '_blank',
-        rel: 'noopener noreferrer',
-        sx: { textDecoration: 'none', color: 'inherit', ...sx },
-        ...rest,
-      }}
-    >
-      {children}
-    </ThemeLink>
+  // Filter out any null values from the rest of sx
+  const filteredRestSx = Object.fromEntries(
+    Object.entries(restSx).filter(([, value]) => value !== null)
   );
+
+  const combinedStyle = {
+    textDecoration: finalTextDecoration,
+    color: 'white',
+    ...filteredRestSx,
+  };
+
+  const isInternalLink =
+    href.startsWith('/') ||
+    href.startsWith('#') ||
+    href.startsWith('https://wisevision.tech');
+
+  if (isInternalLink) {
+    return (
+      <Link
+        href={href}
+        as={as}
+        {...rest}
+        style={combinedStyle}
+      >
+        {children}
+      </Link>
+    );
+  } else {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={combinedStyle}
+        {...rest}
+      >
+        {children}
+      </a>
+    );
+  }
 }

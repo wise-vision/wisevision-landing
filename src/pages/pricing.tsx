@@ -7,7 +7,7 @@ import { Box, Container, Flex, Heading } from 'theme-ui';
 export default function Pricing() {
   return (
     <Box>
-      <PageBanner image="pricing" title="Pricing" />
+      <PageBanner image="downloads" title="Pricing" />
       <Flex
         sx={{
           bg: 'primary',

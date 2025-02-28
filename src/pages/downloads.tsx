@@ -23,7 +23,7 @@ function DownloadItem({
         {title}
       </Flex>
       <AppLink href={href}>
-        <Button sx={{ width: '100%' }}>Download</Button>
+        <Button sx={{ width: '100%' }}>GET</Button>
       </AppLink>
     </Grid>
   );
@@ -49,16 +49,16 @@ export default function Downloads() {
           <DownloadItemsContainer title="WHITEPAPER">
             <DownloadItem
               iconColor="primary"
-              href={ROUTES.POBIERZ_SPECYFIKACJA}
+              href={ROUTES.GITHUB}
               title={
                 <>
-                  Specyfikacja <br /> WiseVision
+                  WiseVision <br /> GitHub Repo
                 </>
               }
             />
             <DownloadItem
               iconColor="primary"
-              href={ROUTES.DOWNLOAD_DOCUMENTATION}
+              href={ROUTES.GITHUB_START}
               title="Documentation"
             />
           </DownloadItemsContainer>

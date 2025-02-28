@@ -1,11 +1,11 @@
 import { Global } from '@emotion/react';
 import { AppProps } from 'next/app';
 import dynamic from 'next/dynamic';
-import React from 'react';
 import theme from 'theme';
 import { ThemeProvider } from 'theme-ui';
 import { Layout } from 'components/Layout';
 import { PageSEOTags } from 'components/HeadTags';
+import React, { ReactElement } from 'react';
 
 const DarkReaderDisable = dynamic(() => import('components/DarkReaderDisable'), { ssr: false });
 
@@ -36,7 +36,7 @@ const globalStyles = `
 // extending Component with static properties that can be attached to it
 interface CustomAppProps {
   Component: {
-    seoTags?: JSX.Element;
+    seoTags?: ReactElement; 
   };
 }
 

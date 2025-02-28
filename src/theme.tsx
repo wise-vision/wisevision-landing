@@ -10,8 +10,9 @@ const baseSizes = [0, 4, 8, 16, 32, 64, 128, 256];
 
 const theme: Theme = {
   useBorderBox: true,
-  useBodyStyles: true,
-  breakpoints: ['48em', '64em', '80em'],
+  // useBodyStyles: true,
+  // breakpoints: ['48em', '64em', '80em'],
+  breakpoints: ['48em', '64em', '80em'] as string[],
   fontSizes: baseFontSizes.map((size) => pxToRem(size)),
   space: baseSpace.map((size) => pxToRem(size)),
   sizes: baseSizes.map((size) => pxToRem(size)),
