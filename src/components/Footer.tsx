@@ -111,7 +111,7 @@ export function Footer() {
         </Container>
       </Box>
       <Box sx={{ bg: 'primary', color: 'textAlt', textAlign: 'center', py: pxToRem(18) }}>
-        <Container>wisevision {year} - all rights reserved</Container>
+        <Container>WiseVision {year} - all rights reserved</Container>
       </Box>
     </Box>
   );
