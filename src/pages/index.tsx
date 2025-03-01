@@ -6,7 +6,7 @@ import { pxToRem } from 'theme';
 import { Box, Button, Container, Flex, Grid, Heading, Image, ThemeUIStyleObject } from 'theme-ui';
 import { WithChildren } from 'types';
 import { Link } from 'react-scroll';
-import DataPacketVisualization from 'components/DataPacketVisualization';
+import InteractiveNetworkVisualization from 'components/InteractiveNetworkVisualization';
 
 // Global Constants
 const SCROLL_TARGET = 'scrollTarget';
@@ -102,26 +102,26 @@ function HeroSection() {
         overflow: 'hidden', // Prevent any overflow issues
       }}
     >
-      {/* Visualization takes up the full viewport */}
-      <DataPacketVisualization 
+      {/* InteractiveNetworkVisualization with explicit z-index */}
+      <InteractiveNetworkVisualization 
         sx={{
-          zIndex: 0,
-          opacity: 0.9, // Slightly increased opacity
+          zIndex: 0, // Ensure this is behind everything
+          opacity: 0.9, // Reduced opacity for better text visibility
           position: 'absolute',
           top: 0,
           left: 0,
-          width: '100vw', // Use viewport units instead of percentages
+          width: '100vw',
           height: '100vh',
         }}
       />
-      <Container sx={{ position: 'relative', zIndex: 1 }}>
+      <Container sx={{ position: 'relative', zIndex: 2 }}> {/* Increased z-index from 1 to 2 */}
         <Heading 
           variant="largeHeading" 
           sx={{ 
             maxWidth: '7em', 
             mx: 'auto', 
             textAlign: 'center',
-            textShadow: '0 0 10px rgba(0,0,0,0.5)', // Add text shadow for better readability
+            textShadow: '0 0 15px rgba(0,0,0,0.7)', // Increased shadow for better readability
           }}
         >
           Wisely connected IoT
@@ -134,11 +134,17 @@ function HeroSection() {
           left: '0',
           right: '0',
           textAlign: 'center',
-          zIndex: 2,
+          zIndex: 2, // Match container z-index
         }}
       >
         <Link to={SCROLL_TARGET} offset={navHeight() * -1} smooth duration={800}>
-          <Image src="/static/home/arrow_down.png" sx={{ cursor: 'pointer' }} />
+          <Image 
+            src="/static/home/arrow_down.png" 
+            sx={{ 
+              cursor: 'pointer',
+              filter: 'drop-shadow(0 0 5px rgba(0,0,0,0.5))' // Add shadow to arrow
+            }} 
+          />
         </Link>
       </Box>
     </Flex>
