@@ -7,7 +7,7 @@ import { Box, Container, Flex, Heading } from 'theme-ui';
 export default function Pricing() {
   return (
     <Box>
-      <PageBanner image="pricing" title="Pricing" />
+      <PageBanner image="downloads" title="Pricing" />
       <Flex
         sx={{
           bg: 'primary',
@@ -18,7 +18,7 @@ export default function Pricing() {
       >
         <Container>
           <Heading sx={{ textAlign: 'center', color: 'textAlt' }}>
-          Find Your Perfect Plan: Contact Us for Customized Pricing Solutions.
+            Find Your Perfect Plan: Contact Us for Customized Pricing Solutions.
           </Heading>
         </Container>
       </Flex>

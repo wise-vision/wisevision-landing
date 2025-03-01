@@ -1,4 +1,3 @@
-
 # WiseVision Data Black Box
 
 ## Introduction
@@ -9,4 +8,5 @@ The WiseVision dashboard
 
 ---
 
-Do you need support with this topic or have questions about your project? Feel free to contact us! [support@wisevision.tech](mailto:support@wisevision.tech)
+Do you need support with this topic or have questions about your project? Feel free to contact us!
+[support@wisevision.tech](mailto:support@wisevision.tech)

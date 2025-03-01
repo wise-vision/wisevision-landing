@@ -12,7 +12,7 @@ export default class MyDocument extends Document<Document> {
 
   render() {
     return (
-      <Html lang="pl">
+      <Html lang="en">
         <Head>
           <BaseHeadTags />
         </Head>

@@ -1,10 +1,10 @@
 # Parsing LDS02 door sensor payload
 
-
-For detailed LDS02 door sensor documentation see [this](https://wiki.dragino.com/xwiki/bin/view/Main/User%20Manual%20for%20LoRaWAN%20End%20Nodes/LDS02%20-%20LoRaWAN%20Door%20Sensor%20User%20Manual/#H4.3UplinkPayload).
-
+For detailed LDS02 door sensor documentation see
+[this](https://wiki.dragino.com/xwiki/bin/view/Main/User%20Manual%20for%20LoRaWAN%20End%20Nodes/LDS02%20-%20LoRaWAN%20Door%20Sensor%20User%20Manual/#H4.3UplinkPayload).
 
 Full code:
+
 ```python
 import rclpy
 from rclpy.node import Node

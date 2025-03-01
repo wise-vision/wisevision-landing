@@ -1,3 +1,4 @@
+import React from 'react';
 import { AppLink } from 'components/AppLink';
 import { MENU_ID } from 'components/Menu';
 import { ROUTES } from 'routes';
@@ -5,6 +6,7 @@ import { pxToRem } from 'theme';
 import { Box, Button, Container, Flex, Grid, Heading, Image, ThemeUIStyleObject } from 'theme-ui';
 import { WithChildren } from 'types';
 import { Link } from 'react-scroll';
+import InteractiveNetworkVisualization from 'components/InteractiveNetworkVisualization';
 
 // Global Constants
 const SCROLL_TARGET = 'scrollTarget';
@@ -92,37 +94,36 @@ function HeroSection() {
   return (
     <Flex
       sx={{
-        py: 6,
+        py: 0, // Remove padding to allow full screen
         minHeight: [`calc(100vh - ${pxToRem(59)})`, `calc(100vh - ${pxToRem(70)})`],
+        height: '100vh', // Ensure it takes full viewport height
         alignItems: 'center',
         position: 'relative',
+        overflow: 'hidden', // Prevent any overflow issues
       }}
     >
-      <Box
-        as="video"
-        // @ts-ignore
-        autoPlay
-        muted
-        loop
-        playsInline
-        disablePictureInPicture
-        id="myVideo"
-        poster="static/home/hero.jpg"
+      {/* InteractiveNetworkVisualization with explicit z-index */}
+      <InteractiveNetworkVisualization 
         sx={{
+          zIndex: 0, // Ensure this is behind everything
+          opacity: 0.9, // Reduced opacity for better text visibility
           position: 'absolute',
           top: 0,
           left: 0,
-          right: 0,
-          bottom: 0,
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
+          width: '100vw',
+          height: '100vh',
         }}
-      >
-        <source src="static/home/hero_video.mp4" type="video/mp4" />
-      </Box>
-      <Container sx={{ position: 'relative', zIndex: 1 }}>
-        <Heading variant="largeHeading" sx={{ maxWidth: '7em', mx: 'auto', textAlign: 'center' }}>
+      />
+      <Container sx={{ position: 'relative', zIndex: 2 }}> {/* Increased z-index from 1 to 2 */}
+        <Heading 
+          variant="largeHeading" 
+          sx={{ 
+            maxWidth: '7em', 
+            mx: 'auto', 
+            textAlign: 'center',
+            textShadow: '0 0 15px rgba(0,0,0,0.7)', // Increased shadow for better readability
+          }}
+        >
           Wisely connected IoT
         </Heading>
       </Container>
@@ -133,10 +134,17 @@ function HeroSection() {
           left: '0',
           right: '0',
           textAlign: 'center',
+          zIndex: 2, // Match container z-index
         }}
       >
         <Link to={SCROLL_TARGET} offset={navHeight() * -1} smooth duration={800}>
-          <Image src="/static/home/arrow_down.png" sx={{ cursor: 'pointer' }} />
+          <Image 
+            src="/static/home/arrow_down.png" 
+            sx={{ 
+              cursor: 'pointer',
+              filter: 'drop-shadow(0 0 5px rgba(0,0,0,0.5))' // Add shadow to arrow
+            }} 
+          />
         </Link>
       </Box>
     </Flex>
@@ -146,6 +154,7 @@ function HeroSection() {
 function ControlPanelSection() {
   return (
     <SectionWrapper
+      id={SCROLL_TARGET}
       sectionImage="watch"
       styles={{
         image: {
@@ -235,7 +244,6 @@ function UControllerSection() {
 function SystemSection() {
   return (
     <SectionWrapper
-      id={SCROLL_TARGET}
       sectionImage="system"
       styles={{
         image: {
