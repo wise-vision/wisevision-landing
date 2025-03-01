@@ -94,21 +94,36 @@ function HeroSection() {
   return (
     <Flex
       sx={{
-        py: 6,
+        py: 0, // Remove padding to allow full screen
         minHeight: [`calc(100vh - ${pxToRem(59)})`, `calc(100vh - ${pxToRem(70)})`],
+        height: '100vh', // Ensure it takes full viewport height
         alignItems: 'center',
         position: 'relative',
+        overflow: 'hidden', // Prevent any overflow issues
       }}
     >
-      {/* Replace video element with DataPacketVisualization */}
+      {/* Visualization takes up the full viewport */}
       <DataPacketVisualization 
         sx={{
           zIndex: 0,
-          opacity: 0.8,
+          opacity: 0.9, // Slightly increased opacity
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100vw', // Use viewport units instead of percentages
+          height: '100vh',
         }}
       />
       <Container sx={{ position: 'relative', zIndex: 1 }}>
-        <Heading variant="largeHeading" sx={{ maxWidth: '7em', mx: 'auto', textAlign: 'center' }}>
+        <Heading 
+          variant="largeHeading" 
+          sx={{ 
+            maxWidth: '7em', 
+            mx: 'auto', 
+            textAlign: 'center',
+            textShadow: '0 0 10px rgba(0,0,0,0.5)', // Add text shadow for better readability
+          }}
+        >
           Wisely connected IoT
         </Heading>
       </Container>
