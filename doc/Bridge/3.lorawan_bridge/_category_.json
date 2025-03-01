@@ -1,8 +1,7 @@
 {
-    "label": "WiseVision LoRaWAN Bridge",
-    "position": 3,
-    "link": {
-      "type": "generated-index"
-    }
+  "label": "WiseVision LoRaWAN Bridge",
+  "position": 3,
+  "link": {
+    "type": "generated-index"
   }
-  
+}

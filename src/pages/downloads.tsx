@@ -56,11 +56,7 @@ export default function Downloads() {
                 </>
               }
             />
-            <DownloadItem
-              iconColor="primary"
-              href={ROUTES.GITHUB_START}
-              title="Documentation"
-            />
+            <DownloadItem iconColor="primary" href={ROUTES.GITHUB_START} title="Documentation" />
           </DownloadItemsContainer>
           <DownloadItemsContainer title="NOTES & RODO">
             <DownloadItem iconColor="muted" href={ROUTES.DOWNLOAD_RODO} title="RODO" />

@@ -18,7 +18,7 @@ export default function Pricing() {
       >
         <Container>
           <Heading sx={{ textAlign: 'center', color: 'textAlt' }}>
-          Find Your Perfect Plan: Contact Us for Customized Pricing Solutions.
+            Find Your Perfect Plan: Contact Us for Customized Pricing Solutions.
           </Heading>
         </Container>
       </Flex>

@@ -36,7 +36,7 @@ const globalStyles = `
 // extending Component with static properties that can be attached to it
 interface CustomAppProps {
   Component: {
-    seoTags?: ReactElement; 
+    seoTags?: ReactElement;
   };
 }
 

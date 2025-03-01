@@ -32,9 +32,7 @@ module.exports = {
         source: '/static/doc/docs/intro',
         destination: '/static/doc/docs/intro/index.html',
       },
-      { source: '/static/doc/blog', 
-        destination: '/static/doc/blog/index.html',
-      },
+      { source: '/static/doc/blog', destination: '/static/doc/blog/index.html' },
       // {
       //   source: '/docs/:slug*',        // Match any subpath after /docs/ and rewrite it to /static/doc/:slug* but does not work
       //   destination: '/static/doc/:slug*',

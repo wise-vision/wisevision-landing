@@ -4,7 +4,7 @@
 // There are various equivalent ways to declare your Docusaurus config.
 // See: https://docusaurus.io/docs/api/docusaurus-config
 
-import {themes as prismThemes} from 'prism-react-renderer';
+import { themes as prismThemes } from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -144,12 +144,12 @@ const config = {
             position: 'right',
             label: 'Documentation',
           },
-          {to: '/Dashboard/intro', label: 'Dashboard', position: 'left'},
-          {to: '/Bridge/intro', label: 'Bridge', position: 'left'},
-          {to: '/BlackBox/intro', label: 'BlackBox', position: 'left'},
-          {to: '/DevBoard/intro', label: 'DevBoard', position: 'left'},
-          {to: '/Tools/intro', label: 'Tools', position: 'left'},
-          {to: '/blog', label: 'Blog', position: 'right'},
+          { to: '/Dashboard/intro', label: 'Dashboard', position: 'left' },
+          { to: '/Bridge/intro', label: 'Bridge', position: 'left' },
+          { to: '/BlackBox/intro', label: 'BlackBox', position: 'left' },
+          { to: '/DevBoard/intro', label: 'DevBoard', position: 'left' },
+          { to: '/Tools/intro', label: 'Tools', position: 'left' },
+          { to: '/blog', label: 'Blog', position: 'right' },
           {
             href: 'https://github.com/wise-vision',
             label: 'GitHub',

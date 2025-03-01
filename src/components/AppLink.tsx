@@ -17,7 +17,8 @@ export function AppLink({ href, as, children, sx, ...rest }: AppLinkProps) {
   const sxObj = (sx || {}) as Record<string, any>;
   const { textDecoration, ...restSx } = sxObj;
   // Replace a null textDecoration with 'none'
-  const finalTextDecoration = textDecoration === null || textDecoration === undefined ? 'none' : textDecoration;
+  const finalTextDecoration =
+    textDecoration === null || textDecoration === undefined ? 'none' : textDecoration;
 
   // Filter out any null values from the rest of sx
   const filteredRestSx = Object.fromEntries(
@@ -31,32 +32,18 @@ export function AppLink({ href, as, children, sx, ...rest }: AppLinkProps) {
   };
 
   const isInternalLink =
-    href.startsWith('/') ||
-    href.startsWith('#') ||
-    href.startsWith('https://wisevision.tech');
+    href.startsWith('/') || href.startsWith('#') || href.startsWith('https://wisevision.tech');
 
   if (isInternalLink) {
     return (
-      <Link
-        href={href}
-        as={as}
-        {...rest}
-        style={combinedStyle}
-      >
+      <Link href={href} as={as} {...rest} style={combinedStyle}>
         {children}
       </Link>
     );
-  } else {
-    return (
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={combinedStyle}
-        {...rest}
-      >
-        {children}
-      </a>
-    );
   }
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer" style={combinedStyle} {...rest}>
+      {children}
+    </a>
+  );
 }
