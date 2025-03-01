@@ -1,3 +1,4 @@
+import React from 'react';
 import { AppLink } from 'components/AppLink';
 import { MENU_ID } from 'components/Menu';
 import { ROUTES } from 'routes';
@@ -5,6 +6,7 @@ import { pxToRem } from 'theme';
 import { Box, Button, Container, Flex, Grid, Heading, Image, ThemeUIStyleObject } from 'theme-ui';
 import { WithChildren } from 'types';
 import { Link } from 'react-scroll';
+import DataPacketVisualization from 'components/DataPacketVisualization';
 
 // Global Constants
 const SCROLL_TARGET = 'scrollTarget';
@@ -98,29 +100,13 @@ function HeroSection() {
         position: 'relative',
       }}
     >
-      <Box
-        as="video"
-        // @ts-ignore
-        autoPlay
-        muted
-        loop
-        playsInline
-        disablePictureInPicture
-        id="myVideo"
-        poster="static/home/hero.jpg"
+      {/* Replace video element with DataPacketVisualization */}
+      <DataPacketVisualization 
         sx={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
+          zIndex: 0,
+          opacity: 0.8,
         }}
-      >
-        <source src="static/home/hero_video.mp4" type="video/mp4" />
-      </Box>
+      />
       <Container sx={{ position: 'relative', zIndex: 1 }}>
         <Heading variant="largeHeading" sx={{ maxWidth: '7em', mx: 'auto', textAlign: 'center' }}>
           Wisely connected IoT
@@ -133,6 +119,7 @@ function HeroSection() {
           left: '0',
           right: '0',
           textAlign: 'center',
+          zIndex: 2,
         }}
       >
         <Link to={SCROLL_TARGET} offset={navHeight() * -1} smooth duration={800}>
