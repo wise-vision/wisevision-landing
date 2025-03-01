@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { ROUTES } from 'routes';
 import { pxToRem } from 'theme';
 import {
@@ -22,25 +22,25 @@ const footerLabel: ThemeUIStyleObject = {
   fontSize: [5, null, 3],
 };
 
-function NewsletterForm() {
-  const [email, setEmail] = useState('');
+// function NewsletterForm() {
+//   const [email, setEmail] = useState('');
 
-  return (
-    <form action={process.env.NEXT_PUBLIC_MAILCHIMP_URL} method="POST" target="_blank">
-      <Flex sx={{ maxWidth: ['100%', null, pxToRem(320)], width: '100%' }}>
-        <Input
-          name="EMAIL"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="email"
-          sx={{ flex: 1, bg: 'backgroundMuted', px: pxToRem(24) }}
-        />
-        <Button type="submit">Subscribe</Button>
-      </Flex>
-    </form>
-  );
-}
+//   return (
+//     <form action={process.env.NEXT_PUBLIC_MAILCHIMP_URL} method="POST" target="_blank">
+//       <Flex sx={{ maxWidth: ['100%', null, pxToRem(320)], width: '100%' }}>
+//         <Input
+//           name="EMAIL"
+//           type="email"
+//           value={email}
+//           onChange={(e) => setEmail(e.target.value)}
+//           placeholder="email"
+//           sx={{ flex: 1, bg: 'backgroundMuted', px: pxToRem(24) }}
+//         />
+//         <Button type="submit">Subscribe</Button>
+//       </Flex>
+//     </form>
+//   );
+// }
 
 function SocialMedia({ sx }: MySxProp) {
   return (
@@ -51,7 +51,7 @@ function SocialMedia({ sx }: MySxProp) {
           <Image src="static/icons/twitter.png" />
         </AppLink> */}
         <AppLink href={ROUTES.LINKEDIN}>
-          <Image src="static/icons/linkedin.png" />
+          <Image src="static/icons/linkedin.png" alt="LinkedIn" />
         </AppLink>
       </Flex>
     </Box>
@@ -66,7 +66,7 @@ export function Footer() {
       <Box sx={{ bg: 'backgroundAlt', py: 4, color: 'textMuted' }}>
         <Container variant="footer" pb={2}>
           <Box mb={4}>
-            <Image src="/static/logo.png" sx={{ maxWidth: [pxToRem(140), '100%'] }} />
+            <Image src="/static/logo.png" alt="WiseVision Logo" sx={{ maxWidth: [pxToRem(140), '100%'] }} />
           </Box>
           <Grid columns={[1, 2, 3]} gap={4}>
             <Grid gap={4}>

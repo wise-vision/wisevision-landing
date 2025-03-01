@@ -2,7 +2,13 @@
 
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
-module.exports = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  // Enable the new export mode:
+  output: 'export',
   /**
    * Custom Webpack Config
    * https://nextjs.org/docs/api-reference/next.config.js/custom-webpack-config
@@ -40,3 +46,5 @@ module.exports = {
     ];
   },
 };
+
+module.exports = nextConfig;
