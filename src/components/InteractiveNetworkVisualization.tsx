@@ -1208,8 +1208,8 @@ const InteractiveNetworkVisualization: React.FC<NetworkVisualizationProps> = ({ 
           </Text>
           <Box sx={{ fontSize: '14px' }}>
             <Text>Connections: {selectedNode.connections}</Text>
-            <Text>Data Rate: {selectedNode.dataRate}</Text>
-            <Text>Position: {selectedNode.position}</Text>
+            {/* <Text>Data Rate: {selectedNode.dataRate}</Text>
+            <Text>Position: {selectedNode.position}</Text> */}
           </Box>
           <Box
             sx={{

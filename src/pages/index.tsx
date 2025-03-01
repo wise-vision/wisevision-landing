@@ -154,6 +154,7 @@ function HeroSection() {
 function ControlPanelSection() {
   return (
     <SectionWrapper
+      id={SCROLL_TARGET}
       sectionImage="watch"
       styles={{
         image: {
@@ -243,7 +244,6 @@ function UControllerSection() {
 function SystemSection() {
   return (
     <SectionWrapper
-      id={SCROLL_TARGET}
       sectionImage="system"
       styles={{
         image: {
