@@ -118,6 +118,7 @@ function HeroSection() {
         <Heading 
           variant="largeHeading" 
           sx={{ 
+            mt: '-15rem', // adjust this value to make text offset from center of animation
             maxWidth: '7em', 
             mx: 'auto', 
             textAlign: 'center',
@@ -326,7 +327,7 @@ function UsageSection() {
           <Heading
             sx={{ color: 'textAlt', textAlign: 'center', maxWidth: ['8em', '100%'], mx: 'auto' }}
           >
-            WiseVision Suite of Tools
+            WiseVision Use Cases
           </Heading>
         </Container>
       </Box>
