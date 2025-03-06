@@ -338,6 +338,11 @@ const InteractiveNetworkVisualization: React.FC<NetworkVisualizationProps> = ({ 
         
         // Simulate data flow from this node
         triggerDataFlows(node);
+        
+        // Reset the node size after 5 seconds
+        setTimeout(() => {
+          highlightNode(node, false);
+        }, 5000);
       }
     };
 
