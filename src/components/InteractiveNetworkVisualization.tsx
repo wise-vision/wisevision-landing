@@ -4,6 +4,7 @@ import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass';
 import { Box, Text } from 'theme-ui';
+import theme from 'theme';
 
 interface NetworkVisualizationProps {
   sx?: any;
@@ -11,17 +12,19 @@ interface NetworkVisualizationProps {
 
 // Node types for the network
 enum NodeType {
-  SENSOR = 'sensor',
-  CONTROLLER = 'controller',
-  GATEWAY = 'gateway',
-  DATA_CENTER = 'data_center',
-  INDUSTRIAL_SYSTEM = 'industrial_system',
-  SMART_BUILDING = 'smart_building'
+  SENSOR = 'Sensor',
+  CONTROLLER = 'Controller',
+  GATEWAY = 'Gateway',
+  DATA_CENTER = 'WiseVision Core',
+  INDUSTRIAL_SYSTEM = 'Industrial System',
+  SMART_BUILDING = 'Smart Building',
+  ROBOT = 'Robot'
 }
 
 // Color palette for the visualization
-const COLORS = {
+const colors_hex = {
   BLUE_DEEP: 0x0a1a40,
+  BLUE_DEEP2: 0x000033,
   BLUE_MID: 0x0f3460,
   BLUE_LIGHT: 0x4bcdf0,
   TEAL: 0x3ae3ae,
@@ -30,51 +33,74 @@ const COLORS = {
   ORANGE: 0xff6600,
   GREEN: 0x2ecc71,
   WHITE: 0xffffff,
+  BLACK: 0x000000,
+  GRAY: 0x808080,
+}
+
+// Color palette for the visualization
+const COLORS = {
+  SENSOR: colors_hex.BLUE_LIGHT,
+  CONTROLLER: colors_hex.BLUE_DEEP,
+  GATEWAY: colors_hex.BLUE_MID,
+  DATA_CENTER: colors_hex.BLUE_LIGHT,
+  INDUSTRIAL_SYSTEM: colors_hex.GREEN,
+  SMART_BUILDING: colors_hex.ORANGE,
+  GRID: colors_hex.BLACK,
+  LINE: colors_hex.GRAY,
+  BACKGROUND: colors_hex.BLUE_DEEP2,
+  ROBOT: colors_hex.PURPLE,
 }
 
 // Node properties by type
 const NODE_PROPERTIES = {
   [NodeType.SENSOR]: {
-    color: COLORS.TEAL,
+    color: COLORS.SENSOR,
     size: 0.8,
     shape: 'sphere',
-    name: 'IoT Sensor',
+    name: 'IoT Sensor ',
     description: 'Collects environmental data like temperature, humidity, etc.'
   },
   [NodeType.CONTROLLER]: {
-    color: COLORS.BLUE_LIGHT,
+    color: COLORS.CONTROLLER,
     size: 1.2,
     shape: 'box',
-    name: 'Edge Controller',
+    name: 'Edge Controller ',
     description: 'Processes data from multiple sensors and controls local systems'
   },
   [NodeType.GATEWAY]: {
-    color: COLORS.PURPLE,
+    color: COLORS.GATEWAY,
     size: 1.5,
     shape: 'octahedron',
-    name: 'Network Gateway',
+    name: 'Network Gateway ',
     description: 'Routes data between local nodes and the central data center'
   },
   [NodeType.DATA_CENTER]: {
-    color: COLORS.ORANGE,
+    color: COLORS.DATA_CENTER,
     size: 2.5,
     shape: 'cylinder',
-    name: 'Data Center',
+    name: 'WiseVision ',
     description: 'Central processing hub for all network data and analytics'
   },
   [NodeType.INDUSTRIAL_SYSTEM]: {
-    color: COLORS.GREEN,
+    color: COLORS.INDUSTRIAL_SYSTEM,
     size: 1.8,
     shape: 'cone',
-    name: 'Industrial System',
-    description: 'Manufacturing equipment with IoT connectivity'
+    name: 'Industrial System ',
+    description: 'Manufacturing equipment with IoT / ROS 2 connectivity'
   },
   [NodeType.SMART_BUILDING]: {
-    color: COLORS.PINK,
+    color: COLORS.SMART_BUILDING,
     size: 2.0,
     shape: 'building',
-    name: 'Smart Building',
+    name: 'Smart Building ',
     description: 'Connected building with automated systems and monitoring'
+  },
+  [NodeType.ROBOT]: {
+    color: COLORS.ROBOT,
+    size: 1.0,
+    shape: 'sphere',
+    name: 'Robot ',
+    description: 'Autonomous robot for various tasks and data collection'
   }
 };
 
@@ -90,6 +116,15 @@ interface NetworkNode {
   processingRate: number;
   lastUpdate: number;
   meshes: THREE.Mesh[];
+  // Robot specific properties - no longer optional
+  movementTarget?: THREE.Vector3;
+  speed?: number;
+  connectionRange?: number;
+  connectionTimeout?: number;
+  activeConnections?: NetworkNode[];
+  statusLight?: THREE.PointLight;
+  blinkRate?: number;
+  lastBlink?: number;
 }
 
 // Interface for data flows between nodes
@@ -168,7 +203,7 @@ const InteractiveNetworkVisualization: React.FC<NetworkVisualizationProps> = ({ 
     });
     renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setClearColor(0x000000, 0.1);
+    renderer.setClearColor(COLORS.BACKGROUND, 1);
     container.appendChild(renderer.domElement);
 
     // Create a raycaster for mouse interactions
@@ -178,7 +213,7 @@ const InteractiveNetworkVisualization: React.FC<NetworkVisualizationProps> = ({ 
     // Add a grid to represent a city/industrial layout
     const gridSize = 100;
     const gridDivisions = 20;
-    const grid = new THREE.GridHelper(gridSize, gridDivisions, 0x2c3e50, 0x34495e);
+    const grid = new THREE.GridHelper(gridSize, gridDivisions, COLORS.GRID, COLORS.GRID);
     grid.position.y = -2;
     scene.add(grid);
     
@@ -195,11 +230,11 @@ const InteractiveNetworkVisualization: React.FC<NetworkVisualizationProps> = ({ 
     scene.add(directionalLight);
     
     // Add point lights for colored highlights
-    const pointLight1 = new THREE.PointLight(COLORS.TEAL, 1, 50);
+    const pointLight1 = new THREE.PointLight(COLORS.SENSOR, 1, 50);
     pointLight1.position.set(-20, 20, 20);
     scene.add(pointLight1);
     
-    const pointLight2 = new THREE.PointLight(COLORS.PURPLE, 0.7, 50);
+    const pointLight2 = new THREE.PointLight(COLORS.GATEWAY, 0.7, 50);
     pointLight2.position.set(20, 15, -20);
     scene.add(pointLight2);
 
@@ -303,6 +338,11 @@ const InteractiveNetworkVisualization: React.FC<NetworkVisualizationProps> = ({ 
         
         // Simulate data flow from this node
         triggerDataFlows(node);
+        
+        // Reset the node size after 5 seconds
+        setTimeout(() => {
+          highlightNode(node, false);
+        }, 5000);
       }
     };
 
@@ -563,6 +603,9 @@ const InteractiveNetworkVisualization: React.FC<NetworkVisualizationProps> = ({ 
     
     // Add cross-connections for network redundancy
     addRedundantConnections();
+    
+    // Add robots moving around the smart city
+    addRobotsToNetwork();
   };
   
   // Add redundant connections
@@ -589,6 +632,67 @@ const InteractiveNetworkVisualization: React.FC<NetworkVisualizationProps> = ({ 
     });
   };
   
+  // Add robots that move around the network
+  const addRobotsToNetwork = () => {
+    if (!sceneRef.current) return;
+    
+    const { scene, nodes } = sceneRef.current;
+    
+    // Add several robots around the scene
+    const robotCount = 5;
+    
+    for (let i = 0; i < robotCount; i++) {
+      // Create random starting position
+      const angle = Math.random() * Math.PI * 2;
+      const distance = 15 + Math.random() * 30;
+      
+      const x = Math.cos(angle) * distance;
+      const z = Math.sin(angle) * distance;
+      
+      // Create robot node
+      const robot = createNetworkNode(
+        NodeType.ROBOT,
+        new THREE.Vector3(x, 0.8, z)
+      );
+      
+      // Add required properties for movement - initialize with actual values instead of undefined
+      robot.movementTarget = new THREE.Vector3(
+        Math.random() * 60 - 30,
+        0.8,
+        Math.random() * 60 - 30
+      );
+      robot.speed = 0.05 + Math.random() * 0.05;
+      robot.connectionRange = 5 + Math.random() * 3;
+      robot.connectionTimeout = 0;
+      robot.activeConnections = [];
+      robot.blinkRate = 0.5 + Math.random() * 1.5;
+      robot.lastBlink = Math.random() * 2;
+      
+      // Add custom appearance for robots
+      const robotGroup = robot.object;
+      
+      // Add antenna to robot
+      const antenna = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.05, 0.05, 0.8, 8),
+        new THREE.MeshStandardMaterial({
+          color: colors_hex.WHITE,
+          emissive: colors_hex.WHITE,
+          emissiveIntensity: 0.7
+        })
+      );
+      antenna.position.y = 0.6;
+      robotGroup.add(antenna);
+      
+      // Add blinking light
+      const light = new THREE.PointLight(COLORS.ROBOT, 1, 3);
+      light.position.y = 0.6;
+      robotGroup.add(light);
+      
+      // Store reference to the light for blinking effect
+      robot.statusLight = light;
+    }
+  };
+
   // Create a network node of specified type
   const createNetworkNode = (type: NodeType, position: THREE.Vector3): NetworkNode => {
     if (!sceneRef.current) throw new Error("Scene not initialized");
@@ -710,7 +814,7 @@ const InteractiveNetworkVisualization: React.FC<NetworkVisualizationProps> = ({ 
         
         // Windows effect using a separate mesh with window pattern texture
         const windowsMaterial = new THREE.MeshBasicMaterial({
-          color: COLORS.WHITE,
+          color: COLORS.CONTROLLER,
           transparent: true,
           opacity: 0.5
         });
@@ -798,28 +902,31 @@ const InteractiveNetworkVisualization: React.FC<NetworkVisualizationProps> = ({ 
   };
   
   // Connect two nodes with a network link
-  const connectNodes = (node1: NetworkNode, node2: NetworkNode) => {
+  const connectNodes = (node1: NetworkNode, node2: NetworkNode, displayLine: boolean = true) => {
     if (!sceneRef.current) return;
     
     const { scene } = sceneRef.current;
     
-    // Create connection line material
-    const lineMaterial = new THREE.LineBasicMaterial({
-      color: 0x4bcdf0,
-      transparent: true,
-      opacity: 0.4
-    });
-    
-    // Create points for the line
-    const points = [
-      node1.position.clone(),
-      node2.position.clone()
-    ];
-    
-    // Create geometry for connection line
-    const geometry = new THREE.BufferGeometry().setFromPoints(points);
-    const line = new THREE.Line(geometry, lineMaterial);
-    scene.add(line);
+    // Only create the visible line if displayLine is true
+    if (displayLine) {
+      // Create connection line material
+      const lineMaterial = new THREE.LineBasicMaterial({
+        color: COLORS.LINE,
+        transparent: true,
+        opacity: 0.4
+      });
+      
+      // Create points for the line
+      const points = [
+        node1.position.clone(),
+        node2.position.clone()
+      ];
+      
+      // Create geometry for connection line
+      const geometry = new THREE.BufferGeometry().setFromPoints(points);
+      const line = new THREE.Line(geometry, lineMaterial);
+      scene.add(line);
+    }
     
     // Create data flow between nodes
     createDataFlow(node1, node2);
@@ -845,16 +952,16 @@ const InteractiveNetworkVisualization: React.FC<NetworkVisualizationProps> = ({ 
     
     if (from.type === NodeType.SENSOR || to.type === NodeType.SENSOR) {
       flowType = 'sensorData';
-      flowColor = COLORS.TEAL;
+      flowColor = COLORS.SENSOR;
     } else if (from.type === NodeType.DATA_CENTER || to.type === NodeType.DATA_CENTER) {
       flowType = 'analytics';
-      flowColor = COLORS.ORANGE;
+      flowColor = COLORS.DATA_CENTER;
     } else if (from.type === NodeType.INDUSTRIAL_SYSTEM || to.type === NodeType.INDUSTRIAL_SYSTEM) {
       flowType = 'commands';
-      flowColor = COLORS.GREEN;
+      flowColor = COLORS.INDUSTRIAL_SYSTEM;
     } else {
       flowType = 'network';
-      flowColor = COLORS.BLUE_LIGHT;
+      flowColor = COLORS.LINE;
     }
     
     // Create curve for particle path
@@ -1125,8 +1232,153 @@ const InteractiveNetworkVisualization: React.FC<NetworkVisualizationProps> = ({ 
         }
       }
     });
+    
+    // Handle robot movement and connections
+    moveRobotsAndUpdateConnections(time);
   };
   
+  // Move robots and update their connections to nearby nodes
+  const moveRobotsAndUpdateConnections = (time: number) => {
+    if (!sceneRef.current) return;
+    
+    const { nodes } = sceneRef.current;
+    const robotNodes = nodes.filter(node => node.type === NodeType.ROBOT);
+    
+    robotNodes.forEach(robot => {
+      // Move robot towards target
+      if (robot.movementTarget) {  // Add null check
+        const targetPosition = robot.movementTarget;
+        const direction = new THREE.Vector3()
+          .subVectors(targetPosition, robot.position)
+          .normalize();
+          
+        // Only move if not very close to target
+        if (robot.position.distanceTo(targetPosition) > 0.5) {
+          // Calculate new position
+          const moveAmount = robot.speed || 0.05;  // Provide default if undefined
+          const movement = direction.multiplyScalar(moveAmount);
+          
+          // Update position
+          robot.position.add(movement);
+          robot.object.position.copy(robot.position);
+          
+          // Rotate robot to face movement direction
+          if (movement.length() > 0) {
+            const targetRotation = Math.atan2(movement.x, movement.z);
+            robot.object.rotation.y = targetRotation;
+          }
+        } else {
+          // Choose new random target
+          robot.movementTarget = new THREE.Vector3(
+            Math.random() * 60 - 30,
+            0.8,
+            Math.random() * 60 - 30
+          );
+        }
+      }
+      
+      // Blink robot status light
+      if (robot.statusLight && 
+          typeof robot.lastBlink === 'number' && 
+          typeof robot.blinkRate === 'number' && 
+          time - robot.lastBlink > 1 / robot.blinkRate) {
+        robot.statusLight.intensity = robot.statusLight.intensity === 0 ? 1 : 0;
+        robot.lastBlink = time;
+      }
+      
+      // Check for nearby nodes to connect to
+      const connectionRange = robot.connectionRange || 5;  // Default if undefined
+      const nearbyNodes = nodes.filter(node => 
+        node !== robot && 
+        node.type !== NodeType.ROBOT &&
+        robot.position.distanceTo(node.position) < connectionRange
+      );
+      
+      // Ensure activeConnections is initialized
+      if (!robot.activeConnections) {
+        robot.activeConnections = [];
+      }
+      
+      // Remove old connections that are no longer in range
+      robot.activeConnections = robot.activeConnections.filter(conn => {
+        const stillInRange = nearbyNodes.includes(conn);
+        
+        if (!stillInRange && robot.connections.includes(conn)) {
+          // Remove connection
+          const index = robot.connections.indexOf(conn);
+          if (index >= 0) robot.connections.splice(index, 1);
+          
+          const connIndex = conn.connections.indexOf(robot);
+          if (connIndex >= 0) conn.connections.splice(connIndex, 1);
+          
+          // Find and remove the data flow
+          const flows = [...robot.dataFlows];
+          flows.forEach(flow => {
+            if (flow.to === conn || flow.from === conn) {
+              // Set flow inactive
+              flow.active = false;
+              
+              // Schedule removal from scene after fade-out
+              setTimeout(() => {
+                if (sceneRef.current && flow.particles.parent) {
+                  flow.particles.parent.remove(flow.particles);
+                  
+                  // Remove from dataFlows array
+                  const flowIndex = sceneRef.current.dataFlows.indexOf(flow);
+                  if (flowIndex >= 0) {
+                    sceneRef.current.dataFlows.splice(flowIndex, 1);
+                  }
+                  
+                  // Remove from node's dataFlows
+                  const nodeFlowIndex = robot.dataFlows.indexOf(flow);
+                  if (nodeFlowIndex >= 0) {
+                    robot.dataFlows.splice(nodeFlowIndex, 1);
+                  }
+                }
+              }, 1000);
+            }
+          });
+        }
+        
+        return stillInRange;
+      });
+      
+      // Establish new connections to nearby nodes
+      if ((robot.connectionTimeout || 0) <= 0) {  // Use 0 if undefined
+        nearbyNodes.forEach(node => {
+          if (!robot.activeConnections?.includes(node) && Math.random() < 0.3) {
+            // Connect to this node without showing a line
+            connectNodes(robot, node, false);  // Pass false to not display the connection line
+            
+            // Add to active connections
+            if (robot.activeConnections) {
+              robot.activeConnections.push(node);
+            }
+            
+            // Trigger data flow
+            const relevantFlows = robot.dataFlows.filter(flow => 
+              flow.to === node || flow.from === node
+            );
+            
+            relevantFlows.forEach(flow => {
+              flow.active = true;
+              
+              // Deactivate after random time
+              setTimeout(() => {
+                flow.active = false;
+              }, 5000 + Math.random() * 5000);
+            });
+            
+            // Set timeout before next connection attempt
+            robot.connectionTimeout = 5 + Math.random() * 8;
+          }
+        });
+      } else if (robot.connectionTimeout !== undefined) {
+        robot.connectionTimeout -= 0.016; // Approximate for 60fps
+      }
+    });
+  };
+
   // Animate camera movements
   const animateCamera = (time: number) => {
     if (!sceneRef.current || selectedNode) return; // Don't move camera when node selected
