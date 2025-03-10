@@ -9,9 +9,13 @@ import {
   Line, 
   Sparkles,
   useTexture,
-  Billboard 
+  Billboard,
+  Cloud, 
+  Sky, 
+  Stars 
 } from '@react-three/drei';
 import { Group, Vector3, MathUtils } from 'three';
+import { Bloom, EffectComposer } from '@react-three/postprocessing';
 
 // Define mock IoT data interfaces
 interface IoTSensorData {
@@ -52,6 +56,7 @@ interface VehicleData {
   sensorData: IoTSensorData;
   businessImpact: BusinessImpact;
   cargoDescription?: string;
+  module?: string; // Add module property to fix the TypeScript error
 }
 
 // Enhanced mock data with more vehicles and infrastructure
@@ -1459,9 +1464,11 @@ const PortBoundary = () => {
 };
 
 // Main scene component
-const EnhancedDryPortScene = ({ onSelectVehicle, selectedVehicleId }: { 
+const EnhancedDryPortScene = ({ onSelectVehicle, selectedVehicleId, simulationSpeed, weather }: { 
   onSelectVehicle: (vehicle: VehicleData | null) => void;
   selectedVehicleId: string | null;
+  simulationSpeed: number;
+  weather: WeatherCondition;
 }) => {
   // Handle selection change
   const handleSelect = (vehicle: VehicleData | null) => {
@@ -1589,10 +1596,649 @@ const EnhancedDryPortScene = ({ onSelectVehicle, selectedVehicleId }: {
   );
 };
 
+// Add the new module information interfaces
+interface ModuleTechnology {
+  name: string;
+  description: string;
+}
+
+interface ModuleBusinessValue {
+  title: string;
+  description: string;
+}
+
+interface SystemModule {
+  id: string;
+  name: string;
+  description: string;
+  technologies: ModuleTechnology[];
+  businessValues: ModuleBusinessValue[];
+  color: string;
+  icon?: string;
+}
+
+// Define system modules data
+const systemModules: SystemModule[] = [
+  {
+    id: 'terminal-management',
+    name: 'Terminal Management',
+    description: 'Comprehensive management of cargo movements, terminal space optimization, operation scheduling, and documentation handling.',
+    technologies: [
+      { name: 'AI/ML', description: 'Optimizes terminal layout and container placement' },
+      { name: 'GIS/GPS', description: 'Real-time tracking of container movement and location' },
+      { name: 'Blockchain', description: 'Secure storage of shipping documentation and transfer history' }
+    ],
+    businessValues: [
+      { title: 'Cost Reduction', description: 'Reduces storage costs by 32% through optimized space utilization' },
+      { title: 'Enhanced Control', description: 'Increases visibility of logistical operations by 87%' },
+      { title: 'Error Reduction', description: 'Minimizes documentation errors by 94% through automation' }
+    ],
+    color: '#3b82f6',
+    icon: 'terminal'
+  },
+  {
+    id: 'iot-management',
+    name: 'IoT Device Management',
+    description: 'Integration with IoT devices for real-time monitoring of containers, equipment conditions, and environmental parameters.',
+    technologies: [
+      { name: 'LoRaWAN/MQTT', description: 'Low-power communication protocols for widespread sensor deployment' },
+      { name: 'Edge Computing', description: 'Localized data processing to reduce latency and bandwidth' },
+      { name: 'Predictive Analytics', description: 'AI-powered condition monitoring and anomaly detection' }
+    ],
+    businessValues: [
+      { title: 'Loss Prevention', description: 'Reduces cargo losses by 76% through real-time condition monitoring' },
+      { title: 'Maintenance Optimization', description: 'Decreases maintenance costs by 43% through predictive diagnostics' },
+      { title: 'Supply Chain Visibility', description: 'Provides 99.8% accurate real-time visibility of goods condition' }
+    ],
+    color: '#06b6d4',
+    icon: 'sensor'
+  },
+  {
+    id: 'fleet-management',
+    name: 'Fleet Management',
+    description: 'Real-time tracking of vehicles and equipment, route optimization, and maintenance scheduling.',
+    technologies: [
+      { name: 'Telematics', description: 'Advanced vehicle monitoring and diagnostics systems' },
+      { name: 'Route Optimization', description: 'AI algorithms for dynamic route planning and adjustment' },
+      { name: 'Predictive Maintenance', description: 'Early detection of potential vehicle failures' }
+    ],
+    businessValues: [
+      { title: 'Fuel Efficiency', description: 'Reduces fuel consumption by 28% through optimized routing' },
+      { title: 'Vehicle Utilization', description: 'Increases asset utilization by 35% through better scheduling' },
+      { title: 'Maintenance Savings', description: 'Decreases repair costs by 47% through preventative maintenance' }
+    ],
+    color: '#f59e0b',
+    icon: 'truck'
+  },
+  {
+    id: 'hr-management',
+    name: 'Human Resources Management',
+    description: 'Employee scheduling, role assignment, performance monitoring, and safety compliance management.',
+    technologies: [
+      { name: 'Workforce Analytics', description: 'AI-powered analysis of workforce performance and patterns' },
+      { name: 'Digital Training', description: 'Automated tracking of certifications and required training' },
+      { name: 'Safety Systems', description: 'Real-time monitoring of safety compliance and incident reporting' }
+    ],
+    businessValues: [
+      { title: 'Labor Optimization', description: 'Reduces staffing costs by 24% through optimized scheduling' },
+      { title: 'Productivity Boost', description: 'Increases worker productivity by 31% through better task assignment' },
+      { title: 'Safety Improvement', description: 'Reduces workplace incidents by 68% through proactive monitoring' }
+    ],
+    color: '#10b981',
+    icon: 'person'
+  },
+  {
+    id: 'inventory-management',
+    name: 'Inventory Management',
+    description: 'Real-time inventory control, order management, and delivery verification systems.',
+    technologies: [
+      { name: 'RFID/IoT Tracking', description: 'Automated inventory tracking without manual intervention' },
+      { name: 'Demand Forecasting', description: 'Machine learning algorithms to predict inventory needs' },
+      { name: 'Digital Twin', description: 'Real-time digital representation of physical inventory' }
+    ],
+    businessValues: [
+      { title: 'Storage Optimization', description: 'Reduces storage space requirements by 36% through dynamic management' },
+      { title: 'Error Elimination', description: 'Decreases inventory discrepancies by 92% through automation' },
+      { title: 'Stock-out Prevention', description: 'Reduces stock-outs by 87% through predictive ordering' }
+    ],
+    color: '#8b5cf6',
+    icon: 'box'
+  },
+  {
+    id: 'analytics',
+    name: 'Analysis and Reporting',
+    description: 'Comprehensive operational analytics, performance reporting, and AI-powered business forecasting.',
+    technologies: [
+      { name: 'Business Intelligence', description: 'Interactive dashboards and visualizations for key metrics' },
+      { name: 'Predictive Analytics', description: 'AI algorithms to forecast operational trends and needs' },
+      { name: 'Real-time KPIs', description: 'Live performance indicators for immediate decision making' }
+    ],
+    businessValues: [
+      { title: 'Decision Velocity', description: 'Accelerates decision-making processes by 74% through real-time insights' },
+      { title: 'Cost Forecasting', description: 'Improves budget accuracy by 42% through trend analysis' },
+      { title: 'Performance Enhancement', description: 'Identifies efficiency improvements worth an average of $2.3M annually' }
+    ],
+    color: '#ec4899',
+    icon: 'chart'
+  },
+  {
+    id: 'integration',
+    name: 'Systems Integration',
+    description: 'Seamless integration with external systems including ERP, TMS, customs systems, and APIs for IoT devices.',
+    technologies: [
+      { name: 'API Architecture', description: 'REST and GraphQL APIs for flexible system interconnection' },
+      { name: 'EDI Systems', description: 'Electronic Data Interchange for standardized business communications' },
+      { name: 'ESB Architecture', description: 'Enterprise Service Bus for robust system orchestration' }
+    ],
+    businessValues: [
+      { title: 'Process Streamlining', description: 'Reduces processing time by 63% through automated data exchange' },
+      { title: 'Error Reduction', description: 'Eliminates 96% of manual data entry errors' },
+      { title: 'Scalability', description: 'Enables 5x faster integration of new business partners and systems' }
+    ],
+    color: '#6366f1',
+    icon: 'sync'
+  },
+  {
+    id: 'security',
+    name: 'Security Management',
+    description: 'Comprehensive access management, security monitoring, incident response, and compliance enforcement.',
+    technologies: [
+      { name: 'AI-powered Threat Detection', description: 'Advanced algorithms to detect and respond to security threats' },
+      { name: 'Blockchain Validation', description: 'Immutable record-keeping for critical transactions' },
+      { name: 'Zero Trust Architecture', description: 'Continuous verification of all access attempts' }
+    ],
+    businessValues: [
+      { title: 'Risk Mitigation', description: 'Reduces security incidents by 84% through proactive monitoring' },
+      { title: 'Compliance Assurance', description: 'Ensures 100% regulatory compliance with automated controls' },
+      { title: 'Trust Enhancement', description: 'Increases client confidence through demonstrated security measures' }
+    ],
+    color: '#ef4444',
+    icon: 'shield'
+  },
+];
+
+// Add weather condition interface
+interface WeatherCondition {
+  name: string;
+  description: string;
+  visibilityFactor: number;
+  operationalImpact: string;
+  cloudiness: number;
+  particleIntensity: number;
+  color: string;
+}
+
+// Define weather conditions
+const weatherConditions: WeatherCondition[] = [
+  {
+    name: 'Clear',
+    description: 'Optimal visibility, no operational disruptions',
+    visibilityFactor: 1.0,
+    operationalImpact: 'All operations at 100% efficiency',
+    cloudiness: 0,
+    particleIntensity: 0,
+    color: '#87CEEB'
+  },
+  {
+    name: 'Overcast',
+    description: 'Reduced natural light, minimal impact on operations',
+    visibilityFactor: 0.8,
+    operationalImpact: 'Crane operations at 95% efficiency',
+    cloudiness: 0.6,
+    particleIntensity: 0,
+    color: '#708090'
+  },
+  {
+    name: 'Fog',
+    description: 'Significantly reduced visibility, requires enhanced sensor operations',
+    visibilityFactor: 0.4,
+    operationalImpact: 'Vehicle speed reduced by 40%, LiDAR systems active',
+    cloudiness: 0.3,
+    particleIntensity: 0.5,
+    color: '#B6B6B4'
+  },
+  {
+    name: 'Rain',
+    description: 'Wet conditions, reduced friction on roads',
+    visibilityFactor: 0.6,
+    operationalImpact: 'Vehicle speed reduced by 25%, crane operations at 80%',
+    cloudiness: 0.7,
+    particleIntensity: 0.7,
+    color: '#4682B4'
+  },
+  {
+    name: 'Heavy Wind',
+    description: 'Strong winds affecting crane operations and container stability',
+    visibilityFactor: 0.7,
+    operationalImpact: 'Crane operations at 60%, heavy container movement restricted',
+    cloudiness: 0.4,
+    particleIntensity: 0.2,
+    color: '#A0B4C8'
+  }
+];
+
+// Key Performance Indicator interface
+interface KPI {
+  name: string;
+  value: number;
+  unit: string;
+  trend: 'up' | 'down' | 'stable';
+  target: number;
+  color: string;
+}
+
+// Define KPIs for the dashboard
+const initialKPIs: KPI[] = [
+  {
+    name: 'Throughput',
+    value: 127,
+    unit: 'containers/hour',
+    trend: 'up',
+    target: 120,
+    color: '#10b981'
+  },
+  {
+    name: 'Equipment Utilization',
+    value: 84.5,
+    unit: '%',
+    trend: 'up',
+    target: 80,
+    color: '#3b82f6'
+  },
+  {
+    name: 'Average Dwell Time',
+    value: 23.2,
+    unit: 'hours',
+    trend: 'down',
+    target: 24,
+    color: '#8b5cf6'
+  },
+  {
+    name: 'Energy Consumption',
+    value: 3.7,
+    unit: 'MWh',
+    trend: 'down',
+    target: 4.2,
+    color: '#10b981'
+  },
+  {
+    name: 'Vehicle Idle Time',
+    value: 14.3,
+    unit: '%',
+    trend: 'down',
+    target: 15,
+    color: '#f59e0b'
+  },
+  {
+    name: 'Safety Incidents',
+    value: 0,
+    unit: 'incidents/month',
+    trend: 'stable',
+    target: 0,
+    color: '#ef4444'
+  }
+];
+
+// Alert interface
+interface Alert {
+  id: string;
+  title: string;
+  message: string;
+  timestamp: Date;
+  severity: 'low' | 'medium' | 'high';
+  relatedModule?: string;
+  vehicle?: string;
+}
+
+// WeatherEffect component for fog, rain, etc.
+const WeatherEffect = ({ condition }: { condition: WeatherCondition }) => {
+  if (condition.name === 'Clear') return null;
+
+  // Create appropriate effects based on weather
+  return (
+    <group>
+      {condition.cloudiness > 0 && (
+        <>
+          <Cloud
+            opacity={condition.cloudiness}
+            speed={0.4}
+            position={[0, 50, 0]}
+            segments={20}
+          />
+          <Cloud
+            opacity={condition.cloudiness * 0.7}
+            speed={0.2}
+            position={[40, 30, -40]}
+            segments={20}
+          />
+          <Cloud
+            opacity={condition.cloudiness * 0.5}
+            speed={0.3}
+            position={[-40, 40, -20]}
+            segments={15}
+          />
+        </>
+      )}
+      {condition.name === 'Fog' && (
+        <fog attach="fog" args={[condition.color, 10, 60]} />
+      )}
+      {condition.name === 'Rain' && (
+        <RainEffect intensity={condition.particleIntensity} />
+      )}
+      {condition.name === 'Heavy Wind' && (
+        <WindEffect intensity={condition.particleIntensity} />
+      )}
+    </group>
+  );
+};
+
+// Rain particle effect
+const RainEffect = ({ intensity }: { intensity: number }) => {
+  const count = Math.floor(intensity * 1000);
+  return (
+    <Sparkles
+      count={count}
+      size={4}
+      scale={[100, 50, 100]}
+      speed={10}
+      noise={0.1}
+      position={[0, 30, 0]}
+      color="#7EB2DD"
+      opacity={0.4}
+    />
+  );
+};
+
+// Wind effect simulation
+const WindEffect = ({ intensity }: { intensity: number }) => {
+  const count = Math.floor(intensity * 300);
+  return (
+    <Sparkles
+      count={count}
+      size={1}
+      scale={[100, 20, 100]}
+      speed={20}
+      noise={1}
+      position={[0, 20, 0]}
+      color="#FFFFFF"
+      opacity={0.2}
+    />
+  );
+};
+
+// KPI Dashboard Component
+const KPIDashboard = ({ kpis }: { kpis: KPI[] }) => {
+  return (
+    <div style={{
+      position: 'absolute',
+      bottom: '100px',
+      right: '20px',
+      background: 'rgba(0,0,0,0.85)',
+      color: 'white',
+      padding: '15px',
+      borderRadius: '8px',
+      width: '350px',
+      boxShadow: '0 4px 6px rgba(0,0,0,0.3)',
+      border: '1px solid #3b82f6',
+      zIndex: 100
+    }}>
+      <div style={{
+        borderBottom: '1px solid rgba(255,255,255,0.2)',
+        paddingBottom: '10px',
+        marginBottom: '10px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+      }}>
+        <h3 style={{ margin: '0', color: '#3b82f6' }}>Performance Dashboard</h3>
+        <div style={{
+          fontSize: '0.75em',
+          background: 'rgba(59, 130, 246, 0.2)',
+          padding: '2px 6px',
+          borderRadius: '4px'
+        }}>
+          REAL-TIME
+        </div>
+      </div>
+
+      <div style={{ 
+        display: 'grid', 
+        gridTemplateColumns: '1fr 1fr', 
+        gap: '10px'
+      }}>
+        {kpis.map(kpi => (
+          <div key={kpi.name} style={{ 
+            background: 'rgba(255,255,255,0.05)', 
+            padding: '10px', 
+            borderRadius: '6px',
+            borderLeft: `3px solid ${kpi.color}`,
+          }}>
+            <div style={{ fontSize: '0.7em', opacity: 0.7, marginBottom: '3px' }}>
+              {kpi.name}
+            </div>
+            <div style={{ 
+              display: 'flex', 
+              justifyContent: 'space-between', 
+              alignItems: 'center'
+            }}>
+              <div style={{ fontWeight: 'bold', fontSize: '1.1em' }}>
+                {kpi.value} <span style={{ fontSize: '0.7em', opacity: 0.7 }}>{kpi.unit}</span>
+              </div>
+              <div style={{
+                color: kpi.trend === 'up' ? '#10b981' : kpi.trend === 'down' ? '#ef4444' : '#f59e0b',
+                fontSize: '0.9em',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '3px'
+              }}>
+                {kpi.trend === 'up' ? '↑' : kpi.trend === 'down' ? '↓' : '→'} 
+                {kpi.trend === 'up' ? ((kpi.value / kpi.target - 1) * 100).toFixed(1) + '%' :
+                 kpi.trend === 'down' ? ((1 - kpi.value / kpi.target) * 100).toFixed(1) + '%' : '0%'}
+              </div>
+            </div>
+            <div style={{ 
+              height: '3px', 
+              background: 'rgba(255,255,255,0.1)', 
+              borderRadius: '2px',
+              marginTop: '5px',
+              overflow: 'hidden'
+            }}>
+              <div style={{
+                height: '100%',
+                width: `${(kpi.value / kpi.target) * 100}%`,
+                background: kpi.color,
+                borderRadius: '2px'
+              }} />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// Alert Notification Component
+const AlertNotifications = ({ alerts }: { alerts: Alert[] }) => {
+  if (alerts.length === 0) return null;
+  
+  return (
+    <div style={{
+      position: 'absolute',
+      top: '80px',
+      right: '20px',
+      zIndex: 1000,
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '10px',
+      maxWidth: '350px'
+    }}>
+      {alerts.slice(0, 3).map(alert => (
+        <div
+          key={alert.id}
+          style={{
+            background: 'rgba(0,0,0,0.85)',
+            color: 'white',
+            padding: '12px',
+            borderRadius: '8px',
+            boxShadow: '0 4px 6px rgba(0,0,0,0.3)',
+            borderLeft: `4px solid ${
+              alert.severity === 'high' ? '#ef4444' : 
+              alert.severity === 'medium' ? '#f59e0b' : '#3b82f6'
+            }`,
+            animation: 'fadeIn 0.5s ease-out'
+          }}
+        >
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            marginBottom: '5px',
+            alignItems: 'center'
+          }}>
+            <div style={{ fontWeight: 'bold', fontSize: '0.9em' }}>
+              {alert.title}
+            </div>
+            <div style={{
+              fontSize: '0.7em',
+              padding: '2px 6px',
+              borderRadius: '4px',
+              background: alert.severity === 'high' ? 'rgba(239, 68, 68, 0.2)' : 
+                        alert.severity === 'medium' ? 'rgba(245, 158, 11, 0.2)' : 
+                        'rgba(59, 130, 246, 0.2)',
+            }}>
+              {alert.severity.toUpperCase()}
+            </div>
+          </div>
+          <div style={{ fontSize: '0.8em', marginBottom: '5px' }}>
+            {alert.message}
+          </div>
+          <div style={{ 
+            display: 'flex', 
+            justifyContent: 'space-between',
+            fontSize: '0.7em',
+            opacity: 0.7
+          }}>
+            <div>{new Date(alert.timestamp).toLocaleTimeString()}</div>
+            {alert.relatedModule && <div>{alert.relatedModule}</div>}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+// Simulation Controls Component
+const SimulationControls = ({
+  speed, 
+  setSpeed,
+  weather,
+  setWeather
+}: {
+  speed: number;
+  setSpeed: (speed: number) => void;
+  weather: WeatherCondition;
+  setWeather: (weather: WeatherCondition) => void;
+}) => {
+  return (
+    <div style={{
+      position: 'absolute',
+      bottom: '20px',
+      // Move from right side to left side next to the info panel
+      left: '440px', // Positioned to the right of the info panel
+      background: 'rgba(0,0,0,0.85)',
+      color: 'white',
+      padding: '15px',
+      borderRadius: '8px',
+      width: '200px',
+      boxShadow: '0 4px 6px rgba(0,0,0,0.3)',
+      border: '1px solid #3b82f6',
+      zIndex: 100
+    }}>
+      <div style={{ marginBottom: '15px' }}>
+        <div style={{ marginBottom: '5px', fontSize: '0.8em', opacity: 0.7 }}>
+          Simulation Speed: {speed.toFixed(1)}x
+        </div>
+        <div style={{ display: 'flex', gap: '5px' }}>
+          <button 
+            onClick={() => setSpeed(Math.max(0.1, speed - 0.5))}
+            style={{
+              background: '#1e293b',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              padding: '5px 10px',
+              cursor: 'pointer',
+              flex: 1
+            }}
+          >
+            Slower
+          </button>
+          <button 
+            onClick={() => setSpeed(Math.min(3, speed + 0.5))}
+            style={{
+              background: '#1e293b',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              padding: '5px 10px',
+              cursor: 'pointer',
+              flex: 1
+            }}
+          >
+            Faster
+          </button>
+        </div>
+      </div>
+      
+      <div>
+        <div style={{ marginBottom: '5px', fontSize: '0.8em', opacity: 0.7 }}>
+          Weather Conditions
+        </div>
+        <select 
+          value={weather.name}
+          onChange={(e) => {
+            const selected = weatherConditions.find(w => w.name === e.target.value);
+            if (selected) setWeather(selected);
+          }}
+          style={{
+            width: '100%',
+            padding: '5px',
+            background: '#1e293b',
+            color: 'white',
+            border: 'none',
+            borderRadius: '4px',
+            outline: 'none'
+          }}
+        >
+          {weatherConditions.map(condition => (
+            <option key={condition.name} value={condition.name}>
+              {condition.name}
+            </option>
+          ))}
+        </select>
+        <div style={{ 
+          fontSize: '0.7em', 
+          marginTop: '5px', 
+          opacity: 0.7,
+          fontStyle: 'italic'
+        }}>
+          {weather.operationalImpact}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // Main enhanced dry port simulation component
 const EnhancedDryPortSimulation = ({ filter = 'all', highlight = 'none' }: { filter?: string, highlight?: string }) => {
   const [loaded, setLoaded] = useState(false);
   const [selectedVehicle, setSelectedVehicle] = useState<VehicleData | null>(null);
+  const [showModules, setShowModules] = useState(false);
+  const [selectedModule, setSelectedModule] = useState<SystemModule | null>(null);
+  const [simulationSpeed, setSimulationSpeed] = useState(1.0);
+  const [weather, setWeather] = useState<WeatherCondition>(weatherConditions[0]);
+  const [kpis, setKpis] = useState<KPI[]>(initialKPIs);
+  const [showKpis, setShowKpis] = useState(false);
+  const [alerts, setAlerts] = useState<Alert[]>([]);
   
   // Handle loading state
   useEffect(() => {
@@ -1603,280 +2249,644 @@ const EnhancedDryPortSimulation = ({ filter = 'all', highlight = 'none' }: { fil
     return () => clearTimeout(timer);
   }, []);
 
+  // Update KPIs periodically to simulate real-time data
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setKpis(currentKpis => currentKpis.map(kpi => {
+        // Apply random small fluctuations to KPI values
+        const fluctuation = (Math.random() - 0.5) * 0.05;
+        const newValue = kpi.value * (1 + fluctuation);
+        
+        // Update trend based on new value vs target
+        let trend: 'up' | 'down' | 'stable';
+        if (kpi.name === 'Average Dwell Time' || kpi.name === 'Vehicle Idle Time' || kpi.name === 'Energy Consumption') {
+          trend = newValue < kpi.target ? 'down' : newValue > kpi.target * 1.05 ? 'up' : 'stable';
+        } else {
+          trend = newValue > kpi.target ? 'up' : newValue < kpi.target * 0.95 ? 'down' : 'stable';
+        }
+        
+        return { ...kpi, value: Number(newValue.toFixed(1)), trend };
+      }));
+    }, 5000);
+    
+    return () => clearInterval(interval);
+  }, []);
+
+  // Generate random alerts
+  useEffect(() => {
+    // Initial alert
+    setTimeout(() => {
+      const newAlert: Alert = {
+        id: 'alert-' + Date.now(),
+        title: 'Predictive Maintenance Alert',
+        message: 'Crane-1 hydraulic system showing early signs of wear. Maintenance scheduled for next week.',
+        timestamp: new Date(),
+        severity: 'medium',
+        relatedModule: 'Fleet Management',
+        vehicle: 'SmartCrane-C5'
+      };
+      setAlerts(prev => [newAlert, ...prev]);
+    }, 15000);
+    
+    // Random alerts generation
+    const interval = setInterval(() => {
+      // 30% chance to generate an alert
+      if (Math.random() > 0.7) {
+        const alertTypes = [
+          {
+            title: 'Battery Level Warning',
+            message: 'Forklift FL-02 battery level below 20%. Charging station notified.',
+            severity: 'medium',
+            module: 'Fleet Management'
+          },
+          {
+            title: 'Optimal Route Recommended',
+            message: 'Traffic congestion detected. Alternative route calculated for delivery trucks.',
+            severity: 'low',
+            module: 'Transport Management'
+          },
+          {
+            title: 'Container Temperature Alert',
+            message: 'Temperature rising in refrigerated container #R-1842. Cooling system power increased.',
+            severity: 'high',
+            module: 'IoT Management'
+          },
+          {
+            title: 'Operation Milestone Reached',
+            message: '1000th container processed today, exceeding daily target by 12%.',
+            severity: 'low',
+            module: 'Terminal Management'
+          },
+          {
+            title: 'Maintenance Complete',
+            message: 'Scheduled maintenance for Crane #2 completed. All systems operational.',
+            severity: 'low',
+            module: 'Fleet Management'
+          }
+        ];
+        
+        const selectedAlert = alertTypes[Math.floor(Math.random() * alertTypes.length)];
+        
+        const newAlert: Alert = {
+          id: 'alert-' + Date.now(),
+          title: selectedAlert.title,
+          message: selectedAlert.message,
+          timestamp: new Date(),
+          severity: selectedAlert.severity as 'low' | 'medium' | 'high',
+          relatedModule: selectedAlert.module
+        };
+        
+        setAlerts(prev => [newAlert, ...prev.slice(0, 9)]); // Keep last 10 alerts
+      }
+    }, 30000);
+    
+    return () => clearInterval(interval);
+  }, []);
+
   // Handle vehicle selection
   const handleVehicleSelect = (vehicle: VehicleData | null) => {
     setSelectedVehicle(vehicle);
+    // Close modules panel when selecting a vehicle
+    if (vehicle) setShowModules(false);
+  };
+  
+  // Toggle modules panel
+  const toggleModulesPanel = () => {
+    setShowModules(!showModules);
+    // Close vehicle details when opening modules
+    if (!showModules) setSelectedVehicle(null);
+  };
+  
+  // Toggle KPI dashboard
+  const toggleKPIDashboard = () => {
+    setShowKpis(!showKpis);
+  };
+  
+  // Select a specific module
+  const handleModuleSelect = (moduleId: string) => {
+    const module = systemModules.find(m => m.id === moduleId);
+    setSelectedModule(module || null);
   };
   
   return (
-    <div style={{ width: '100%', height: '100vh', backgroundColor: '#000000', position: 'relative' }}>
-      <Canvas 
-        camera={{ position: [0, 40, 80], fov: 50 }}
-        shadows
-        gl={{ antialias: true }}
-        style={{ width: '100%', height: '100%' }}
-      >
-        <EnhancedDryPortScene 
-          onSelectVehicle={handleVehicleSelect} 
-          selectedVehicleId={selectedVehicle?.id || null} 
-        />
-      </Canvas>
+    <>
+      {/* Existing global styles */}
+      <style jsx global>{`
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateX(20px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+        
+        /* Force blue background color on body and html */
+        html, body {
+          background-color: #1E90FF !important;
+        }
+      `}</style>
       
-      {/* Fixed Position Detail Card (when a vehicle is selected) */}
-      {selectedVehicle && (
+      <div style={{ 
+        width: '100%', 
+        height: '100vh', 
+        backgroundColor: '#1E90FF', 
+        position: 'relative' 
+      }}>
+        <Canvas 
+          camera={{ position: [0, 40, 80], fov: 50 }}
+          shadows
+          gl={{ 
+            antialias: true,
+            // clearColor: '#1E90FF', // Set WebGL clear color to blue
+            alpha: false // Disable alpha to ensure solid background
+          }}
+          style={{ width: '100%', height: '100%' }}
+        >
+          {/* Remove Sky component and use stronger direct approach */}
+          <color attach="background" args={['#1E90FF']} /> {/* Dodger Blue */}
+          
+          {/* Add blue fog for atmosphere */}
+          {/* <fog attach="fog" args={['#1E90FF', 70, 200]} /> */}
+          
+          {/* Weather effects */}
+          <WeatherEffect condition={weather} />
+          
+          {/* Stars only at night - moved above scene so they don't block it */}
+          {weather.visibilityFactor > 0.8 && (
+            <Stars radius={100} depth={50} count={5000} factor={2} saturation={0.5} fade speed={1} />
+          )}
+          
+          {/* Main scene with simulation speed control */}
+          <EnhancedDryPortScene 
+            onSelectVehicle={handleVehicleSelect} 
+            selectedVehicleId={selectedVehicle?.id || null} 
+            simulationSpeed={simulationSpeed}
+            weather={weather}
+          />
+          
+          {/* Post-processing effects */}
+          <EffectComposer>
+            <Bloom luminanceThreshold={0.2} luminanceSmoothing={0.9} height={300} />
+          </EffectComposer>
+        </Canvas>
+        
+        {/* Button Bar - Combined controls in one row */}
         <div style={{
           position: 'absolute',
           top: '20px',
-          right: '20px',
-          background: 'rgba(0,0,0,0.85)',
-          color: 'white',
-          padding: '15px',
-          borderRadius: '8px',
-          width: '350px',
-          maxHeight: '80vh',
-          overflowY: 'auto',
-          boxShadow: '0 4px 6px rgba(0,0,0,0.3)',
-          border: `1px solid ${selectedVehicle.color}`,
-          zIndex: 100
+          left: '20px',
+          zIndex: 1000,
+          display: 'flex',
+          gap: '10px'
         }}>
-          {/* Header */}
-          <div style={{ borderBottom: '1px solid rgba(255,255,255,0.2)', paddingBottom: '10px', marginBottom: '10px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <h3 style={{ margin: '0', color: selectedVehicle.color }}>{selectedVehicle.name}</h3>
-              <button 
-                onClick={() => setSelectedVehicle(null)}
-                style={{ 
-                  background: 'transparent', 
-                  border: 'none', 
-                  color: '#999', 
-                  cursor: 'pointer',
-                  fontSize: '18px',
-                  padding: '0 5px'
-                }}
-              >
-                ×
-              </button>
-            </div>
-            <div style={{ fontStyle: 'italic', fontSize: '0.8em', opacity: 0.7, marginTop: '3px' }}>
-              {selectedVehicle.description}
-            </div>
-          </div>
+          <button
+            onClick={toggleModulesPanel}
+            style={{
+              background: showModules ? 'rgba(16, 185, 129, 0.9)' : 'rgba(0, 0, 0, 0.7)',
+              color: 'white',
+              border: 'none',
+              padding: '10px 15px',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              fontSize: '14px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
+            }}
+          >
+            {showModules ? 'Hide System Modules' : 'Show System Modules'}
+          </button>
           
-          {/* Status Badge */}
+          <button
+            onClick={toggleKPIDashboard}
+            style={{
+              background: showKpis ? 'rgba(59, 130, 246, 0.9)' : 'rgba(0, 0, 0, 0.7)',
+              color: 'white',
+              border: 'none',
+              padding: '10px 15px',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              fontSize: '14px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
+            }}
+          >
+            {showKpis ? 'Hide KPI Dashboard' : 'Show KPI Dashboard'}
+          </button>
+        </div>
+        
+        {/* Modules Information Panel */}
+        {showModules && (
           <div style={{
-            display: 'inline-block',
-            background: selectedVehicle.sensorData.status === 'Active Scanning' ? '#22c55e' : '#3b82f6',
-            padding: '3px 8px',
-            borderRadius: '20px',
-            fontSize: '0.7em',
-            marginBottom: '15px'
+            position: 'absolute',
+            top: '70px',
+            left: '20px',
+            background: 'rgba(0,0,0,0.85)',
+            color: 'white',
+            padding: '15px',
+            borderRadius: '8px',
+            width: '350px',
+            maxHeight: '80vh',
+            overflowY: 'auto',
+            boxShadow: '0 4px 6px rgba(0,0,0,0.3)',
+            border: '1px solid #3b82f6',
+            zIndex: 100
           }}>
-            {selectedVehicle.sensorData.status}
-          </div>
-          
-          {/* IoT Sensor Data */}
-          <div style={{ marginBottom: '15px' }}>
-            <h4 style={{ margin: '0 0 8px 0', fontSize: '0.9em', color: '#3b82f6' }}>SENSOR DATA</h4>
-            
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', fontSize: '0.85em' }}>
-              <div>
-                <div style={{ fontWeight: 'bold', fontSize: '0.8em', opacity: 0.7 }}>Speed</div>
-                <div>{selectedVehicle.sensorData.speed} km/h</div>
-              </div>
-              
-              <div>
-                <div style={{ fontWeight: 'bold', fontSize: '0.8em', opacity: 0.7 }}>Temperature</div>
-                <div>{selectedVehicle.sensorData.temperature}°C</div>
-              </div>
-              
-              {selectedVehicle.sensorData.batteryLevel !== undefined && (
-                <div>
-                  <div style={{ fontWeight: 'bold', fontSize: '0.8em', opacity: 0.7 }}>Battery</div>
-                  <div>{selectedVehicle.sensorData.batteryLevel}%</div>
-                </div>
-              )}
-              
-              {selectedVehicle.sensorData.fuelLevel !== undefined && (
-                <div>
-                  <div style={{ fontWeight: 'bold', fontSize: '0.8em', opacity: 0.7 }}>Fuel</div>
-                  <div>{selectedVehicle.sensorData.fuelLevel}%</div>
-                </div>
-              )}
-              
-              <div>
-                <div style={{ fontWeight: 'bold', fontSize: '0.8em', opacity: 0.7 }}>Load</div>
-                <div>{selectedVehicle.sensorData.loadCapacity}%</div>
-              </div>
-              
-              <div>
-                <div style={{ fontWeight: 'bold', fontSize: '0.8em', opacity: 0.7 }}>Maintenance</div>
-                <div>{selectedVehicle.sensorData.lastMaintenance}</div>
-              </div>
-            </div>
-            
-            {/* Advanced Sensors */}
             <div style={{ 
               display: 'flex', 
-              gap: '8px', 
-              margin: '10px 0', 
-              fontSize: '0.7em'
+              justifyContent: 'space-between', 
+              alignItems: 'center',
+              marginBottom: '15px',
+              borderBottom: '1px solid rgba(255,255,255,0.2)',
+              paddingBottom: '10px'
             }}>
-              <div style={{ 
-                padding: '2px 8px', 
-                borderRadius: '3px',
-                background: selectedVehicle.sensorData.cameras ? 'rgba(59, 130, 246, 0.3)' : 'rgba(100, 100, 100, 0.3)',
-                color: selectedVehicle.sensorData.cameras ? '#3b82f6' : '#999'
-              }}>
-                CAMERAS
-              </div>
-              <div style={{ 
-                padding: '2px 8px', 
-                borderRadius: '3px',
-                background: selectedVehicle.sensorData.lidar ? 'rgba(59, 130, 246, 0.3)' : 'rgba(100, 100, 100, 0.3)',
-                color: selectedVehicle.sensorData.lidar ? '#3b82f6' : '#999'
-              }}>
-                LIDAR
-              </div>
-              <div style={{ 
-                padding: '2px 8px', 
-                borderRadius: '3px',
-                background: selectedVehicle.sensorData.radar ? 'rgba(59, 130, 246, 0.3)' : 'rgba(100, 100, 100, 0.3)',
-                color: selectedVehicle.sensorData.radar ? '#3b82f6' : '#999'
-              }}>
-                RADAR
-              </div>
+              <h3 style={{ margin: '0', color: '#3b82f6' }}>
+                {selectedModule ? selectedModule.name : 'System Modules'}
+              </h3>
+              {selectedModule && (
+                <button
+                  onClick={() => setSelectedModule(null)}
+                  style={{
+                    background: 'transparent',
+                    border: 'none',
+                    color: '#999',
+                    cursor: 'pointer',
+                    fontSize: '14px'
+                  }}
+                >
+                  Back to Modules
+                </button>
+              )}
             </div>
-            
-            {/* Location info */}
-            <div style={{ marginTop: '10px', fontSize: '0.85em' }}>
-              <div style={{ fontWeight: 'bold', fontSize: '0.8em', opacity: 0.7 }}>Current Location</div>
-              <div>{selectedVehicle.sensorData.location}</div>
-              
-              <div style={{ fontWeight: 'bold', fontSize: '0.8em', opacity: 0.7, marginTop: '8px' }}>Next Checkpoint</div>
-              <div>{selectedVehicle.sensorData.nextCheckpoint}</div>
-            </div>
-            
-            {/* Cargo description */}
-            {selectedVehicle.cargoDescription && (
-              <div style={{ 
-                marginTop: '15px', 
-                background: 'rgba(255,255,255,0.1)', 
-                padding: '8px',
-                borderRadius: '4px',
-                fontSize: '0.85em'
-              }}>
-                <div style={{ fontWeight: 'bold', fontSize: '0.8em', opacity: 0.7 }}>Cargo</div>
-                <div>{selectedVehicle.cargoDescription}</div>
+
+            {selectedModule ? (
+              // Selected module detailed view
+              <div>
+                <div style={{ marginBottom: '15px' }}>
+                  <div style={{ fontSize: '0.9em', lineHeight: '1.5' }}>
+                    {selectedModule.description}
+                  </div>
+                </div>
+                
+                <div style={{ marginBottom: '15px' }}>
+                  <h4 style={{ margin: '0 0 8px 0', fontSize: '0.9em', color: '#3b82f6' }}>KEY TECHNOLOGIES</h4>
+                  
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    {selectedModule.technologies.map((tech, index) => (
+                      <div key={index} style={{ 
+                        background: 'rgba(255,255,255,0.1)', 
+                        padding: '10px', 
+                        borderRadius: '5px',
+                        borderLeft: `4px solid ${selectedModule.color}`
+                      }}>
+                        <div style={{ fontWeight: 'bold', marginBottom: '3px' }}>{tech.name}</div>
+                        <div style={{ fontSize: '0.85em', opacity: 0.8 }}>{tech.description}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                <div>
+                  <h4 style={{ margin: '0 0 8px 0', fontSize: '0.9em', color: '#10b981' }}>BUSINESS VALUE</h4>
+                  
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    {selectedModule.businessValues.map((value, index) => (
+                      <div key={index} style={{ 
+                        background: 'rgba(255,255,255,0.1)', 
+                        padding: '10px', 
+                        borderRadius: '5px',
+                        borderLeft: `4px solid #10b981`
+                      }}>
+                        <div style={{ fontWeight: 'bold', marginBottom: '3px' }}>{value.title}</div>
+                        <div style={{ fontSize: '0.85em', opacity: 0.8 }}>{value.description}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              // Module selection grid
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                {systemModules.map(module => (
+                  <div 
+                    key={module.id}
+                    onClick={() => handleModuleSelect(module.id)}
+                    style={{
+                      background: 'rgba(255,255,255,0.1)',
+                      padding: '15px',
+                      borderRadius: '5px',
+                      cursor: 'pointer',
+                      borderLeft: `4px solid ${module.color}`,
+                      transition: 'all 0.2s ease'
+                    }}
+                    onMouseOver={e => {
+                      e.currentTarget.style.background = 'rgba(255,255,255,0.15)';
+                    }}
+                    onMouseOut={e => {
+                      e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
+                    }}
+                  >
+                    <div style={{ fontWeight: 'bold', marginBottom: '5px', color: module.color }}>
+                      {module.name}
+                    </div>
+                    <div style={{ fontSize: '0.8em', opacity: 0.8, height: '40px', overflow: 'hidden' }}>
+                      {module.description.length > 70 
+                        ? `${module.description.substring(0, 70)}...` 
+                        : module.description}
+                    </div>
+                  </div>
+                ))}
               </div>
             )}
           </div>
-          
-          {/* Business Impact */}
-          <div>
-            <h4 style={{ margin: '0 0 8px 0', fontSize: '0.9em', color: '#10b981' }}>BUSINESS IMPACT</h4>
+        )}
+        
+        {/* KPI Dashboard */}
+        {showKpis && <KPIDashboard kpis={kpis} />}
+        
+        {/* Alert Notifications */}
+        <AlertNotifications alerts={alerts} />
+        
+        {/* Simulation Controls - MOVED to prevent overlap with KPI Dashboard */}
+        <SimulationControls 
+          speed={simulationSpeed} 
+          setSpeed={setSimulationSpeed}
+          weather={weather}
+          setWeather={setWeather}
+        />
+        
+        {/* Fixed Position Detail Card (when a vehicle is selected) */}
+        {selectedVehicle && (
+          <div style={{
+            position: 'absolute',
+            top: '20px',
+            right: '20px',
+            background: 'rgba(0,0,0,0.85)',
+            color: 'white',
+            padding: '15px',
+            borderRadius: '8px',
+            width: '350px',
+            maxHeight: '80vh',
+            overflowY: 'auto',
+            boxShadow: '0 4px 6px rgba(0,0,0,0.3)',
+            border: `1px solid ${selectedVehicle.color}`,
+            zIndex: 100
+          }}>
+            {/* Header */}
+            <div style={{ borderBottom: '1px solid rgba(255,255,255,0.2)', paddingBottom: '10px', marginBottom: '10px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <h3 style={{ margin: '0', color: selectedVehicle.color }}>{selectedVehicle.name}</h3>
+                <button 
+                  onClick={() => setSelectedVehicle(null)}
+                  style={{ 
+                    background: 'transparent', 
+                    border: 'none', 
+                    color: '#999', 
+                    cursor: 'pointer',
+                    fontSize: '18px',
+                    padding: '0 5px'
+                  }}
+                >
+                  ×
+                </button>
+              </div>
+              <div style={{ fontStyle: 'italic', fontSize: '0.8em', opacity: 0.7, marginTop: '3px' }}>
+                {selectedVehicle.description}
+              </div>
+            </div>
             
-            <div style={{ fontSize: '0.85em' }}>
-              <div style={{ marginBottom: '8px' }}>
-                <div style={{ fontWeight: 'bold', fontSize: '0.8em', opacity: 0.7 }}>Efficiency</div>
-                <div>{selectedVehicle.businessImpact.efficiencyGain}</div>
-              </div>
-              
-              <div style={{ marginBottom: '8px' }}>
-                <div style={{ fontWeight: 'bold', fontSize: '0.8em', opacity: 0.7 }}>Cost Savings</div>
-                <div>{selectedVehicle.businessImpact.costSavings}</div>
-              </div>
-              
-              <div style={{ marginBottom: '8px' }}>
-                <div style={{ fontWeight: 'bold', fontSize: '0.8em', opacity: 0.7 }}>Safety</div>
-                <div>{selectedVehicle.businessImpact.safetyImprovement}</div>
-              </div>
-              
-              <div style={{ 
-                marginTop: '10px', 
-                borderTop: '1px solid rgba(255,255,255,0.1)',
-                paddingTop: '10px',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center'
+            {/* Module Badge - Show which module this vehicle belongs to */}
+            {selectedVehicle.module && (
+              <div style={{
+                display: 'inline-block',
+                background: 'rgba(59, 130, 246, 0.3)',
+                padding: '3px 8px',
+                borderRadius: '20px',
+                fontSize: '0.7em',
+                marginBottom: '15px'
               }}>
-                <div style={{ fontWeight: 'bold', fontSize: '0.8em' }}>ROI:</div>
+                {selectedVehicle.module || 'Transport Management'}
+              </div>
+            )}
+            
+            {/* Status Badge */}
+            <div style={{
+              display: 'inline-block',
+              background: selectedVehicle.sensorData.status === 'Active Scanning' ? '#22c55e' : '#3b82f6',
+              padding: '3px 8px',
+              borderRadius: '20px',
+              fontSize: '0.7em',
+              marginBottom: '15px',
+              marginLeft: '5px'
+            }}>
+              {selectedVehicle.sensorData.status}
+            </div>
+            
+            {/* IoT Sensor Data */}
+            <div style={{ marginBottom: '15px' }}>
+              <h4 style={{ margin: '0 0 8px 0', fontSize: '0.9em', color: '#3b82f6' }}>SENSOR DATA</h4>
+              
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', fontSize: '0.85em' }}>
+                <div>
+                  <div style={{ fontWeight: 'bold', fontSize: '0.8em', opacity: 0.7 }}>Speed</div>
+                  <div>{selectedVehicle.sensorData.speed} km/h</div>
+                </div>
+                
+                <div>
+                  <div style={{ fontWeight: 'bold', fontSize: '0.8em', opacity: 0.7 }}>Temperature</div>
+                  <div>{selectedVehicle.sensorData.temperature}°C</div>
+                </div>
+                
+                {selectedVehicle.sensorData.batteryLevel !== undefined && (
+                  <div>
+                    <div style={{ fontWeight: 'bold', fontSize: '0.8em', opacity: 0.7 }}>Battery</div>
+                    <div>{selectedVehicle.sensorData.batteryLevel}%</div>
+                  </div>
+                )}
+                
+                {selectedVehicle.sensorData.fuelLevel !== undefined && (
+                  <div>
+                    <div style={{ fontWeight: 'bold', fontSize: '0.8em', opacity: 0.7 }}>Fuel</div>
+                    <div>{selectedVehicle.sensorData.fuelLevel}%</div>
+                  </div>
+                )}
+                
+                <div>
+                  <div style={{ fontWeight: 'bold', fontSize: '0.8em', opacity: 0.7 }}>Load</div>
+                  <div>{selectedVehicle.sensorData.loadCapacity}%</div>
+                </div>
+                
+                <div>
+                  <div style={{ fontWeight: 'bold', fontSize: '0.8em', opacity: 0.7 }}>Maintenance</div>
+                  <div>{selectedVehicle.sensorData.lastMaintenance}</div>
+                </div>
+              </div>
+              
+              {/* Advanced Sensors */}
+              <div style={{ 
+                display: 'flex', 
+                gap: '8px', 
+                margin: '10px 0', 
+                fontSize: '0.7em'
+              }}>
                 <div style={{ 
-                  color: '#10b981',
-                  fontWeight: 'bold'
-                }}>{selectedVehicle.businessImpact.roi}</div>
+                  padding: '2px 8px', 
+                  borderRadius: '3px',
+                  background: selectedVehicle.sensorData.cameras ? 'rgba(59, 130, 246, 0.3)' : 'rgba(100, 100, 100, 0.3)',
+                  color: selectedVehicle.sensorData.cameras ? '#3b82f6' : '#999'
+                }}>
+                  CAMERAS
+                </div>
+                <div style={{ 
+                  padding: '2px 8px', 
+                  borderRadius: '3px',
+                  background: selectedVehicle.sensorData.lidar ? 'rgba(59, 130, 246, 0.3)' : 'rgba(100, 100, 100, 0.3)',
+                  color: selectedVehicle.sensorData.lidar ? '#3b82f6' : '#999'
+                }}>
+                  LIDAR
+                </div>
+                <div style={{ 
+                  padding: '2px 8px', 
+                  borderRadius: '3px',
+                  background: selectedVehicle.sensorData.radar ? 'rgba(59, 130, 246, 0.3)' : 'rgba(100, 100, 100, 0.3)',
+                  color: selectedVehicle.sensorData.radar ? '#3b82f6' : '#999'
+                }}>
+                  RADAR
+                </div>
+              </div>
+              
+              {/* Location info */}
+              <div style={{ marginTop: '10px', fontSize: '0.85em' }}>
+                <div style={{ fontWeight: 'bold', fontSize: '0.8em', opacity: 0.7 }}>Current Location</div>
+                <div>{selectedVehicle.sensorData.location}</div>
+                
+                <div style={{ fontWeight: 'bold', fontSize: '0.8em', opacity: 0.7, marginTop: '8px' }}>Next Checkpoint</div>
+                <div>{selectedVehicle.sensorData.nextCheckpoint}</div>
+              </div>
+              
+              {/* Cargo description */}
+              {selectedVehicle.cargoDescription && (
+                <div style={{ 
+                  marginTop: '15px', 
+                  background: 'rgba(255,255,255,0.1)', 
+                  padding: '8px',
+                  borderRadius: '4px',
+                  fontSize: '0.85em'
+                }}>
+                  <div style={{ fontWeight: 'bold', fontSize: '0.8em', opacity: 0.7 }}>Cargo</div>
+                  <div>{selectedVehicle.cargoDescription}</div>
+                </div>
+              )}
+            </div>
+            
+            {/* Business Impact */}
+            <div>
+              <h4 style={{ margin: '0 0 8px 0', fontSize: '0.9em', color: '#10b981' }}>BUSINESS IMPACT</h4>
+              
+              <div style={{ fontSize: '0.85em' }}>
+                <div style={{ marginBottom: '8px' }}>
+                  <div style={{ fontWeight: 'bold', fontSize: '0.8em', opacity: 0.7 }}>Efficiency</div>
+                  <div>{selectedVehicle.businessImpact.efficiencyGain}</div>
+                </div>
+                
+                <div style={{ marginBottom: '8px' }}>
+                  <div style={{ fontWeight: 'bold', fontSize: '0.8em', opacity: 0.7 }}>Cost Savings</div>
+                  <div>{selectedVehicle.businessImpact.costSavings}</div>
+                </div>
+                
+                <div style={{ marginBottom: '8px' }}>
+                  <div style={{ fontWeight: 'bold', fontSize: '0.8em', opacity: 0.7 }}>Safety</div>
+                  <div>{selectedVehicle.businessImpact.safetyImprovement}</div>
+                </div>
+                
+                <div style={{ 
+                  marginTop: '10px', 
+                  borderTop: '1px solid rgba(255,255,255,0.1)',
+                  paddingTop: '10px',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center'
+                }}>
+                  <div style={{ fontWeight: 'bold', fontSize: '0.8em' }}>ROI:</div>
+                  <div style={{ 
+                    color: '#10b981',
+                    fontWeight: 'bold'
+                  }}>{selectedVehicle.businessImpact.roi}</div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
-      
-      {/* Information overlay */}
-      <div style={{
-        position: 'absolute',
-        bottom: '20px',
-        left: '20px',
-        background: 'rgba(0,0,0,0.7)',
-        color: 'white',
-        padding: '15px',
-        borderRadius: '10px',
-        fontSize: '14px',
-        maxWidth: '400px',
-        zIndex: 100
-      }}>
-        <h3 style={{ margin: '0 0 10px 0', color: '#3b82f6' }}>Smart Dry Port Simulation</h3>
-        <p style={{ margin: '0 0 10px 0', lineHeight: '1.5' }}>
-          Hover over vehicles and infrastructure to see real-time IoT data. 
-          Click for detailed analytics and business impact information.
-        </p>
-        <div style={{ fontSize: '12px', opacity: 0.7 }}>
-          <strong>Navigation:</strong> Drag to rotate • Scroll to zoom • Right-click to pan
-        </div>
-      </div>
-      
-      {/* Loading indicator */}
-      {!loaded && (
+        )}
+        
+        {/* Information overlay */}
         <div style={{
           position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          backgroundColor: 'rgba(0,0,0,0.8)',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
+          bottom: '20px',
+          left: '20px',
+          background: 'rgba(0,0,0,0.7)',
           color: 'white',
-          zIndex: 1000
+          padding: '15px',
+          borderRadius: '10px',
+          fontSize: '14px',
+          maxWidth: '400px',
+          zIndex: 100
         }}>
-          <h2>Loading IoT-Enabled Port Simulation</h2>
-          <div style={{ 
-            width: '200px', 
-            height: '4px', 
-            backgroundColor: '#1e293b',
-            borderRadius: '2px',
-            overflow: 'hidden',
-            marginTop: '20px'
-          }}>
-            <div 
-              style={{
-                height: '100%',
-                width: '50%',
-                backgroundColor: '#3b82f6',
-                borderRadius: '2px',
-                animation: 'move 1.5s infinite ease-in-out'
-              }}
-            />
+          <h3 style={{ margin: '0 0 10px 0', color: '#3b82f6' }}>Smart Dry Port Simulation</h3>
+          <p style={{ margin: '0 0 10px 0', lineHeight: '1.5' }}>
+            Hover over vehicles and infrastructure to see real-time IoT data. 
+            Click for detailed analytics and business impact information.
+          </p>
+          <div style={{ fontSize: '12px', opacity: 0.7 }}>
+            <strong>Navigation:</strong> Drag to rotate • Scroll to zoom • Right-click to pan
           </div>
-          <style jsx>{`
-            @keyframes move {
-              0% { transform: translateX(-100%); }
-              100% { transform: translateX(200%); }
-            }
-          `}</style>
+          <div style={{ 
+            marginTop: '5px',
+            padding: '5px',
+            background: 'rgba(59, 130, 246, 0.2)',
+            borderRadius: '4px',
+            fontSize: '12px' 
+          }}>
+            <strong>Current Weather:</strong> {weather.name} - {weather.description}
+          </div>
         </div>
-      )}
-    </div>
+        
+        {/* Loading indicator */}
+        {!loaded && (
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(0,0,0,0.8)',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            color: 'white',
+            zIndex: 1000
+          }}>
+            <h2>Loading IoT-Enabled Port Simulation</h2>
+            <div style={{ 
+              width: '200px', 
+              height: '4px', 
+              backgroundColor: '#1e293b',
+              borderRadius: '2px',
+              overflow: 'hidden',
+              marginTop: '20px'
+            }}>
+              <div 
+                style={{
+                  height: '100%',
+                  width: '50%',
+                  backgroundColor: '#3b82f6',
+                  borderRadius: '2px',
+                  animation: 'move 1.5s infinite ease-in-out'
+                }}
+              />
+            </div>
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 
