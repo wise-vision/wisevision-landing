@@ -124,7 +124,7 @@ function CookieConsent() {
     >
       <Text sx={{ fontSize: 1, flex: 1 }}>
         We use cookies to enhance your browsing experience and analyze site traffic. 
-        By continuing to use our site, you consent to our use of cookies.
+        By continuing to use our site, you consent to our use of cookies for details see our Legal Notes.
       </Text>
       <Flex sx={{ gap: 2 }}>
         <AppLink href={ROUTES.PRIVACY_POLICY || '#'} sx={{ textDecoration: 'underline', fontSize: 1 }}>
