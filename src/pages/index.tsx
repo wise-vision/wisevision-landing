@@ -92,6 +92,7 @@ function CookieConsent() {
       const timer = setTimeout(() => setVisible(true), 1500);
       return () => clearTimeout(timer);
     }
+    return () => {}; // Add empty cleanup function to satisfy TypeScript
   }, []);
   
   const acceptCookies = () => {

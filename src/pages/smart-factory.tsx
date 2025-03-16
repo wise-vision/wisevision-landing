@@ -6,6 +6,9 @@ import {
   PageInfographic,
   PageInfographicSectionWrapper,
 } from 'components/PageWithInfographic';
+import { Box, Button, Container } from 'theme-ui';
+import { AppLink } from 'components/AppLink';
+import { ROUTES } from 'routes';
 
 const DESCRIPTION_ITEMS_1 = [
   {
@@ -44,6 +47,34 @@ export default function SmartFactory() {
         <PageInfographic image="analityka_dla_handlu" />
         <PageDescriptionItems items={DESCRIPTION_ITEMS_1} />
       </PageInfographicSectionWrapper>
+      
+      <Box sx={{ 
+        textAlign: 'center', 
+        py: 6, 
+        bg: 'backgroundMuted'
+      }}>
+        <Container>
+          <PageHeadingSection 
+            small 
+            title="Experience our Smart Factory technology in action" 
+          />
+          <AppLink href={ROUTES.ENHANCED_DRY_PORT}>
+            <Button 
+              variant="primary"
+              sx={{ 
+                mt: 3,
+                px: 4,
+                py: 2,
+                fontSize: 2,
+                fontWeight: 'bold'
+              }}
+            >
+              Try Smart Factory Simulation
+            </Button>
+          </AppLink>
+        </Container>
+      </Box>
+      
       <PageHeadingSection
         small
         title="If you're ready to transform your factory into a smart, connected operation, get in touch with us!"

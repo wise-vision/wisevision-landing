@@ -508,8 +508,8 @@ const InteractiveTooltip = ({
             </span>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>Speed:</span>
-            <span>{vehicle.sensorData.speed} km/h</span>
+            <span>Speed:</span> 
+            <span>{vehicle.sensorData.speed.toFixed(1)} km/h</span>
           </div>
           <div style={{ fontSize: '0.7em', marginTop: '5px', fontStyle: 'italic' }}>
             Click for details
@@ -2153,7 +2153,7 @@ const KPIDashboard = ({ kpis }: { kpis: KPI[] }) => {
 };
 
 // Alert Notification Component
-const AlertNotifications = ({ alerts }: { alerts: Alert[] }) => {
+const AlertNotifications = ({ alerts, onDismiss }: { alerts: Alert[], onDismiss: (id: string) => void }) => {
   if (alerts.length === 0) return null;
   
   return (
@@ -2193,14 +2193,38 @@ const AlertNotifications = ({ alerts }: { alerts: Alert[] }) => {
               {alert.title}
             </div>
             <div style={{
-              fontSize: '0.7em',
-              padding: '2px 6px',
-              borderRadius: '4px',
-              background: alert.severity === 'high' ? 'rgba(239, 68, 68, 0.2)' : 
-                        alert.severity === 'medium' ? 'rgba(245, 158, 11, 0.2)' : 
-                        'rgba(59, 130, 246, 0.2)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
             }}>
-              {alert.severity.toUpperCase()}
+              <div style={{
+                fontSize: '0.7em',
+                padding: '2px 6px',
+                borderRadius: '4px',
+                background: alert.severity === 'high' ? 'rgba(239, 68, 68, 0.2)' : 
+                          alert.severity === 'medium' ? 'rgba(245, 158, 11, 0.2)' : 
+                          'rgba(59, 130, 246, 0.2)',
+              }}>
+                {alert.severity.toUpperCase()}
+              </div>
+              <button
+                onClick={() => onDismiss(alert.id)}
+                style={{
+                  background: 'transparent',
+                  border: 'none',
+                  color: '#999',
+                  cursor: 'pointer',
+                  padding: '0 5px',
+                  fontSize: '16px',
+                  lineHeight: '1',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+                aria-label="Close notification"
+              >
+                ×
+              </button>
             </div>
           </div>
           <div style={{ fontSize: '0.8em', marginBottom: '5px' }}>
@@ -2566,6 +2590,11 @@ const EnhancedDryPortSimulation = ({ filter = 'all', highlight = 'none' }: { fil
     const module = systemModules.find(m => m.id === moduleId);
     setSelectedModule(module || null);
   };
+
+  // Add a function to handle dismissing notifications
+  const handleDismissAlert = (id: string) => {
+    setAlerts(prev => prev.filter(alert => alert.id !== id));
+  };
   
   return (
     <>
@@ -2802,7 +2831,7 @@ const EnhancedDryPortSimulation = ({ filter = 'all', highlight = 'none' }: { fil
         {showKpis && <KPIDashboard kpis={kpis} />}
         
         {/* Alert Notifications */}
-        <AlertNotifications alerts={alerts} />
+        <AlertNotifications alerts={alerts} onDismiss={handleDismissAlert} />
         
         {/* Simulation Controls - MOVED to prevent overlap with KPI Dashboard */}
         <SimulationControls 

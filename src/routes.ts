@@ -25,6 +25,8 @@ export const ROUTES = {
   AI_CENTRIC_SYSTEMS: '/ai-centric-systems',
   SMART_FACTORY: '/smart-factory',
   LOGISTICS: '/logistics',
+  ENHANCED_DRY_PORT: '/enhanced-dry-port',
   GITHUB: 'https://github.com/wise-vision',
   GITHUB_START: 'https://github.com/wise-vision/wisevision.proj?tab=readme-ov-file#wisevisionproj',
+  PRIVACY_POLICY: '/privacy-policy',
 };
