@@ -3,13 +3,14 @@ import { AppLink } from 'components/AppLink';
 import { MENU_ID } from 'components/Menu';
 import { ROUTES } from 'routes';
 import { pxToRem } from 'theme';
-import { Box, Button, Container, Flex, Grid, Heading, Image, ThemeUIStyleObject } from 'theme-ui';
+import { Box, Button, Container, Flex, Grid, Heading, Image, ThemeUIStyleObject, Text } from 'theme-ui';
 import { WithChildren } from 'types';
 import { Link } from 'react-scroll';
 import InteractiveNetworkVisualization from 'components/InteractiveNetworkVisualization';
 
 // Global Constants
 const SCROLL_TARGET = 'scrollTarget';
+const COOKIE_CONSENT_KEY = 'wisevision-cookie-consent';
 
 // Helper Components
 function SectionWrapper({
@@ -75,6 +76,67 @@ function SectionContent({
     <Box>
       <Heading sx={{ maxWidth: '7em', mb: 3, ...styles?.title }}>{title}</Heading>
       <Box sx={{ maxWidth: '31em' }}>{description}</Box>
+    </Box>
+  );
+}
+
+// Cookie Consent Component
+function CookieConsent() {
+  const [visible, setVisible] = React.useState(false);
+  
+  React.useEffect(() => {
+    // Check if user has already accepted cookies
+    const hasConsent = localStorage.getItem(COOKIE_CONSENT_KEY) === 'accepted';
+    if (!hasConsent) {
+      // Delay showing the banner slightly for better UX
+      const timer = setTimeout(() => setVisible(true), 1500);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+  
+  const acceptCookies = () => {
+    localStorage.setItem(COOKIE_CONSENT_KEY, 'accepted');
+    setVisible(false);
+  };
+  
+  if (!visible) return null;
+  
+  return (
+    <Box
+      sx={{
+        position: 'fixed',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        bg: 'rgba(255, 255, 255, 0.95)',
+        boxShadow: '0 -2px 10px rgba(0, 0, 0, 0.1)',
+        p: 3,
+        zIndex: 1000,
+        borderTop: '1px solid',
+        borderColor: 'muted',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        flexDirection: ['column', 'row'],
+        gap: 3,
+      }}
+    >
+      <Text sx={{ fontSize: 1, flex: 1 }}>
+        We use cookies to enhance your browsing experience and analyze site traffic. 
+        By continuing to use our site, you consent to our use of cookies.
+      </Text>
+      <Flex sx={{ gap: 2 }}>
+        <AppLink href={ROUTES.PRIVACY_POLICY || '#'} sx={{ textDecoration: 'underline', fontSize: 1 }}>
+          Learn More
+        </AppLink>
+        <Button 
+          onClick={acceptCookies} 
+          variant="primary" 
+          sx={{ py: 1, px: 3, fontSize: 1 }}
+        >
+          Accept
+        </Button>
+      </Flex>
     </Box>
   );
 }
@@ -288,32 +350,32 @@ function NotificationSection() {
 // Constants for Usage Section
 const USAGE_ITEMS = [
   {
-    icon: 'analityka_handlu',
+    icon: 'ai_centric',
     label: 'AI Centric Systems',
     href: ROUTES.AI_CENTRIC_SYSTEMS,
   },
   {
-    icon: 'zarzadzanie_wideo',
+    icon: 'smart_factory',
     label: 'Smart Factory',
     href: ROUTES.SMART_FACTORY,
   },
   {
-    icon: 'wideo_na_zywo',
+    icon: 'logistics',
     label: 'Logistics',
     href: ROUTES.LOGISTICS,
   },
   {
-    icon: 'identyfikacja',
+    icon: 'agriculture',
     label: 'Agriculture',
     href: ROUTES.AGRICULTURE,
   },
   {
-    icon: 'zdalny_dostep',
+    icon: 'robotics',
     label: 'Robotics',
     href: ROUTES.ROBOTICS,
   },
   {
-    icon: 'covid',
+    icon: 'smart_city',
     label: 'Smart City',
     href: ROUTES.SMART_CITY,
   },
@@ -377,6 +439,7 @@ export default function Home() {
       <SystemSection />
       <NotificationSection />
       <UsageSection />
+      <CookieConsent />
     </Box>
   );
 }

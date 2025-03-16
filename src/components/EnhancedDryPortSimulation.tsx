@@ -683,8 +683,8 @@ const SmartTrain = ({
   // Animate train and update sensor data
   useFrame(({ clock }) => {
     if (trainRef.current) {
-      // Move the train along x-axis
-      const xPosition = Math.sin(clock.getElapsedTime() * 0.2) * 25;
+      // Move the train along x-axis following the central rail corridor
+      const xPosition = Math.sin(clock.getElapsedTime() * 0.2) * 50;
       trainRef.current.position.x = xPosition;
       trainRef.current.rotation.y = Math.cos(clock.getElapsedTime() * 0.2) > 0 ? 0 : Math.PI;
       
@@ -1251,7 +1251,7 @@ const SmartCrane = ({
   );
 };
 
-// Enhanced Ground component with more details
+// Enhanced Ground component with layout based on Chełm concept
 const Ground = () => {
   return (
     <group>
@@ -1261,338 +1261,433 @@ const Ground = () => {
         <meshStandardMaterial color="#0f172a" roughness={0.8} />
       </mesh>
       
-      {/* Additional asphalt areas */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[20, -0.48, 15]} receiveShadow>
-        <planeGeometry args={[60, 20]} />
+      {/* Main terminal area - Central rectangle */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.48, 0]} receiveShadow>
+        <planeGeometry args={[200, 100]} />
         <meshStandardMaterial color="#1f2937" roughness={0.7} />
       </mesh>
       
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[-20, -0.48, -15]} receiveShadow>
-        <planeGeometry args={[50, 30]} />
-        <meshStandardMaterial color="#1f2937" roughness={0.7} />
-      </mesh>
-      
-      {/* Concrete loading zones */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.47, -25]} receiveShadow>
-        <planeGeometry args={[100, 15]} />
+      {/* Railway corridors - Multiple parallel tracks */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.47, -10]} receiveShadow>
+        <planeGeometry args={[180, 25]} />
         <meshStandardMaterial color="#374151" roughness={0.6} />
       </mesh>
       
-      {/* Additional railways */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.47, 25]} receiveShadow>
+        <planeGeometry args={[180, 25]} />
+        <meshStandardMaterial color="#374151" roughness={0.6} />
+      </mesh>
+      
+      {/* Terminal roads - Perimeter circulation */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.46, -45]} receiveShadow>
-        <planeGeometry args={[120, 12]} />
+        <planeGeometry args={[200, 10]} />
         <meshStandardMaterial color="#4b5563" roughness={0.5} />
+      </mesh>
+      
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.46, 45]} receiveShadow>
+        <planeGeometry args={[200, 10]} />
+        <meshStandardMaterial color="#4b5563" roughness={0.5} />
+      </mesh>
+      
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[-95, -0.46, 0]} receiveShadow>
+        <planeGeometry args={[10, 100]} />
+        <meshStandardMaterial color="#4b5563" roughness={0.5} />
+      </mesh>
+      
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[95, -0.46, 0]} receiveShadow>
+        <planeGeometry args={[10, 100]} />
+        <meshStandardMaterial color="#4b5563" roughness={0.5} />
+      </mesh>
+      
+      {/* Container storage areas */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[-50, -0.45, -30]} receiveShadow>
+        <planeGeometry args={[50, 20]} />
+        <meshStandardMaterial color="#1e293b" roughness={0.7} />
+      </mesh>
+      
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[50, -0.45, -30]} receiveShadow>
+        <planeGeometry args={[50, 20]} />
+        <meshStandardMaterial color="#1e293b" roughness={0.7} />
+      </mesh>
+      
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[-50, -0.45, 30]} receiveShadow>
+        <planeGeometry args={[50, 20]} />
+        <meshStandardMaterial color="#1e293b" roughness={0.7} />
+      </mesh>
+      
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[50, -0.45, 30]} receiveShadow>
+        <planeGeometry args={[50, 20]} />
+        <meshStandardMaterial color="#1e293b" roughness={0.7} />
       </mesh>
     </group>
   );
 };
 
-// Additional infrastructure components
+// Additional infrastructure components based on Chełm dry port concept
 const AdditionalInfrastructure = () => {
   return (
     <group>
-      {/* Additional warehouses */}
-      <group position={[-35, 0, -20]}>
-        <mesh position={[0, 2.5, 0]} castShadow>
-          <boxGeometry args={[15, 5, 10]} />
+      {/* Main Terminal Building */}
+      <group position={[-65, 0, -30]}>
+        <mesh position={[0, 5, 0]} castShadow>
+          <boxGeometry args={[30, 10, 15]} />
           <meshStandardMaterial color="#475569" />
         </mesh>
-        <mesh position={[0, 5.5, 0]} castShadow>
-          <coneGeometry args={[9, 2, 4]} />
+        <mesh position={[0, 11, 0]} castShadow>
+          <boxGeometry args={[32, 2, 17]} />
           <meshStandardMaterial color="#334155" />
         </mesh>
-        <Text position={[0, 8, 0]} fontSize={1.2} color="white" anchorX="center" anchorY="middle">
-          Bulk Storage Facility
+        <Text position={[0, 14, 0]} fontSize={2} color="white" anchorX="center" anchorY="middle">
+          Main Terminal
         </Text>
       </group>
       
-      <group position={[40, 0, -20]}>
-        <mesh position={[0, 3, 0]} castShadow>
-          <boxGeometry args={[18, 6, 12]} />
+      {/* Intermodal Handling Facility */}
+      <group position={[65, 0, -30]}>
+        <mesh position={[0, 4, 0]} castShadow>
+          <boxGeometry args={[35, 8, 18]} />
           <meshStandardMaterial color="#0f766e" />
         </mesh>
-        <mesh position={[0, 6.5, 0]} castShadow>
-          <coneGeometry args={[10, 2.5, 4]} />
-          <meshStandardMaterial color="#334155" />
+        <mesh position={[0, 9, 0]} castShadow>
+          <boxGeometry args={[37, 2, 20]} />
+          <meshStandardMaterial color="#0e7490" />
         </mesh>
-        <Text position={[0, 9, 0]} fontSize={1.2} color="white" anchorX="center" anchorY="middle">
-          Distribution Center
+        <Text position={[0, 12, 0]} fontSize={1.8} color="white" anchorX="center" anchorY="middle">
+          Intermodal Facility
         </Text>
       </group>
       
-      <group position={[0, 0, -60]}>
-        <mesh position={[0, 2, 0]} castShadow>
-          <boxGeometry args={[14, 4, 8]} />
+      {/* Customs Clearance Building */}
+      <group position={[0, 0, -35]}>
+        <mesh position={[0, 3.5, 0]} castShadow>
+          <boxGeometry args={[25, 7, 12]} />
           <meshStandardMaterial color="#7e22ce" />
         </mesh>
-        <mesh position={[0, 4.5, 0]} castShadow>
-          <coneGeometry args={[7, 2, 4]} />
-          <meshStandardMaterial color="#334155" />
+        <mesh position={[0, 7.5, 0]} castShadow>
+          <boxGeometry args={[27, 1, 14]} />
+          <meshStandardMaterial color="#6b21a8" />
         </mesh>
-        <Text position={[0, 7, 0]} fontSize={1.2} color="white" anchorX="center" anchorY="middle">
-          Rail Terminal
+        <Text position={[0, 10, 0]} fontSize={1.5} color="white" anchorX="center" anchorY="middle">
+          Customs Clearance
         </Text>
       </group>
       
-      {/* More container stacks */}
-      <group position={[-30, 0, 20]}>
-        <mesh position={[0, 0.75, 0]} castShadow>
-          <boxGeometry args={[5, 1.5, 2]} />
-          <meshStandardMaterial color="#e11d48" />
-        </mesh>
-        <mesh position={[0, 2.25, 0]} castShadow>
-          <boxGeometry args={[5, 1.5, 2]} />
-          <meshStandardMaterial color="#e11d48" metalness={0.1} />
-        </mesh>
-      </group>
-      
-      <group position={[-25, 0, 20]}>
-        <mesh position={[0, 0.75, 0]} castShadow>
-          <boxGeometry args={[5, 1.5, 2]} />
-          <meshStandardMaterial color="#9333ea" />
-        </mesh>
-        <mesh position={[0, 2.25, 0]} castShadow>
-          <boxGeometry args={[5, 1.5, 2]} />
-          <meshStandardMaterial color="#9333ea" metalness={0.1} />
-        </mesh>
-        <mesh position={[0, 3.75, 0]} castShadow>
-          <boxGeometry args={[5, 1.5, 2]} />
-          <meshStandardMaterial color="#9333ea" metalness={0.2} />
-        </mesh>
-      </group>
-      
-      {/* More roads with lane markings */}
-      <group position={[0, -0.3, 30]}>
-        <mesh position={[0, 0, 0]} receiveShadow>
-          <boxGeometry args={[100, 0.1, 8]} />
-          <meshStandardMaterial color="#1f2937" />
-        </mesh>
-        <mesh position={[0, 0.06, 0]} receiveShadow>
-          <boxGeometry args={[90, 0.01, 0.3]} />
-          <meshStandardMaterial color="#f8fafc" />
-        </mesh>
-      </group>
-      
-      <group position={[-40, -0.3, 0]} rotation={[0, Math.PI/2, 0]}>
-        <mesh position={[0, 0, 0]} receiveShadow>
-          <boxGeometry args={[80, 0.1, 8]} />
-          <meshStandardMaterial color="#1f2937" />
-        </mesh>
-        <mesh position={[0, 0.06, 0]} receiveShadow>
-          <boxGeometry args={[70, 0.01, 0.3]} />
-          <meshStandardMaterial color="#f8fafc" />
-        </mesh>
-      </group>
-      
-      {/* Control tower structure */}
-      <group position={[35, 0, 35]}>
+      {/* Administration Office */}
+      <group position={[30, 0, 30]}>
         <mesh position={[0, 7, 0]} castShadow>
-          <cylinderGeometry args={[3, 4, 14, 16]} />
+          <boxGeometry args={[15, 14, 12]} />
           <meshStandardMaterial color="#1e40af" metalness={0.3} />
         </mesh>
         <mesh position={[0, 15, 0]} castShadow>
-          <cylinderGeometry args={[5, 3, 2, 16]} />
+          <boxGeometry args={[17, 2, 14]} />
           <meshStandardMaterial color="#60a5fa" opacity={0.7} transparent={true} metalness={0.8} />
         </mesh>
-        <Text position={[0, 18, 0]} fontSize={1.2} color="white" anchorX="center" anchorY="middle">
-          IoT Control Center
+        <Text position={[0, 18, 0]} fontSize={1.5} color="white" anchorX="center" anchorY="middle">
+          Administration
         </Text>
       </group>
       
-      {/* Security fencing */}
+      {/* Maintenance Facility */}
+      <group position={[-30, 0, 30]}>
+        <mesh position={[0, 4, 0]} castShadow>
+          <boxGeometry args={[20, 8, 15]} />
+          <meshStandardMaterial color="#b91c1c" />
+        </mesh>
+        <mesh position={[0, 9, 0]} castShadow>
+          <boxGeometry args={[22, 2, 17]} />
+          <meshStandardMaterial color="#991b1b" />
+        </mesh>
+        <Text position={[0, 12, 0]} fontSize={1.5} color="white" anchorX="center" anchorY="middle">
+          Maintenance Facility
+        </Text>
+      </group>
+      
+      {/* Container yards with stacked containers */}
+      {/* Eastern Container Storage */}
+      <ContainerStack position={[-50, 0, -30]} count={3} height={3} color="#e11d48" />
+      <ContainerStack position={[-60, 0, -30]} count={2} height={3} color="#9333ea" />
+      <ContainerStack position={[-40, 0, -30]} count={4} height={2} color="#2563eb" />
+      
+      {/* Western Container Storage */}
+      <ContainerStack position={[50, 0, -30]} count={3} height={3} color="#f97316" />
+      <ContainerStack position={[60, 0, -30]} count={2} height={3} color="#0ea5e9" />
+      <ContainerStack position={[40, 0, -30]} count={4} height={2} color="#84cc16" />
+      
+      {/* Northern Container Storage */}
+      <ContainerStack position={[-50, 0, 30]} count={3} height={2} color="#8b5cf6" />
+      <ContainerStack position={[-40, 0, 30]} count={2} height={3} color="#ec4899" />
+      
+      {/* Southern Container Storage */}
+      <ContainerStack position={[50, 0, 30]} count={3} height={2} color="#14b8a6" />
+      <ContainerStack position={[60, 0, 30]} count={2} height={3} color="#f59e0b" />
+      
+      {/* Main rail tracks based on Chełm dry port design */}
+      <group position={[0, -0.3, -10]}>
+        {/* Multiple parallel rail lines */}
+        <mesh position={[0, 0, 0]} receiveShadow>
+          <boxGeometry args={[180, 0.1, 22]} />
+          <meshStandardMaterial color="#4b5563" />
+        </mesh>
+        
+        {/* Rail track 1 */}
+        <RailTrack position={[0, 0.06, -8]} length={180} />
+        
+        {/* Rail track 2 */}
+        <RailTrack position={[0, 0.06, -4]} length={180} />
+        
+        {/* Rail track 3 */}
+        <RailTrack position={[0, 0.06, 0]} length={180} />
+        
+        {/* Rail track 4 */}
+        <RailTrack position={[0, 0.06, 4]} length={180} />
+        
+        {/* Rail track 5 */}
+        <RailTrack position={[0, 0.06, 8]} length={180} />
+      </group>
+      
+      {/* Second rail yard */}
+      <group position={[0, -0.3, 25]}>
+        <mesh position={[0, 0, 0]} receiveShadow>
+          <boxGeometry args={[180, 0.1, 22]} />
+          <meshStandardMaterial color="#4b5563" />
+        </mesh>
+        
+        {/* Rail tracks */}
+        <RailTrack position={[0, 0.06, -8]} length={180} />
+        <RailTrack position={[0, 0.06, -4]} length={180} />
+        <RailTrack position={[0, 0.06, 0]} length={180} />
+        <RailTrack position={[0, 0.06, 4]} length={180} />
+        <RailTrack position={[0, 0.06, 8]} length={180} />
+      </group>
+      
+      {/* Loading/unloading areas */}
+      <group position={[-40, -0.4, -30]}>
+        <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+          <planeGeometry args={[30, 15]} />
+          <meshStandardMaterial color="#1f2937" />
+        </mesh>
+      </group>
+      
+      <group position={[40, -0.4, -30]}>
+        <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+          <planeGeometry args={[30, 15]} />
+          <meshStandardMaterial color="#1f2937" />
+        </mesh>
+      </group>
+      
+      <group position={[-40, -0.4, 30]}>
+        <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+          <planeGeometry args={[30, 15]} />
+          <meshStandardMaterial color="#1f2937" />
+        </mesh>
+      </group>
+      
+      <group position={[40, -0.4, 30]}>
+        <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+          <planeGeometry args={[30, 15]} />
+          <meshStandardMaterial color="#1f2937" />
+        </mesh>
+      </group>
+      
+      {/* Gantry cranes over rail lines */}
+      <GantryCrane position={[-60, 0, -10]} width={30} height={18} color="#3b82f6" />
+      <GantryCrane position={[0, 0, -10]} width={30} height={18} color="#3b82f6" />
+      <GantryCrane position={[60, 0, -10]} width={30} height={18} color="#3b82f6" />
+      <GantryCrane position={[-60, 0, 25]} width={30} height={18} color="#3b82f6" />
+      <GantryCrane position={[0, 0, 25]} width={30} height={18} color="#3b82f6" />
+      <GantryCrane position={[60, 0, 25]} width={30} height={18} color="#3b82f6" />
+      
+      {/* Truck scales at entry points */}
+      <group position={[-95, 0, -35]} rotation={[0, Math.PI/2, 0]}>
+        <mesh position={[0, 0.1, 0]} receiveShadow>
+          <boxGeometry args={[8, 0.2, 3]} />
+          <meshStandardMaterial color="#94a3b8" />
+        </mesh>
+        <mesh position={[0, -0.2, 0]} receiveShadow>
+          <boxGeometry args={[6, 0.4, 2]} />
+          <meshStandardMaterial color="#64748b" />
+        </mesh>
+        <Text position={[0, 1, 0]} fontSize={0.6} color="white" anchorX="center" anchorY="middle">
+          Truck Scale
+        </Text>
+      </group>
+      
+      <group position={[95, 0, -35]} rotation={[0, Math.PI/2, 0]}>
+        <mesh position={[0, 0.1, 0]} receiveShadow>
+          <boxGeometry args={[8, 0.2, 3]} />
+          <meshStandardMaterial color="#94a3b8" />
+        </mesh>
+        <mesh position={[0, -0.2, 0]} receiveShadow>
+          <boxGeometry args={[6, 0.4, 2]} />
+          <meshStandardMaterial color="#64748b" />
+        </mesh>
+        <Text position={[0, 1, 0]} fontSize={0.6} color="white" anchorX="center" anchorY="middle">
+          Truck Scale
+        </Text>
+      </group>
+      
+      {/* Security perimeter fencing */}
       <group>
         {/* North fence */}
-        <mesh position={[0, 1, -80]} castShadow>
-          <boxGeometry args={[160, 2, 0.2]} />
+        <mesh position={[0, 1, -55]} castShadow>
+          <boxGeometry args={[210, 2, 0.2]} />
           <meshStandardMaterial color="#64748b" />
         </mesh>
         
         {/* South fence */}
-        <mesh position={[0, 1, 80]} castShadow>
-          <boxGeometry args={[160, 2, 0.2]} />
+        <mesh position={[0, 1, 55]} castShadow>
+          <boxGeometry args={[210, 2, 0.2]} />
           <meshStandardMaterial color="#64748b" />
         </mesh>
         
         {/* East fence */}
-        <mesh position={[80, 1, 0]} rotation={[0, Math.PI/2, 0]} castShadow>
-          <boxGeometry args={[160, 2, 0.2]} />
+        <mesh position={[105, 1, 0]} rotation={[0, Math.PI/2, 0]} castShadow>
+          <boxGeometry args={[110, 2, 0.2]} />
           <meshStandardMaterial color="#64748b" />
         </mesh>
         
         {/* West fence */}
-        <mesh position={[-80, 1, 0]} rotation={[0, Math.PI/2, 0]} castShadow>
-          <boxGeometry args={[160, 2, 0.2]} />
+        <mesh position={[-105, 1, 0]} rotation={[0, Math.PI/2, 0]} castShadow>
+          <boxGeometry args={[110, 2, 0.2]} />
           <meshStandardMaterial color="#64748b" />
         </mesh>
+      </group>
+      
+      {/* Entry/Exit gates */}
+      <group position={[-95, 0, -45]}>
+        <mesh position={[0, 3, 0]} castShadow>
+          <boxGeometry args={[1, 6, 1]} />
+          <meshStandardMaterial color="#64748b" />
+        </mesh>
+        <mesh position={[5, 3, 0]} castShadow>
+          <boxGeometry args={[1, 6, 1]} />
+          <meshStandardMaterial color="#64748b" />
+        </mesh>
+        <mesh position={[2.5, 6.5, 0]} castShadow>
+          <boxGeometry args={[8, 1, 1]} />
+          <meshStandardMaterial color="#64748b" />
+        </mesh>
+        <Text position={[2.5, 7.5, 0]} fontSize={1} color="white" anchorX="center" anchorY="middle">
+          ENTRY
+        </Text>
+      </group>
+      
+      <group position={[95, 0, -45]}>
+        <mesh position={[0, 3, 0]} castShadow>
+          <boxGeometry args={[1, 6, 1]} />
+          <meshStandardMaterial color="#64748b" />
+        </mesh>
+        <mesh position={[-5, 3, 0]} castShadow>
+          <boxGeometry args={[1, 6, 1]} />
+          <meshStandardMaterial color="#64748b" />
+        </mesh>
+        <mesh position={[-2.5, 6.5, 0]} castShadow>
+          <boxGeometry args={[8, 1, 1]} />
+          <meshStandardMaterial color="#64748b" />
+        </mesh>
+        <Text position={[-2.5, 7.5, 0]} fontSize={1} color="white" anchorX="center" anchorY="middle">
+          EXIT
+        </Text>
       </group>
     </group>
   );
 };
 
-// Enhanced port boundary component
-const PortBoundary = () => {
+// Helper component for creating rail tracks
+const RailTrack = ({ position, length }: { position: [number, number, number], length: number }) => {
   return (
-    <group>
-      {/* Port outline */}
-      <mesh position={[0, -0.48, 0]} rotation={[-Math.PI/2, 0, 0]}>
-        <ringGeometry args={[79, 80, 64]} />
-        <meshBasicMaterial color="#4299e1" />
+    <group position={position}>
+      {/* Rail line */}
+      <mesh receiveShadow>
+        <boxGeometry args={[length, 0.01, 0.3]} />
+        <meshStandardMaterial color="#94a3b8" metalness={0.6} />
       </mesh>
       
-      {/* Main title */}
-      <Text
-        position={[0, 14, -70]}
-        fontSize={6}
-        color="white"
-        anchorX="center"
-        anchorY="middle"
-      >
-        SMART DRY PORT
-      </Text>
-      
-      <Text
-        position={[0, 8, -70]}
-        fontSize={2.5}
-        color="#94a3b8"
-        anchorX="center"
-        anchorY="middle"
-      >
-        IoT-Enabled Port Operations Management
-      </Text>
+      {/* Sleepers/ties */}
+      {Array(Math.floor(length / 2)).fill(0).map((_, i) => (
+        <mesh key={i} position={[-length/2 + 1 + i*2, -0.01, 0]} receiveShadow>
+          <boxGeometry args={[0.8, 0.05, 1.5]} />
+          <meshStandardMaterial color="#475569" />
+        </mesh>
+      ))}
     </group>
   );
 };
 
-// Main scene component
-const EnhancedDryPortScene = ({ onSelectVehicle, selectedVehicleId, simulationSpeed, weather }: { 
-  onSelectVehicle: (vehicle: VehicleData | null) => void;
-  selectedVehicleId: string | null;
-  simulationSpeed: number;
-  weather: WeatherCondition;
+// Helper component for creating stacks of containers
+const ContainerStack = ({ position, count, height, color }: { 
+  position: [number, number, number], 
+  count: number, 
+  height: number,
+  color: string 
 }) => {
-  // Handle selection change
-  const handleSelect = (vehicle: VehicleData | null) => {
-    onSelectVehicle(vehicle);
-  };
-
-  // Close selection when clicking on empty space
-  const handleBackgroundClick = () => {
-    onSelectVehicle(null);
-  };
-
   return (
-    <>
-      {/* Lighting */}
-      <ambientLight intensity={0.4} />
-      <directionalLight 
-        position={[10, 20, 10]} 
-        intensity={0.8} 
-        castShadow 
-        shadow-mapSize-width={2048} 
-        shadow-mapSize-height={2048} 
-      />
-      <hemisphereLight args={['#87ceeb', '#4a6a8a', 0.5]} />
-      
-      {/* Scene background */}
-      <color attach="background" args={['#000000']} />
-      
-      {/* Ground */}
-      <Ground />
-      
-      {/* Port outline */}
-      <PortBoundary />
-      
-      {/* Additional infrastructure */}
-      <AdditionalInfrastructure />
-      
-      {/* Background click handler */}
-      <mesh 
-        position={[0, -0.49, 0]} 
-        rotation={[-Math.PI/2, 0, 0]} 
-        onClick={handleBackgroundClick}
-        visible={false}
-      >
-        <planeGeometry args={[500, 500]} />
-        <meshStandardMaterial color="#000000" opacity={0} transparent />
+    <group position={position}>
+      {Array(count).fill(0).map((_, i) => (
+        <group key={i} position={[i*2.5, 0, 0]}>
+          {Array(height).fill(0).map((_, j) => (
+            <mesh key={j} position={[0, 0.75 + j*1.5, 0]} castShadow>
+              <boxGeometry args={[6, 1.5, 2.5]} />
+              <meshStandardMaterial 
+                color={color} 
+                metalness={0.1 + j*0.05} 
+                roughness={0.7 - j*0.05}
+              />
+            </mesh>
+          ))}
+        </group>
+      ))}
+    </group>
+  );
+};
+
+// Gantry crane helper component
+const GantryCrane = ({ position, width, height, color }: { 
+  position: [number, number, number],
+  width: number,
+  height: number,
+  color: string
+}) => {
+  return (
+    <group position={position}>
+      {/* Left leg */}
+      <mesh position={[-width/2 + 1, height/2, 0]} castShadow>
+        <boxGeometry args={[2, height, 2]} />
+        <meshStandardMaterial color="#475569" metalness={0.3} />
       </mesh>
       
-      {/* Render each vehicle from the vehicle data array */}
-      {vehicleData.map(vehicle => {
-        switch(vehicle.type) {
-          case 'train':
-            return (
-              <SmartTrain 
-                key={vehicle.id}
-                data={vehicle}
-                onSelect={handleSelect}
-                selected={selectedVehicleId === vehicle.id}
-              />
-            );
-          case 'truck':
-            // Different road positions for different trucks
-            const truckProps: {
-              [key: string]: {
-                position: [number, number, number]; 
-                direction: number; 
-                speed: number;
-              }
-            } = {
-              'truck-1': { position: [0, 0, 15], direction: 1, speed: 0.08 },
-              'truck-2': { position: [15, 0, 15], direction: -1, speed: 0.06 },
-              'truck-3': { position: [-15, 0, 30], direction: 1, speed: 0.09 },
-              'truck-4': { position: [30, 0, 30], direction: -1, speed: 0.07 }
-            };
-            return (
-              <SmartTruck 
-                key={vehicle.id}
-                data={vehicle}
-                {...truckProps[vehicle.id as keyof typeof truckProps]}
-                onSelect={handleSelect}
-                selected={selectedVehicleId === vehicle.id}
-              />
-            );
-          case 'forklift':
-            return (
-              <SmartForklift
-                key={vehicle.id}
-                data={vehicle}
-                onSelect={handleSelect}
-                selected={selectedVehicleId === vehicle.id}
-              />
-            );
-          case 'scanner':
-            return (
-              <ScannerSystem
-                key={vehicle.id}
-                data={vehicle}
-                onSelect={handleSelect}
-                selected={selectedVehicleId === vehicle.id}
-              />
-            );
-          case 'crane':
-            return (
-              <SmartCrane
-                key={vehicle.id}
-                data={vehicle}
-                onSelect={handleSelect}
-                selected={selectedVehicleId === vehicle.id}
-              />
-            );
-          default:
-            return null;
-        }
-      })}
+      {/* Right leg */}
+      <mesh position={[width/2 - 1, height/2, 0]} castShadow>
+        <boxGeometry args={[2, height, 2]} />
+        <meshStandardMaterial color="#475569" metalness={0.3} />
+      </mesh>
       
-      {/* Camera controls */}
-      <OrbitControls 
-        enablePan={true}
-        enableZoom={true}
-        enableRotate={true}
-        minDistance={10}
-        maxDistance={200}
-        maxPolarAngle={Math.PI/2.2} // Limit to prevent seeing under the ground
-      />
-    </>
+      {/* Top beam */}
+      <mesh position={[0, height-1, 0]} castShadow>
+        <boxGeometry args={[width, 2, 2]} />
+        <meshStandardMaterial color={color} metalness={0.4} />
+      </mesh>
+      
+      {/* Trolley */}
+      <mesh position={[width/4, height-2, 0]} castShadow>
+        <boxGeometry args={[4, 1, 3]} />
+        <meshStandardMaterial color="#334155" metalness={0.5} />
+      </mesh>
+      
+      {/* Hook */}
+      <mesh position={[width/4, height/2, 0]} castShadow>
+        <boxGeometry args={[0.5, height-4, 0.5]} />
+        <meshStandardMaterial color="#94a3b8" />
+      </mesh>
+      
+      {/* Container on hook (occasionally) */}
+      {Math.random() > 0.7 && (
+        <mesh position={[width/4, height/4, 0]} castShadow>
+          <boxGeometry args={[6, 1.5, 2.5]} />
+          <meshStandardMaterial color="#0ea5e9" metalness={0.2} />
+        </mesh>
+      )}
+    </group>
   );
 };
 
@@ -2225,6 +2320,110 @@ const SimulationControls = ({
         </div>
       </div>
     </div>
+  );
+};
+
+// EnhancedDryPortScene component to render all vehicles and infrastructure
+const EnhancedDryPortScene = ({ 
+  onSelectVehicle, 
+  selectedVehicleId, 
+  simulationSpeed,
+  weather
+}: { 
+  onSelectVehicle: (vehicle: VehicleData | null) => void;
+  selectedVehicleId: string | null;
+  simulationSpeed: number;
+  weather: WeatherCondition;
+}) => {
+  return (
+    <>
+      {/* Lighting */}
+      <ambientLight intensity={weather.visibilityFactor * 0.5} />
+      <directionalLight 
+        position={[10, 20, 10]} 
+        intensity={weather.visibilityFactor * 1.5} 
+        castShadow 
+        shadow-mapSize-width={2048}
+        shadow-mapSize-height={2048}
+        shadow-camera-far={50}
+        shadow-camera-left={-20}
+        shadow-camera-right={20}
+        shadow-camera-top={20}
+        shadow-camera-bottom={-20}
+      />
+      
+      {/* Main ground and infrastructure */}
+      <Ground />
+      <AdditionalInfrastructure />
+      
+      {/* Render vehicles based on filter type */}
+      {vehicleData.map(vehicle => {
+        const isSelected = selectedVehicleId === vehicle.id;
+        
+        switch(vehicle.type) {
+          case 'train':
+            return (
+              <SmartTrain 
+                key={vehicle.id}
+                data={vehicle}
+                onSelect={onSelectVehicle}
+                selected={isSelected}
+              />
+            );
+          case 'truck':
+            return (
+              <SmartTruck 
+                key={vehicle.id}
+                data={vehicle}
+                position={vehicle.position}
+                direction={Math.random() > 0.5 ? 1 : -1}
+                speed={0.05 * simulationSpeed}
+                onSelect={onSelectVehicle}
+                selected={isSelected}
+              />
+            );
+          case 'forklift':
+            return (
+              <SmartForklift 
+                key={vehicle.id}
+                data={vehicle}
+                onSelect={onSelectVehicle}
+                selected={isSelected}
+              />
+            );
+          case 'scanner':
+            return (
+              <ScannerSystem 
+                key={vehicle.id}
+                data={vehicle}
+                onSelect={onSelectVehicle}
+                selected={isSelected}
+              />
+            );
+          case 'crane':
+            return (
+              <SmartCrane 
+                key={vehicle.id}
+                data={vehicle}
+                onSelect={onSelectVehicle}
+                selected={isSelected}
+              />
+            );
+          default:
+            return null;
+        }
+      })}
+      
+      {/* Camera controls */}
+      <OrbitControls 
+        enablePan={true} 
+        enableZoom={true} 
+        enableRotate={true}
+        maxPolarAngle={Math.PI / 2 - 0.1} // Prevent camera from going below ground
+        minDistance={10}
+        maxDistance={150}
+      />
+    </>
   );
 };
 

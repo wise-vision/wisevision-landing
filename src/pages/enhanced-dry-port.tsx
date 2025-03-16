@@ -40,26 +40,6 @@ export default function EnhancedDryPort() {
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Orbitron:wght@400;500;700&family=Roboto+Mono&display=swap" rel="stylesheet" />
       </Head>
       
-      {/* View Toggle Button */}
-      <Box sx={{ 
-        position: 'absolute', 
-        top: '20px', 
-        left: '20px', 
-        zIndex: 1000,
-        backgroundColor: 'rgba(0,0,0,0.7)',
-        padding: '10px',
-        borderRadius: '8px'
-      }}>
-        <Button
-          variant="contained" 
-          color="primary"
-          onClick={() => setDisplayMode(displayMode === 'visualization' ? 'simulation' : 'visualization')}
-          sx={{ textTransform: 'none' }}
-        >
-          Switch to {displayMode === 'visualization' ? 'IoT Simulation' : 'Standard View'}
-        </Button>
-      </Box>
-      
       <ErrorBoundary>
         {displayMode === 'visualization' ? (
           <EnhancedDryPortVisualization />
