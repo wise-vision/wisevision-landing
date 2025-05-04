@@ -30,9 +30,8 @@ function Content() {
           <p>
             <strong>Administrator</strong> - company{' '}
             <span id="firma">
-              <span>Inter Plus Sp. z o.o.</span>, operating at the address: <span>ul. Swietokrzyska 30/63
-              00-116 Warsaw Poland</span>, with the assigned
-              tax identification number (NIP): <span>525-259-13-97</span>
+              <span>WiseVision Sp. z o.o.</span>, operating at the address: <span> Dajwór 14/19, 31-052 Cracow, Poland</span>, with the assigned
+              tax identification number (NIP): <span>6762691520</span>
             </span>
             , providing services electronically through the Website and storing and accessing
             information on the User's Device

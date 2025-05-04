@@ -73,11 +73,11 @@ export function Footer() {
               <Box>
                 <Box sx={footerLabel}>Address</Box>
                 <Box sx={{ lineHeight: 'loose' }}>
-                  Inter Plus Sp. z o.o.
+                  WiseVision Sp. z o.o.
                   <br />
-                  ul. Swietokrzyska 30/63
+                  Dajwór 14/19
                   <br />
-                  00-116 Warsaw
+                  31-052 Cracow
                   <br />
                   Poland
                 </Box>
